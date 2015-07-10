@@ -8,6 +8,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	
   </head>
   <body>
     <section class="page-header">
@@ -22,9 +24,9 @@
       <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Service Fabric I/O.</h3>
 
-<p>The service fabric enables Service Developers Rapidly develop Distributed, Scalable, Asynchronous and Reactive applications
+<p>The service fabric enables Service Developers Rapidly develop Resilient Scalable applications
 
-Service Fabric is a Reactive framework which enables quick and easy development of distributed applications such as on-line gaming, eTrading, Social. It greatly simplifies and streamlines distributed programming and provides a tool-set for managing micro-services architecture.
+Service Fabric is a framework that enables quick and easy development of modern distributed, resilient, scalable reactive applications such as on-line gaming, eTrading and Social. It greatly simplifies and streamlines distributed programming and provides a tool-set for managing micro-services architecture.
 
 'Quick and easy' doesn't mean that a resulting application will suffer from a maintainability or a performance issue. Service Fabric has been designed carefully with the experiences earned from the implementation of a lot of Gaming Distributed Services. As a result, Service Fabric IO has succeeded to find a way to achieve ease of development, performance, stability, and flexibility without a compromise.
 
@@ -44,10 +46,30 @@ The service fabric Features:
 
 </p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<pre class=prettyprint><code class=java>
+
+// Every Service has an interface, The Service interface is a simple java interface decorated 
+// with annotation @Service annotation describes a logical name of the service. 
+@Service(namespace = "my.service.namespace") // the service name
+public interface IGameService {
+
+    @ServiceMethod(datamodel = StartGameRequest.class, action = "startGame")        
+    public void startGame(IContext context, Message requestMessage);
+
+}
+
+// The service implementation is a spring @Component implements a service interface. 
+@Component
+public class GameService implements IGameService {
+
+   @Override
+   public void startGame(IContext context, Message requestMessage) {
+     // Log
+     LOGGER.debug("Received start game request message: " + requestMessage);
+   }
+}
+
+</pre>
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
