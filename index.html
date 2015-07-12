@@ -41,16 +41,19 @@ li {font-size:20%}
 
 -->
 
-	<li> Simple, asynchronous programming model for writing distributed non-blocking services that can scale</li>
+    <li>Peer-to-peer architecture with no message brokers and servers</li>
+	<li>Simple, asynchronous programming model for writing distributed non-blocking services that can scale</li>
 	<li>Takes advantage of the JVM and scales over available cores </li>
 	<li>Cluster aware and distributed Event Driven SOA</li>
-	<li>Technology abstraction with a plug and play model</li>
+	<li>Pluggable framework with default support for transport and serialization, cluster management, routing, balancing, service registry</li>
 	<li>Can be embedded in existing Java applications</li>
 	<li>Modular, Service is a stand alone deployable unit Service Fabric manages their topology on demand</li>
 	<li>Fault tolerance, node can appear or disappear at any given time.</li>
 	<li>Includes distributed Service Bus and Event bus</li>
 	<li>Zero Conf, Automatic discovery peer-to-peer service discovery using gossip.</li>
+	<li>Failure detection</li>
 	<li>Smart Routing and balancing strategies.</li>
+	<li>Low latency and high throughput</li>
 
 </p>
 
@@ -84,21 +87,34 @@ public class GameService implements IGameService {
 
 <h3>
 <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h3>
-
 <p>
 The service fabric node provision the services dynamically to the cluster so when a service request arrives to any service fabric node it is routed to the provisioning node in a transparent manner.
-that means that having service fabric nodes that provision no services makes these nodes transparent proxy and routers to the cluster.
-the nodes that do provision business services will serve the business request as they arrive to them but also may act as transparent proxy.  
-
+that means that having service fabric nodes that provision no services makes these nodes API-Gateway and routers of the cluster.
+the nodes that do provision micro-services will serve the business request as they arrive to them but also may act as API Gateways.  
 </p>
 <IMG SRC="https://raw.githubusercontent.com/servicefabric/servicefabric/gh-pages/img/Picture1.png" ALT="Service Fabric Conceptual" WIDTH=800 HEIGHT=700>
 
 
 
 <h3>
-<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>API-Gateway</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>
+Implement an API gateway that is the single entry point for all clients. The API gateway handles requests in one of two ways. Some requests are simply proxied/routed to the appropriate service. It handles other requests by fanning out to multiple services.
+Rather than provide a one-size-fits-all style API, the API gateway can expose a different API for each client. For example, the API gateway can runs client-specifc adapter code that provides each client with an API that's best suited to it's requirements.
+The API gateway might also implement security, e.g. verify that the client is authorized to perform the request.
+
+Using an API gateway has the following benefits:
+
+<li>Insulates the clients from how the application is partitioned into microservices</li>
+<li>Insulates the clients from the problem of determining the locations of service instances</li>
+<li>Provides the optimal API for each client</li>
+<li>Reduces the number of requests/round trips. For example, the API gateway enables clients to retrieve data from multiple services with a single round-trip. Fewer requests also means less overhead and improves the user experience. An API gateway is essential for mobile applications.</li>
+<li>Simplifies the client by moving logic for calling multiple services from the client to API gateway</li>
+
+The Service Fabric API-Gateway is An event-driven/reactive approach is best if it must scale to scale to handle high loads On the JVM, NIO-based libraries such as Netty
+it support Socket.IO, WebSockets, SockJS, HTTP, TCP transports and JSON / Google Protocol buffers for browser and native clients but as well may be extended to support any transport or protocol.
+</p>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
