@@ -87,10 +87,11 @@
                 return t1.message().qualifier().equals("hello/world");
             }
         }).subscribe(new Action1<TransportMessage>() {
-        @Override
-        public void call(TransportMessage t1) {
-            System.out.println(t1.message());
-        }});
+            @Override
+            public void call(TransportMessage t1) {
+                System.out.println(t1.message());
+            }
+        });
     </pre>
 
     Send hello world message from member A to member B:
