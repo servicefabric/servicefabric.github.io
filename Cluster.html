@@ -34,9 +34,11 @@
            <dd>A set of nodes joined together through the membership service.</dd>
 
          <h4>Seed Members</h4>
-          <dd>The seed members are configured contact points for new nodes joining the cluster.
-              When a new node is started it sends a message to all seed nodes and then sends a join command to the seed node that answers first.
-              The seed members configuration value does not have any influence on the running cluster itself, it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to; a new member can send this command to any current member of the cluster, not only to the seed members.
+          <dd>The seed members are configured contact points for new members joining the cluster.
+              When a new member is started it sends a message to all seed nodes and then sends a join command to the seed node that answers first.
+              The seed members configuration value does not have any influence on the running cluster itself,
+              it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
+              a new member can send this command to any current member of the cluster, not only to the seed members.
           </dd>
     </p>
 
