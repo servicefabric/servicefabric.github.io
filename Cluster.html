@@ -61,14 +61,34 @@
 
     </pre>
 
+    <h4>Send gossip from member-A that eventually will reach all members</h4>
+
+    Subscribe to gossip:
+    <pre class=prettyprint><code class=java>
+        clusterA.gossip().listen().subscribe(new Action1<Gossip>() {
+            @Override
+            public void call(Gossip g) {
+                System.out.println(g);
+            }
+        });
+     </pre>
+
+    spread gossip from member-B:
+    <pre class=prettyprint><code class=java>
+        clusterB.gossip().spread("hello/world",null);
+    </pre>
+
+
+
+
     <h4>Send message from member-A to member-B</h4>
     Subscribe to hello world message on member-A using filter:
     <pre class=prettyprint><code class=java>
         clusterA.transport().listen().filter(new Func1<TransportMessage, Boolean> () {
-        @Override
-        public Boolean call(TransportMessage t1) {
-            return t1.message().qualifier().equals("hello/world");
-        }
+            @Override
+            public Boolean call(TransportMessage t1) {
+                return t1.message().qualifier().equals("hello/world");
+            }
         }).subscribe(new Action1<TransportMessage>() {
         @Override
         public void call(TransportMessage t1) {
