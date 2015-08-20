@@ -57,8 +57,6 @@
         // create cluster member B on port 3001 and join as seed member A
         ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000");
         clusterB.join();
-
-
     </pre>
 
     <h4>Send gossip from member-A that eventually will reach all members</h4>
