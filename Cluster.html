@@ -51,12 +51,11 @@
     setting up cluster nodes A and B while A is seed node and B use A as seed:
     <pre class=prettyprint><code class=java>
         // create cluster member A on port 3000 and join as seed member
-        ICluster clusterA = Cluster.newInstance(3000);
-        clusterA.join();
+        ICluster clusterA = Cluster.newInstance(3000).join();
 
         // create cluster member B on port 3001 and join as seed member A
-        ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000");
-        clusterB.join();
+        ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
+
     </pre>
 
     <h4>Send gossip from member-A that eventually will reach all members</h4>
