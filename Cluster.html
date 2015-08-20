@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>servicefabric by Cluster</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Service-Fabric Cluster</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/servicefabric" class="btn">View on GitHub</a>
+      <a href="https://github.com/servicefabric/servicefabric/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/servicefabric/servicefabric/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Service Fabric I/O.</h3>
+
+<p>The service fabric enables Service Developers Rapidly develop Resilient Scalable applications
+Service Fabric is a framework that enables quick and easy development of modern distributed, resilient, scalable reactive applications such as 
+on-line gaming, 
+eTrading and Social. 
+It greatly simplifies and streamlines distributed programming and provides a tool-set for managing micro-services architecture.
+'Quick and easy' doesn't mean that a resulting application will suffer from a maintainability or a performance issue. Service Fabric has been designed carefully with the experiences earned from the implementation of a lot of Gaming Distributed Services. As a result, Service Fabric IO has succeeded to find a way to achieve ease of development, performance, stability, and flexibility without a compromise.
+
+
+The service fabric Features:
+<!-- 
+<style type="text/css">
+li {font-size:20%}
+</style>
+-->
+
+-->
+
+    <li>Peer-to-peer architecture with no message brokers and servers</li>
+	<li>Service Discovery and Self Registration of micro-services</li>
+	<li>Simple, asynchronous programming model for writing distributed non-blocking services that can scale</li>
+	<li>Takes advantage of the JVM and scales over available cores </li>
+	<li>Cluster aware and distributed Event Driven SOA</li>
+	<li>Pluggable framework with default support for transport and serialization, cluster management, routing, balancing, service registry</li>
+	<li>Can be embedded in existing Java applications</li>
+	<li>Modular, Service is a stand alone deployable unit Service Fabric manages their topology on demand</li>
+	<li>Fault tolerance, node can appear or disappear at any given time.</li>
+	<li>Includes distributed Service Bus and Event bus</li>
+	<li>Zero Conf, Automatic discovery peer-to-peer service discovery using gossip.</li>
+	<li>Failure detection</li>
+	<li>Smart Routing and balancing strategies.</li>
+	<li>Low latency and high throughput</li>
+
+</p>
+
+
+<pre class=prettyprint><code class=java>
+
+// Every Service has an interface, The Service interface is a simple java interface decorated 
+// with annotation @Service annotation describes a logical name of the service. 
+@Service(namespace = "my.service.namespace") // the service name
+public interface IGameService {
+
+    @ServiceMethod(datamodel = StartGameRequest.class, action = "startGame")        
+    public void startGame(IContext context, Message requestMessage);
+
+}
+
+// The service implementation is a spring @Component implements a service interface. 
+@Component
+public class GameService implements IGameService {
+
+   @Override
+   public void startGame(IContext context, Message requestMessage) {
+     // Log
+     LOGGER.debug("Received start game request message: " + requestMessage);
+   }
+}
+
+</pre>
+
+<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+
+<h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h3>
+<p>
+The service fabric node provision the services dynamically to the cluster so when a service request arrives to any service fabric node it is routed to the provisioning node in a transparent manner.
+that means that having service fabric nodes that provision no services makes these nodes API-Gateway and routers of the cluster.
+the nodes that do provision micro-services will serve the business request as they arrive to them but also may act as API Gateways.  
+</p>
+<img src="/img/Picture1.png" ALT="Service Fabric Conceptual" width="800">
+
+
+<h3>
+<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>API-Gateway</h3>
+
+<p>
+Implement an API gateway that is the single entry point for all clients. The API gateway handles requests in one of two ways. Some requests are simply proxied/routed to the appropriate service. It handles other requests by fanning out to multiple services.
+Rather than provide a one-size-fits-all style API, the API gateway can expose a different API for each client. For example, the API gateway can runs client-specifc adapter code that provides each client with an API that's best suited to it's requirements.
+The API gateway might also implement security and Governance of API , e.g. verify that the client is authorized to perform the request, verify how many times this API may be requested over and hour.
+
+Using an API gateway has the following benefits:
+
+<li>Insulates the clients from how the application is partitioned into micro-services</li>
+<li>Insulates the clients from the problem of determining the locations of service instances</li>
+<li>Provides the optimal API for each client</li>
+<li>Reduces the number of requests/round trips. For example, the API gateway enables clients to retrieve data from multiple services with a single round-trip. Fewer requests also means less overhead and improves the user experience. An API gateway is essential for mobile applications.</li>
+<li>Simplifies the client by moving logic for calling multiple services from the client to API gateway</li>
+
+The Service Fabric API-Gateway is An event-driven/reactive approach and can handle high loads over commodity JVM, it uses NIO-based libraries such as Netty
+and support: 
+<li>Socket.IO</li> 
+<li>WebSockets</li> 
+<li>SockJS</li> 
+<li>HTTP</li> 
+<li>TCP</li> 
+
+Message Formats:
+<li>JSON</li> 
+<li> Google Protocol buffers</li>
+ 
+But as well can easily extended to support any transport or message format.
+
+</p>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/servicefabric/servicefabric">servicefabric</a> is maintained by <a href="https://github.com/servicefabric">servicefabric</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
