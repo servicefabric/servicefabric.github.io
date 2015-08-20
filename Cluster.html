@@ -30,16 +30,16 @@
         <h4>Cluster Member</h4>
            <dd>A logical member of a cluster. There could be multiple nodes on a physical machine. Defined by a member id.</dd>
 
-         <h4> cluster</h4>
+         <h4>Cluster</h4>
            <dd>A set of nodes joined together through the membership service.</dd>
 
          <h4>Seed Members</h4>
-          <dd>The seed members are configured contact points for new members joining the cluster.
+           <dd>The seed members are configured contact points for new members joining the cluster.
               When a new member is started it sends a message to all seed nodes and then sends a join command to the seed node that answers first.
               The seed members configuration value does not have any influence on the running cluster itself,
               it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
               a new member can send this command to any current member of the cluster, not only to the seed members.
-          </dd>
+           </dd>
 
         <h4>Failure Detector</h4>
             <dd>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster
@@ -48,7 +48,7 @@
 
 
 
-    setting up cluster nodes A and B while A is seed node and B use A as seed.
+    setting up cluster nodes A and B while A is seed node and B use A as seed:
     <pre class=prettyprint><code class=java>
         // create cluster member A on port 3000 and join as seed member
         ICluster clusterA = Cluster.newInstance(3000);
@@ -59,6 +59,32 @@
         clusterB.join();
 
 
+    </pre>
+
+    <h4>Send message from member-A to member-B</h4>
+    Subscribe to hello world message on member-A using filter:
+    <pre class=prettyprint><code class=java>
+        clusterA.transport().listen().filter(new Func1<TransportMessage, Boolean> () {
+        @Override
+        public Boolean call(TransportMessage t1) {
+            return t1.message().qualifier().equals("hello/world");
+        }
+        }).subscribe(new Action1<TransportMessage>() {
+        @Override
+        public void call(TransportMessage t1) {
+            System.out.println(t1.message());
+        }});
+    </pre>
+
+    Send hello world message from member A to member B:
+    <pre class=prettyprint><code class=java>
+        // get the transport endpoint of member A
+        TransportEndpoint te = TransportEndpoint.from("tcp://A@localhost:3000");
+
+        SettableFuture<Void> promise = SettableFuture.create();
+
+        // send hello world message to member A
+        clusterB.transport().to(te).send(new Message("hello/world"), promise );
     </pre>
 
 </section>
