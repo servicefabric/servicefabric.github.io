@@ -69,7 +69,7 @@
             clusterB.gossip().spread("hello/world",null);
         </code></pre>
 
-        <h4>Send message from member-A to member-B</h4>
+        <h4>Send message from member-B to member-A</h4>
         Subscribe to hello world message on member-A using filter:
 	    <pre class=prettyprint><code class=java>
             clusterA.transport().listen().filter(new Func1&lt;TransportMessage, Boolean> () {
@@ -85,7 +85,7 @@
             });
         </code></pre>
 
-        Send hello world message from member A to member B:
+        Send hello world message from member B to member-A:
 	    <pre class=prettyprint><code class=java>
             // get the transport endpoint of member A
             TransportEndpoint te = TransportEndpoint.from("tcp://A@localhost:3000");
