@@ -58,30 +58,28 @@ li {font-size:20%}
 
 </p>
 
-
+provisioning service
 <pre class=prettyprint><code class=java>
+    // Every Service has an interface, The Service interface is a simple java interface decorated
+    // with annotation @Service annotation describes a logical name of the service.
+    @Service(namespace = "my.service.namespace") // the service name
+    public interface IGameService {
 
-// Every Service has an interface, The Service interface is a simple java interface decorated 
-// with annotation @Service annotation describes a logical name of the service. 
-@Service(namespace = "my.service.namespace") // the service name
-public interface IGameService {
+        @ServiceMethod
+        ListenableFuture<AckResponse> startGame(StartGameRequest request);
+    }
+</pre>
+<pre class=prettyprint><code class=java>
+    // The service implementation is a spring @Component implements a service interface.
+    @Component
+    public class GameService implements IGameService {
 
-    @ServiceMethod(datamodel = StartGameRequest.class, action = "startGame")        
-    public void startGame(IContext context, Message requestMessage);
-
-}
-
-// The service implementation is a spring @Component implements a service interface. 
-@Component
-public class GameService implements IGameService {
-
-   @Override
-   public void startGame(IContext context, Message requestMessage) {
-     // Log
-     LOGGER.debug("Received start game request message: " + requestMessage);
-   }
-}
-
+        @ServiceMethod
+        ListenableFuture<AckResponse> startGame(StartGameRequest request){
+            // Log
+            LOGGER.debug("Received start game request message: " + requestMessage);
+       }
+    }
 </pre>
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
