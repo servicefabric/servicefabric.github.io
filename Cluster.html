@@ -15,7 +15,6 @@
 <body class="container-fluid">
 <section class="page-header row">
     <h1 class="project-name">Service-Fabric Cluster</h1>
-    <h2 class="project-tagline"></h2>
     <a href="https://github.com/servicefabric" class="btn">View on GitHub</a>
     <a href="https://github.com/servicefabric/servicefabric/zipball/master" class="btn">Download .zip</a>
     <a href="https://github.com/servicefabric/servicefabric/tarball/master" class="btn">Download .tar.gz</a>
@@ -58,10 +57,10 @@
         Subscribe to gossip:
 	    <pre class=prettyprint><code class=java>
             clusterA.gossip().listen().subscribe(new Action1&lt;Gossip&gt;() {
-            @Override
-            public void call(Gossip g) {
-            System.out.println(g);
-            }
+                @Override
+                public void call(Gossip g) {
+                    System.out.println(g);
+                }
             });
         </code></pre>
 
@@ -74,15 +73,15 @@
         Subscribe to hello world message on member-A using filter:
 	    <pre class=prettyprint><code class=java>
             clusterA.transport().listen().filter(new Func1&lt;TransportMessage, Boolean> () {
-            @Override
-            public Boolean call(TransportMessage t1) {
-            return t1.message().qualifier().equals("hello/world");
-            }
+                @Override
+                public Boolean call(TransportMessage t1) {
+                    return t1.message().qualifier().equals("hello/world");
+                }
             }).subscribe(new Action1&lt;TransportMessage&gt;() {
-            @Override
-            public void call(TransportMessage t1) {
-            System.out.println(t1.message());
-            }
+                @Override
+                public void call(TransportMessage t1) {
+                    System.out.println(t1.message());
+                }
             });
         </code></pre>
 
