@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -8,11 +9,11 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-
 </head>
-<body>
-<section class="page-header">
+<body class="container-fluid">
+<section class="page-header row">
     <h1 class="project-name">Service-Fabric Cluster</h1>
     <h2 class="project-tagline"></h2>
     <a href="https://github.com/servicefabric" class="btn">View on GitHub</a>
@@ -20,93 +21,88 @@
     <a href="https://github.com/servicefabric/servicefabric/tarball/master" class="btn">Download .tar.gz</a>
 </section>
 
-<section class="main-content">
-    <p>
+<div class="row">
+    <section class="main-content col-xs-7 col-sm-8 col-md-9">
         <h2>Intro</h2>
-          <dd>Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
-            It does this using gossip protocols and an automatic failure detector.</dd>
+        <p>Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
+            It does this using gossip protocols and an automatic failure detector.</p>
 
         <h2>Terms</h2>
         <h4>Cluster Member</h4>
-           <dd>A logical member of a cluster. There could be multiple nodes on a physical machine. Defined by a member id.</dd>
+        <p>A logical member of a cluster. There could be multiple nodes on a physical machine. Defined by a member id.</p>
 
-         <h4>Cluster</h4>
-           <dd>A set of nodes joined together through the membership service.</dd>
+        <h4>Cluster</h4>
+        <p>A set of nodes joined together through the membership service.</p>
 
-         <h4>Seed Members</h4>
-           <dd>The seed members are configured contact points for new members joining the cluster.
-              When a new member is started it sends a message to all seed nodes and then sends a join command to the seed node that answers first.
-              The seed members configuration value does not have any influence on the running cluster itself,
-              it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
-              a new member can send this command to any current member of the cluster, not only to the seed members.
-           </dd>
+        <h4>Seed Members</h4>
+        <p>The seed members are configured contact points for new members joining the cluster.
+            When a new member is started it sends a message to all seed nodes and then sends a join command to the seed node that answers first.
+            The seed members configuration value does not have any influence on the running cluster itself,
+            it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
+            a new member can send this command to any current member of the cluster, not only to the seed members.</p>
 
         <h4>Failure Detector</h4>
-            <dd>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster
-            </dd>
-    </p>
+        <p>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster</p>
 
+        setting up cluster nodes A and B while A is seed node and B use A as seed:
+	    <pre class=prettyprint><code class=java>
+            // create cluster member A on port 3000 and join as seed member
+            ICluster clusterA = Cluster.newInstance(3000).join();
 
+            // create cluster member B on port 3001 and join as seed member A
+            ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
+        </code></pre>
 
-    setting up cluster nodes A and B while A is seed node and B use A as seed:
-    <pre class=prettyprint><code class=java>
-        // create cluster member A on port 3000 and join as seed member
-        ICluster clusterA = Cluster.newInstance(3000).join();
+        <h4>Send gossip from member-A that eventually will reach all members</h4>
 
-        // create cluster member B on port 3001 and join as seed member A
-        ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
-
-    </pre>
-
-    <h4>Send gossip from member-A that eventually will reach all members</h4>
-
-    Subscribe to gossip:
-    <pre class=prettyprint><code class=java>
-        clusterA.gossip().listen().subscribe(new Action1<Gossip>() {
+        Subscribe to gossip:
+	    <pre class=prettyprint><code class=java>
+            clusterA.gossip().listen().subscribe(new Action1&lt;Gossip&gt;() {
             @Override
             public void call(Gossip g) {
-                System.out.println(g);
+            System.out.println(g);
             }
-        });
-     </pre>
+            });
+        </code></pre>
 
-    spread gossip from member-B:
-    <pre class=prettyprint><code class=java>
-        clusterB.gossip().spread("hello/world",null);
-    </pre>
+        spread gossip from member-B:
+	    <pre class=prettyprint><code class=java>
+            clusterB.gossip().spread("hello/world",null);
+        </code></pre>
 
-
-
-
-    <h4>Send message from member-A to member-B</h4>
-    Subscribe to hello world message on member-A using filter:
-    <pre class=prettyprint><code class=java>
-        clusterA.transport().listen().filter(new Func1<TransportMessage, Boolean> () {
+        <h4>Send message from member-A to member-B</h4>
+        Subscribe to hello world message on member-A using filter:
+	    <pre class=prettyprint><code class=java>
+            clusterA.transport().listen().filter(new Func1&lt;TransportMessage, Boolean> () {
             @Override
             public Boolean call(TransportMessage t1) {
-                return t1.message().qualifier().equals("hello/world");
+            return t1.message().qualifier().equals("hello/world");
             }
-        }).subscribe(new Action1<TransportMessage>() {
+            }).subscribe(new Action1&lt;TransportMessage&gt;() {
             @Override
             public void call(TransportMessage t1) {
-                System.out.println(t1.message());
+            System.out.println(t1.message());
             }
-        });
-    </pre>
+            });
+        </code></pre>
 
-    Send hello world message from member A to member B:
-    <pre class=prettyprint><code class=java>
-        // get the transport endpoint of member A
-        TransportEndpoint te = TransportEndpoint.from("tcp://A@localhost:3000");
+        Send hello world message from member A to member B:
+	    <pre class=prettyprint><code class=java>
+            // get the transport endpoint of member A
+            TransportEndpoint te = TransportEndpoint.from("tcp://A@localhost:3000");
 
-        SettableFuture<Void> promise = SettableFuture.create();
+            SettableFuture&lt;Void&gt; promise = SettableFuture.create();
 
-        // send hello world message to member A
-        clusterB.transport().to(te).send(new Message("hello/world"), promise );
-    </pre>
+            // send hello world message to member A
+            clusterB.transport().to(te).send(new Message("hello/world"), promise );
+        </code></pre>
+    </section>
 
-</section>
-
+    <div class="col-xs-5 col-sm-4 col-md-3">
+        <a class="twitter-timeline" href="https://twitter.com/ServiceFabricIO" data-widget-id="634655010568060928">Tweets by @ServiceFabricIO</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+</div>
 
 </body>
 </html>
