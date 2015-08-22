@@ -34,17 +34,17 @@
 
     <hr size=1>The service fabric I/O Features: </hr>
 
-    <li>Peer-to-peer architecture with no single point of single-point-of-failure or single-point-of-bottleneck</li>
-    <li>Can be embedded in existing Java applications</li>
     <li>Service Provisioning of micro-services</li>
+    <li>No single-point-of-failure or single-point-of-bottleneck</li>
     <li>Cluster aware and distributed</li>
-    <li>Modular, and manages topology and flexible deployment models on demand</li>
+    <li>Modular, flexible deployment models and Topologies</li>
     <li>Zero Conf, Automatic discovery peer-to-peer service discovery using gossip.</li>
     <li>Simple non-blocking, asynchronous programming model</li>
     <li>Resilient due to Failure detection, Fault tolerance and elastic.</li>
     <li>Smart Routing and balancing strategies.</li>
     <li>Low latency and high throughput</li>
     <li>Takes advantage of the JVM and scales over available cores </li>
+    <li>Embeddable to existing Java applications</li>
 
     </p>
 
@@ -52,7 +52,7 @@
         <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Service-Fabric I/O Components</h3>
     </hr>
     <p>
-        The service fabric is a set or reusable components modules that provides the foundation for building distributed applications and that includes:
+        The Service Fabric I/O is composed by reusable components that are the foundation for building distributed applications:
     <li><a href="Cluster.html" title="Service Fabric Cluster">Service Fabric Cluster:</a>
         Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
         It does this using gossip protocols and an automatic failure detector.
@@ -80,7 +80,7 @@
     public interface IGameService {
 
         @ServiceMethod
-        ListenableFuture<AckResponse> startGame(StartGameRequest request);
+        ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request);
     }
 </code></pre>
 
@@ -90,9 +90,9 @@
     public class GameService implements IGameService {
 
         @ServiceMethod
-        ListenableFuture<AckResponse> startGame(StartGameRequest request){
+        ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request){
             // Log
-            LOGGER.debug("Received start game request message: " + requestMessage);
+            LOGGER.info("Received start game request: " + requestMessage);
         }
     }
 </code> </pre>
