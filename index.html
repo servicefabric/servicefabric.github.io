@@ -25,8 +25,7 @@
         <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Service Fabric I/O.</h3>
 
     <p>Service Fabric I/O is a framework through which a set of distributed <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a>  are connected in such as way that they resemble a fabric when viewed collectively.
-        The service fabric enables <a href="https://en.wikipedia.org/wiki/Microservices">microservice</a> Developers Rapidly develop Distributed, Resilient, Scalable, Reactive, Modern applications such as
-        on-line gaming and Social. It greatly simplifies and streamlines asynchronous programming and provides a tool-set for managing <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a> architecture.
+        The service fabric enables <a href="https://en.wikipedia.org/wiki/Microservices">microservice</a> Developers Rapidly develop Distributed, Resilient, Scalable, Reactive, High-End Modern applications that scales. It greatly simplifies and streamlines asynchronous programming and provides a tool-set for managing <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a> architecture.
         Service Fabric has been designed carefully with the experiences earned over the years from the implementation of many Online Services and platforms.
         As a result, Service Fabric I/O has succeeded to find a way to achieve ease of development, performance, stability, and flexibility
         without a compromise.
@@ -73,10 +72,10 @@
     <p>
         <hr size=1>provisioning micro-service</hr>
         <pre class=prettyprint><code class=java>
-    // Every Service has an interface, The Service interface is a simple java interface decorated
-    // with annotation @Service annotation describes a logical name of the service.
+    // Every Microservice has an interface, The Service interface is a simple java interface decorated
+    // with annotation @Service annotation which describes a logical name of the service.
     @Service(namespace = "my.service.namespace") // the service name
-        public interface IGameService {
+        public interface GameService {
 
         @ServiceMethod
         ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request);
@@ -88,7 +87,7 @@
         <pre class=prettyprint><code class=java>
     // The service implementation is a spring @Component implements a service interface.
     @Component
-    public class GameService implements IGameService {
+    public class GameComponent implements GameService {
 
         @ServiceMethod
         ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request){
