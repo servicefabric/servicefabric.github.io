@@ -94,6 +94,7 @@
         ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request){
             // Log
             LOGGER.info("Received start game request: " + requestMessage);
+            return Futures.immediateFuture(new AckResponse());
         }
     }
             </code>
