@@ -24,27 +24,27 @@
     <h3>
         <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Service Fabric I/O.</h3>
 
-    <p>The service fabric enables Service Developers Rapidly develop Resilient Scalable applications
-        Service Fabric is a framework that enables quick and easy development of modern distributed, resilient, scalable reactive applications such as
-        on-line gaming,and Social.
-        It greatly simplifies and streamlines distributed asynchronous programming and provides a tool-set for managing micro-services architecture.
-        Service Fabric has been designed carefully with the experiences earned from the implementation of many Online Services.
+    <p>Service Fabric I/O is a framework through which a set of distributed <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a>  are connected in such as way that they resemble a fabric when viewed collectively.
+        The service fabric enables <a href="https://en.wikipedia.org/wiki/Microservices">microservice</a> Developers Rapidly develop Distributed, Resilient, Scalable, Reactive, Modern applications such as
+        on-line gaming and Social. It greatly simplifies and streamlines asynchronous programming and provides a tool-set for managing <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a> architecture.
+        Service Fabric has been designed carefully with the experiences earned over the years from the implementation of many Online Services and platforms.
         As a result, Service Fabric I/O has succeeded to find a way to achieve ease of development, performance, stability, and flexibility
         without a compromise.
 
-    <hr size=1>The service fabric I/O Features: </hr>
+        <hr size=1>The service fabric I/O Features: </hr>
 
-    <li>Service Provisioning of micro-services</li>
-    <li>No single-point-of-failure or single-point-of-bottleneck</li>
-    <li>Cluster aware and distributed</li>
-    <li>Modular, flexible deployment models and Topologies</li>
-    <li>Zero Conf, Automatic discovery peer-to-peer service discovery using gossip.</li>
-    <li>Simple non-blocking, asynchronous programming model</li>
-    <li>Resilient due to Failure detection, Fault tolerance and elastic.</li>
-    <li>Smart Routing and balancing strategies.</li>
-    <li>Low latency and high throughput</li>
-    <li>Takes advantage of the JVM and scales over available cores </li>
-    <li>Embeddable to existing Java applications</li>
+        <li>Service Provisioning and interconnect <a href="https://en.wikipedia.org/wiki/Microservices">microservices</a> and users as a unified system</li>
+        <li>API Gateway - Transparently Provision cluster(s) via bi-directional async APIs for consumers such as Web, Mobile, Servers ect.</li>
+        <li>No single-point-of-failure or single-point-of-bottleneck</li>
+        <li>Cluster aware and distributed</li>
+        <li>Modular, flexible deployment models and Topologies</li>
+        <li>Zero Conf, Automatic discovery peer-to-peer service discovery using gossip.</li>
+        <li>Simple non-blocking, asynchronous programming model</li>
+        <li>Resilient due to Failure detection, Fault tolerance and elasticity.</li>
+        <li>Routing and balancing strategies for both stateless and stateful services</li>
+        <li>Low latency and high throughput</li>
+        <li>Takes advantage of the JVM and scales over available cores </li>
+        <li>Embeddable to existing Java applications</li>
 
     </p>
 
@@ -52,39 +52,40 @@
         <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Service-Fabric I/O Components</h3>
     </hr>
     <p>
-        The Service Fabric I/O is composed by reusable components that are the foundation for building distributed applications:
-    <li><a href="Cluster.html" title="Service Fabric Cluster">Service Fabric Cluster:</a>
-        Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
-        It does this using gossip protocols and an automatic failure detector.
-    </li>
-    <li><a href="Cluster.html" title="Service Fabric Cluster Transport">Service Fabric Cluster Transport:</a>
-        Service Fabric Cluster provides a method to communicate between cluster members and exchange bi-directional communications.
-        the cluster communication is based on netty that provides Better throughput and lower latency communication.
-    </li>
-    <li><a href="Cluster.html" title="Service Fabric Failure Detector">Service Fabric Failure Detector:</a>
-        Failure Detector and Cluster Membership are valuable components for system management, replication, load balancing, group communication
-        services, various consensus algorithms and other distributed services which rely on reasonably accurate detection of failed members. At scale,
-        failure becomes common rather than exceptional; hardware fails, networks become congested, network links fail. Libraries capable of extremely
-        high throughput and extremely low latency are meaningless if the systems they run on or communicate with fail. Failure detectors are a central
-        component in a fault-tolerant distributed systems running over unreliable asynchronous networks.
-    </li>
+            The Service Fabric I/O is composed by reusable components that are the foundation for building distributed applications:
+        <li><a href="Cluster.html" title="Service Fabric Cluster">Service Fabric Cluster:</a>
+            Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
+            It does this using gossip protocols and an automatic failure detector.
+        </li>
+        <li><a href="Cluster.html" title="Service Fabric Cluster Transport">Service Fabric Cluster Transport:</a>
+            Service Fabric Cluster provides a method to communicate between cluster members and exchange bi-directional communications.
+            the cluster communication is based on netty that provides Better throughput and lower latency communication.
+        </li>
+        <li><a href="Cluster.html" title="Service Fabric Failure Detector">Service Fabric Failure Detector:</a>
+            Failure Detector and Cluster Membership are valuable components for system management, replication, load balancing, group communication
+            services, various consensus algorithms and other distributed services which rely on reasonably accurate detection of failed members. At scale,
+            failure becomes common rather than exceptional; hardware fails, networks become congested, network links fail. Libraries capable of extremely
+            high throughput and extremely low latency are meaningless if the systems they run on or communicate with fail. Failure detectors are a central
+            component in a fault-tolerant distributed systems running over unreliable asynchronous networks.
+        </li>
     </p>
 
-
-    <hr size=1>provisioning service</hr>
-
-<pre class=prettyprint><code class=java>
+    <p>
+        <hr size=1>provisioning micro-service</hr>
+        <pre class=prettyprint><code class=java>
     // Every Service has an interface, The Service interface is a simple java interface decorated
     // with annotation @Service annotation describes a logical name of the service.
     @Service(namespace = "my.service.namespace") // the service name
-    public interface IGameService {
+        public interface IGameService {
 
         @ServiceMethod
         ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request);
     }
-</code></pre>
-
-<pre class=prettyprint><code class=java>
+            </code>
+        </pre>
+    </p>
+    <p>
+        <pre class=prettyprint><code class=java>
     // The service implementation is a spring @Component implements a service interface.
     @Component
     public class GameService implements IGameService {
@@ -95,8 +96,9 @@
             LOGGER.info("Received start game request: " + requestMessage);
         }
     }
-</code> </pre>
-
+            </code>
+        </pre>
+    </p>
 
     <footer class="site-footer">
         <span class="site-footer-owner">
