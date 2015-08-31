@@ -22,7 +22,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 </head>
-<body>
+<body onload="prettyPrint()">
+
 <section class="page-header" style="margin:0">
     <h1 class="project-name" style="padding-top: 25px;">Service-Fabric I/O Cluster</h1>
     <a href="https://github.com/servicefabric" class="btn">View on GitHub</a>
@@ -32,6 +33,8 @@
 
 <div class="main-content">
     <section class="col-xs-7 col-sm-8 col-md-10">
+        <text alt="Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
+            It does this using gossip protocols and an automatic failure detector."></text>
         <h2>Intro</h2>
         <p>Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
             It does this using gossip protocols and an automatic failure detector.
@@ -47,66 +50,102 @@
 
         <h4>Seed Members</h4>
         <p>The seed members are configured contact points for new members joining the cluster.
-            When a new member is started it sends a message to all seed nodes and then sends a join command to the seed node that answers first.
+            When a new member is started it sends to all seed nodes (one by one) sync command in order to synchronize membership tables until one of them answers,
+            if all failed to answer it is decided that this member is the first member in the cluster.
+            Seed members will be used further in order to restore cluster from network partitioning They will continued to be and sync with cluster nodes even if they are marked as failed.
+            So it is possible to configure any node as seed member in order to join the cluster, but it is recommended to configure nodes with most probability to work all the time
+            so in such case they can restore from network partitioning via this seed members (e.g. possible choice for seed members are API Gateways)
+
             The seed members configuration value does not have any influence on the running cluster itself,
             it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
-            a new member can send this command to any current member of the cluster, not only to the seed members.</p>
+            a new member can send this command to any current member of the cluster, not only to the seed members.
+
+            The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running, but when initially starting a cluster,
+            the cluster will be initialized only when one or more seed-nodes will become initialized else no other node can join the cluster and nodes can only join themselves.
+            It is quickest to start all configured seed nodes at the same time (order doesn't matter), otherwise it can take up to time until the nodes can join.
+            Once more than two seed nodes have been started it is no problem to shut down the first seed node.
+            If the first seed node is restarted, it will first try to join the other seed nodes in the existing cluster.
+            You can join to any node in the cluster. It does not have to be configured as a seed node.
+            Note that you can only join to an existing cluster member, which means that for bootstrapping some node must join itself,and then the following nodes could join them to make up a cluster.
+        </p>
 
         <h4>Failure Detector</h4>
         <p>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster</p>
 
-        setting up cluster nodes A and B while A is seed node and B use A as seed:
-	    <pre class=prettyprint><code class=java>
-            // create cluster member A on port 3000 and join as seed member
-            ICluster clusterA = Cluster.newInstance(3000).join();
+        <h4>Preparing Your Project for Clustering</h4>
+        <p>The Service Fabric I/O cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
 
-            // create cluster member B on port 3001 and join as seed member A
-            ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
-        </code></pre>
+
+        <div>
+            <div>
+              <pre style="font-size: 16px">
+    <span>&lt;</span>dependency&gt;</span>
+      <span>&lt;groupId&gt;io.servicefabric&lt;/groupId&gt;</span>
+      <span>&lt;</span>artifactId&gt;servicefabric-cluster&lt;artifactId&gt;</span>
+      <span>&lt;</span>version&gt;${project.version}&lt;version&gt;</span>
+    <span>&lt;/</span>dependency&gt;</span>
+              </pre>
+            </div>
+        </div>
+
+        <h3>Simple Cluster examples</h3>
+        setting up cluster nodes A and B while A is seed node and B use A as seed:
+	    <pre class="prettyprint" style="font-size: 16px">
+    // create cluster member A on port 3000 and join as seed member
+    ICluster clusterA = Cluster.newInstance(3000).join();
+
+    // create cluster member B on port 3001 and join as seed member A
+    ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
+        </pre>
 
         <h4>Send gossip from member-A that eventually will reach all members</h4>
 
         Subscribe to gossip:
-	    <pre class=prettyprint><code class=java>
-            clusterA.gossip().listen().subscribe(new Action1&lt;Gossip&gt;() {
-                @Override
-                public void call(Gossip g) {
-                    System.out.println(g);
-                }
-            });
-        </code></pre>
+	    <pre class="prettyprint" style="font-size: 16px">
+    // subscribe to all gossip messages:
+    clusterA.gossip().listen().subscribe(new Action1<Message>() {
+        @Override
+        public void call(Message gossip) {
+            // print out the gossip message
+            System.out.println("Gossip message:"  + gossip);
+        }
+    });
+        </pre>
 
         spread gossip from member-B:
-	    <pre class=prettyprint><code class=java>
-            clusterB.gossip().spread("hello/world",null);
-        </code></pre>
+	    <pre class="prettyprint" style="font-size: 16px">
+    // spread gossip
+    clusterB.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
+        </pre>
 
         <h4>Send message from member-B to member-A</h4>
         Subscribe to hello world message on member-A using filter:
-	    <pre class=prettyprint><code class=java>
-            clusterA.transport().listen().filter(new Func1&lt;TransportMessage, Boolean> () {
-                @Override
-                public Boolean call(TransportMessage t1) {
-                    return t1.message().qualifier().equals("hello/world");
-                }
-            }).subscribe(new Action1&lt;TransportMessage&gt;() {
-                @Override
-                public void call(TransportMessage t1) {
-                    System.out.println(t1.message());
-                }
-            });
-        </code></pre>
+	    <pre class="prettyprint" style="font-size: 16px">
+    // Filter and subscribe to greetings messages:
+    clusterA.listen().filter(new Func1<TransportMessage, Boolean>() {
+        @Override
+        public Boolean call(TransportMessage t1) {
+            return t1.message().data() != null && Greetings.class.equals(t1.message().data().getClass());
+        }
+    }).subscribe(new Action1<TransportMessage>() {
+        @Override
+        public void call(TransportMessage t1) {
+            System.out.println(t1.message().data());
+        }
+    });
+        </pre>
 
         Send hello world message from member B to member-A:
-	    <pre class=prettyprint><code class=java>
-            // get the transport endpoint of member A
-            TransportEndpoint te = TransportEndpoint.from("tcp://A@localhost:3000");
-
-            SettableFuture&lt;Void&gt; promise = SettableFuture.create();
-
-            // send hello world message to member A
-            clusterB.transport().to(te).send(new Message("hello/world"), promise );
-        </code></pre>
+	    <pre class="prettyprint" style="font-size: 16px">
+    // Send greeting message to other cluster members
+    List<ClusterMember> members = clusterB.membership().members();
+    ClusterMember localMember = clusterB.membership().localMember();
+    for (ClusterMember member : members) {
+        if (!clusterB.membership().isLocalMember(member)) {
+            clusterB.to(member).send(new Message(new Greetings("Greetings from ClusterMember B")));
+        }
+    }
+        </pre>
     </section>
 
     <section class="col-xs-5 col-sm-4 col-md-2">
