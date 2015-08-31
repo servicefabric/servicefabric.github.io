@@ -89,7 +89,7 @@
 
         <h3>Simple Cluster examples</h3>
         setting up cluster nodes A and B while A is seed node and B use A as seed:
-	    <pre class="prettyprint" style="font-size: 16px">
+	    <pre class="prettyprint" style="font-size: 14px">
     // create cluster member A on port 3000 and join as seed member
     ICluster clusterA = Cluster.newInstance(3000).join();
 
@@ -100,7 +100,7 @@
         <h4>Send gossip from member-A that eventually will reach all members</h4>
 
         Subscribe to gossip:
-	    <pre class="prettyprint" style="font-size: 16px">
+	    <pre class="prettyprint" style="font-size: 14px">
     // subscribe to all gossip messages:
     clusterA.gossip().listen().subscribe(new Action1<Message>() {
         @Override
@@ -112,14 +112,14 @@
         </pre>
 
         spread gossip from member-B:
-	    <pre class="prettyprint" style="font-size: 16px">
+	    <pre class="prettyprint" style="font-size: 14px">
     // spread gossip
     clusterB.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
         </pre>
 
         <h4>Send message from member-B to member-A</h4>
         Subscribe to hello world message on member-A using filter:
-	    <pre class="prettyprint" style="font-size: 16px">
+	    <pre class="prettyprint" style="font-size: 14px">
     // Filter and subscribe to greetings messages:
     clusterA.listen().filter(new Func1<TransportMessage, Boolean>() {
         @Override
@@ -135,7 +135,7 @@
         </pre>
 
         <h4>Send hello world message from member B to member-A:</h4>
-	    <pre class="prettyprint" style="font-size: 16px">
+	    <pre class="prettyprint" style="font-size: 14px">
     // Send greeting message to other cluster members
     List<ClusterMember> members = clusterB.membership().members();
     ClusterMember localMember = clusterB.membership().localMember();
