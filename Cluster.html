@@ -49,17 +49,16 @@
         <p>A set of nodes joined together through the membership service.</p>
 
         <h4>Seed Members</h4>
-        <p>The seed members are configured contact points for new members joining the cluster.
+        <p>
+            The seed members are configured contact points for new members joining the cluster.
             When a new member is started it sends to all seed nodes (one by one) sync command in order to synchronize membership tables until one of them answers,
             if all failed to answer it is decided that this member is the first member in the cluster.
             Seed members will be used further in order to restore cluster from network partitioning They will continued to be and sync with cluster nodes even if they are marked as failed.
             So it is possible to configure any node as seed member in order to join the cluster, but it is recommended to configure nodes with most probability to work all the time
             so in such case they can restore from network partitioning via this seed members (e.g. possible choice for seed members are API Gateways)
-
             The seed members configuration value does not have any influence on the running cluster itself,
             it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
             a new member can send this command to any current member of the cluster, not only to the seed members.
-
             The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running, but when initially starting a cluster,
             the cluster will be initialized only when one or more seed-nodes will become initialized else no other node can join the cluster and nodes can only join themselves.
             It is quickest to start all configured seed nodes at the same time (order doesn't matter), otherwise it can take up to time until the nodes can join.
@@ -135,7 +134,7 @@
     });
         </pre>
 
-        Send hello world message from member B to member-A:
+        <h4>Send hello world message from member B to member-A:</h4>
 	    <pre class="prettyprint" style="font-size: 16px">
     // Send greeting message to other cluster members
     List<ClusterMember> members = clusterB.membership().members();
