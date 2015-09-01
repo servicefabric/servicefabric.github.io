@@ -69,7 +69,18 @@
         </p>
 
         <h4>Failure Detector</h4>
-        <p>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster</p>
+        <p>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster
+            In a cluster each node is monitored by a few (default maximum 5) other nodes,
+            and when any of these detects the node as unreachable that information will spread to the rest of the cluster through the gossip.In other words,
+            only one node needs to mark a node unreachable to have the rest of the cluster mark that node unreachable.
+            The failure detector will also detect if the node becomes reachable again.
+            When all nodes that monitored the unreachable node detects it as reachable again the cluster, after gossip dissemination, will consider it as reachable.
+            If a messages cannot be delivered to a node it will be quarantined and then it cannot come back from unreachable.
+            The nodes in the cluster monitor each other by sending heartbeats to detect if a node is unreachable from the rest of the cluster.
+            once a node becomes reachable again it can try and rejoin the cluster.
+            The heartbeat arrival times is interpreted by an implementation of The Phi Accrual Failure Detector.
+            The suspicion level of failure is given by a value called phi. The basic idea of the phi failure detector is to express the value of phi on a scale that is dynamically adjusted to reflect current network conditions
+        </p>
 
         <h4>Preparing Your Project for Clustering</h4>
         <p>The Service Fabric I/O cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
