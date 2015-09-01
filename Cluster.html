@@ -54,9 +54,9 @@
             When a new member is started it sends to all seed nodes (one by one) sync command in order to synchronize membership tables until one of them answers,
             if all failed to answer it is decided that this member is the first member in the cluster.
             Seed members will be used further in order to restore cluster from network partitioning They will continued to be and sync with cluster nodes even if they are marked as failed.
-            So it is possible to configure any node as seed member in order to join the cluster, but it is recommended to configure nodes with most probability to work all the time
+            So it is possible to configure any node as seed member in order to join the cluster, but it is recommended to configure nodes with most probability for maximum up-time
             so in such case they can restore from network partitioning via this seed members (e.g. possible choice for seed members are API Gateways)
-            The seed members configuration value does not have any influence on the running cluster itself,
+            The seed members configuration does not have any influence on the running cluster itself,
             it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
             a new member can send this command to any current member of the cluster, not only to the seed members.
             The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running, but when initially starting a cluster,
@@ -134,7 +134,7 @@
     });
         </pre>
 
-        <h4>Send Greetings message to member-A:</h4>
+        Send Greetings message to member-A:
 	    <pre class="prettyprint" style="font-size: 14px">
     // Send greeting message to other cluster members
     List<ClusterMember> members = clusterB.membership().members();
