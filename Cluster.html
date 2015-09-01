@@ -118,7 +118,7 @@
         </pre>
 
         <h4>Send message from member-B to member-A</h4>
-        Subscribe to hello world message on member-A using filter:
+        Subscribe to Greetings message on member-A using filter:
 	    <pre class="prettyprint" style="font-size: 14px">
     // Filter and subscribe to greetings messages:
     clusterA.listen().filter(new Func1<TransportMessage, Boolean>() {
@@ -134,7 +134,7 @@
     });
         </pre>
 
-        <h4>Send hello world message from member B to member-A:</h4>
+        <h4>Send Greetings message to member-A:</h4>
 	    <pre class="prettyprint" style="font-size: 14px">
     // Send greeting message to other cluster members
     List<ClusterMember> members = clusterB.membership().members();
