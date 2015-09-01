@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -11,139 +12,157 @@
         ga('send', 'pageview');
 
     </script>
-
     <meta charset="UTF-8">
-    <title>servicefabric by servicefabric</title>
+    <title>servicefabric by Cluster</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-
 </head>
-<body>
+<body onload="prettyPrint()">
 
-<section class="page-header">
-    <h1 class="project-name">Service-Fabric I/O</h1>
-    <h2 class="project-tagline"></h2>
+<section class="page-header" style="margin:0">
+    <h1 class="project-name" style="padding-top: 25px;">Service-Fabric I/O Cluster</h1>
     <a href="https://github.com/servicefabric" class="btn">View on GitHub</a>
     <a href="https://github.com/servicefabric/servicefabric/zipball/master" class="btn">Download .zip</a>
     <a href="https://github.com/servicefabric/servicefabric/tarball/master" class="btn">Download .tar.gz</a>
 </section>
 
-<section class="main-content">
-    <h3>
-        <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
-            <span class="octicon octicon-link"></span></a>
-        Welcome to Service Fabric I/O.
-    </h3>
-
-    <text alt="Service Fabric I/O is a framework through which a set of distributed <a target="_blank href="https://en.wikipedia.org/wiki/Microservices">microservices</a>  are connected in such as way that they resemble a fabric when viewed collectively.
-    The service fabric enables <a target="_blank" href="https://en.wikipedia.org/wiki/Microservices">microservice</a> Developers Rapidly develop Distributed, Responsive, Resilient, Elastic, Reactive applications that scales.
-    it is carefully designed to promote asynchronous programming and none-blocking
-    and provides set of components which are common building blocks for <a target="_blank" href="https://en.wikipedia.org/wiki/Microservices">microservices</a> architecture.
-    Service Fabric has been designed carefully with the experiences earned over the years from the implementation of many Online Services and platforms.
-    As a result, Service Fabric I/O has succeeded to find a way to achieve ease of development, performance, stability, and flexibility
-    without a compromise."></text>
-
-    <p>Service Fabric I/O is a framework through which a set of distributed <a target="_blank" href="https://en.wikipedia.org/wiki/Microservices">microservices</a>  are connected in such as way that they resemble a fabric when viewed collectively.
-        The service fabric enables <a target="_blank" href="https://en.wikipedia.org/wiki/Microservices">microservice</a> Developers Rapidly develop Distributed, Responsive, Resilient, Elastic, Reactive applications that scales.
-        it is carefully designed to promote asynchronous programming and none-blocking
-        and provides set of components which are common building blocks for <a target="_blank" href="https://en.wikipedia.org/wiki/Microservices">microservices</a> architecture.
-        Service Fabric has been designed carefully with the experiences earned over the years from the implementation of many Online Services and platforms.
-        As a result, Service Fabric I/O has succeeded to find a way to achieve ease of development, performance, stability, and flexibility
-        without a compromise.
-
-
-    <hr size=1/> <!-- -------------------------------------------------------------------------------------------------------   -->
-    <h3>
-        <a id="Features-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
-            <span class="octicon octicon-link"></span></a>
-        The service fabric I/O Features:
-    </h3>
-
-        <li>Service Provisioning and interconnect <a target="_blank" href="https://en.wikipedia.org/wiki/Microservices">microservices</a> and users as a unified system</li>
-        <li>API Gateway - Transparently Provision cluster(s) via bi-directional async APIs for consumers such as Web, Mobile, Servers ect.</li>
-        <li>No single-point-of-failure or single-point-of-bottleneck</li>
-        <li>Cluster aware and distributed</li>
-        <li>Modular, flexible deployment models and Topologies</li>
-        <li>Zero Conf, Automatic discovery peer-to-peer service discovery using gossip.</li>
-        <li>Simple non-blocking, asynchronous programming model</li>
-        <li>Resilient due to Failure detection, Fault tolerance and elasticity.</li>
-        <li>Routing and balancing strategies for both stateless and stateful services</li>
-        <li>Low latency and high throughput</li>
-        <li>Takes advantage of the JVM and scales over available cores </li>
-        <li>Embeddable to existing Java applications</li>
-
-    </p>
-
-    <hr size=1/> <!-- -------------------------------------------------------------------------------------------------------   -->
-    <h3>
-        <a class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
-            <span class="octicon octicon-link"></span></a>
-        Service-Fabric I/O Components:
-    </h3>
-
-    <p>
-            The Service Fabric I/O is composed by reusable components that are the foundation for building distributed applications:
-        <li><a href="Cluster.html" title="Service Fabric Cluster">Service Fabric Cluster:</a>
-            Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
+<div class="main-content">
+    <section class="col-xs-7 col-sm-8 col-md-10">
+        <text alt="Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
+            It does this using gossip protocols and an automatic failure detector."></text>
+        <h2>Intro</h2>
+        <p>Service Fabric Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
             It does this using gossip protocols and an automatic failure detector.
-        </li>
-        <li><a href="Cluster.html" title="Service Fabric Cluster Transport">Service Fabric Cluster Transport:</a>
-            Service Fabric Cluster provides a method to communicate between cluster members and exchange bi-directional communications.
-            the cluster communication is based on netty that provides Better throughput and lower latency communication.
-        </li>
-        <li><a href="Cluster.html" title="Service Fabric Failure Detector">Service Fabric Failure Detector:</a>
-            Failure Detector and Cluster Membership are valuable components for system management, replication, load balancing, group communication
-            services, various consensus algorithms and other distributed services which rely on reasonably accurate detection of failed members. At scale,
-            failure becomes common rather than exceptional; hardware fails, networks become congested, network links fail. Libraries capable of extremely
-            high throughput and extremely low latency are meaningless if the systems they run on or communicate with fail. Failure detectors are a central
-            component in a fault-tolerant distributed systems running over unreliable asynchronous networks.
-        </li>
-    </p>
-    <!--
+        </p>
+
+
+        <h2>Terms</h2>
+        <h4>Cluster Member</h4>
+        <p>A logical member of a cluster. There could be multiple nodes on a physical machine. Defined by a member id.</p>
+
+        <h4>Cluster</h4>
+        <p>A set of nodes joined together through the membership service.</p>
+
+        <h4>Seed Members</h4>
         <p>
-            <hr size=1>provisioning micro-service</hr> <!-- -------------------------------------------------------------------------------------------------------
-        <pre class=prettyprint><code class=java>
-    // Every Microservice has an interface, The Service interface is a simple java interface decorated
-    // with annotation @Service annotation which describes a logical name of the service.
-    @Service(namespace = "my.service.namespace") // the service name
-        public interface GameService {
+            The seed members are configured contact points for new members joining the cluster.
+            When a new member is started it sends to all seed nodes (one by one) sync command in order to synchronize membership tables until one of them answers,
+            if all failed to answer it is decided that this member is the first member in the cluster.
+            Seed members will be used further in order to restore cluster from network partitioning They will continued to be and sync with cluster nodes even if they are marked as failed.
+            So it is possible to configure any node as seed member in order to join the cluster, but it is recommended to configure nodes with most probability for maximum up-time
+            so in such case they can restore from network partitioning via this seed members (e.g. possible choice for seed members are API Gateways)
+            The seed members configuration does not have any influence on the running cluster itself,
+            it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
+            a new member can send this command to any current member of the cluster, not only to the seed members.
+            The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running, but when initially starting a cluster,
+            the cluster will be initialized only when one or more seed-nodes will become initialized else no other node can join the cluster and nodes can only join themselves.
+            It is quickest to start all configured seed nodes at the same time (order doesn't matter), otherwise it can take up to time until the nodes can join.
+            Once more than two seed nodes have been started it is no problem to shut down the first seed node.
+            If the first seed node is restarted, it will first try to join the other seed nodes in the existing cluster.
+            You can join to any node in the cluster. It does not have to be configured as a seed node.
+            Note that you can only join to an existing cluster member, which means that for bootstrapping some node must join itself,and then the following nodes could join them to make up a cluster.
+        </p>
 
-        @ServiceMethod
-        ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request);
-    }
-            </code>
+        <h4>Failure Detector</h4>
+        <p>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster
+            In a cluster each node is monitored by a few (default maximum 5) other nodes,
+            and when any of these detects the node as unreachable that information will spread to the rest of the cluster through the gossip.In other words,
+            only one node needs to mark a node unreachable to have the rest of the cluster mark that node unreachable.
+            The failure detector will also detect if the node becomes reachable again.
+            When all nodes that monitored the unreachable node detects it as reachable again the cluster, after gossip dissemination, will consider it as reachable.
+            If a messages cannot be delivered to a node it will be quarantined and then it cannot come back from unreachable.
+            The nodes in the cluster monitor each other by sending heartbeats to detect if a node is unreachable from the rest of the cluster.
+            once a node becomes reachable again it can try and rejoin the cluster.
+            The heartbeat arrival times is interpreted by an implementation of The Phi Accrual Failure Detector.
+            The suspicion level of failure is given by a value called phi. The basic idea of the phi failure detector is to express the value of phi on a scale that is dynamically adjusted to reflect current network conditions
+        </p>
+
+        <h4>Preparing Your Project for Clustering</h4>
+        <p>The Service Fabric I/O cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
+
+
+        <div>
+            <div>
+              <pre style="font-size: 16px">
+    <span>&lt;</span>dependency&gt;</span>
+                  <span>&lt;groupId&gt;io.servicefabric&lt;/groupId&gt;</span>
+      <span>&lt;</span>artifactId&gt;servicefabric-cluster&lt;artifactId&gt;</span>
+                  <span>&lt;</span>version&gt;${project.version}&lt;version&gt;</span>
+                  <span>&lt;/</span>dependency&gt;</span>
+              </pre>
+            </div>
+        </div>
+
+        <h3>Simple Cluster examples</h3>
+        setting up cluster nodes A and B while A is seed node and B use A as seed:
+	    <pre class="prettyprint" style="font-size: 14px">
+    // create cluster member A on port 3000 and join as seed member
+    ICluster clusterA = Cluster.newInstance(3000).join();
+
+    // create cluster member B on port 3001 and join as seed member A
+    ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
         </pre>
-    </p>
-    <p>
-        <pre class=prettyprint><code class=java>
-    // The service implementation is a spring @Component implements a service interface.
-    @Component
-    public class GameComponent implements GameService {
 
-        @ServiceMethod
-        ListenableFuture&ltAckResponse&gt startGame(StartGameRequest request){
-            // Log
-            LOGGER.info("Received start game request: " + requestMessage);
-            return Futures.immediateFuture(new AckResponse());
+        <h4>Send gossip from member-A that eventually will reach all members</h4>
+
+        Subscribe to gossip:
+	    <pre class="prettyprint" style="font-size: 14px">
+    // subscribe to all gossip messages:
+    clusterA.gossip().listen().subscribe(new Action1<Message>() {
+            @Override
+            public void call(Message gossip) {
+            // print out the gossip message
+            System.out.println("Gossip message:"  + gossip);
+            }
+            });
+        </pre>
+
+        spread gossip from member-B:
+	    <pre class="prettyprint" style="font-size: 14px">
+    // spread gossip
+    clusterB.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
+        </pre>
+
+        <h4>Send message from member-B to member-A</h4>
+        Subscribe to Greetings message on member-A using filter:
+	    <pre class="prettyprint" style="font-size: 14px">
+    // Filter and subscribe to greetings messages:
+    clusterA.listen().filter(new Func1<TransportMessage, Boolean>() {
+        @Override
+        public Boolean call(TransportMessage t1) {
+            return t1.message().data() != null && Greetings.class.equals(t1.message().data().getClass());
         }
-    }
-            </code>
+    }).subscribe(new Action1<TransportMessage>() {
+            @Override
+            public void call(TransportMessage t1) {
+            System.out.println(t1.message().data());
+            }
+            });
         </pre>
-    </p>
-    -->
-    <footer class="site-footer">
-        <span class="site-footer-owner">
-            <a href="https://github.com/servicefabric/servicefabric">servicefabric</a> is maintained by
-            <a href="https://github.com/servicefabric">servicefabric</a>
-        </span>
-    </footer>
 
-</section>
+        Send Greetings message to member-A:
+	    <pre class="prettyprint" style="font-size: 14px">
+    // Send greeting message to other cluster members
+    List<ClusterMember> members = clusterB.membership().members();
+            ClusterMember localMember = clusterB.membership().localMember();
+            for (ClusterMember member : members) {
+            if (!clusterB.membership().isLocalMember(member)) {
+            clusterB.to(member).send(new Message(new Greetings("Greetings from ClusterMember B")));
+            }
+            }
+        </pre>
+    </section>
 
+    <section class="col-xs-5 col-sm-4 col-md-2">
+        <a class="twitter-timeline" href="https://twitter.com/ServiceFabricIO" data-widget-id="634655010568060928">Tweets by @ServiceFabricIO</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </section>
+</div>
 
 </body>
 </html>
