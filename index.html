@@ -114,12 +114,12 @@
 	    <pre class="prettyprint" style="font-size: 14px">
     // subscribe to all gossip messages:
     clusterA.gossip().listen().subscribe(new Action1<Message>() {
-            @Override
-            public void call(Message gossip) {
+        @Override
+        public void call(Message gossip) {
             // print out the gossip message
             System.out.println("Gossip message:"  + gossip);
-            }
-            });
+        }
+    });
         </pre>
 
         spread gossip from member-B:
@@ -141,20 +141,20 @@
             @Override
             public void call(TransportMessage t1) {
             System.out.println(t1.message().data());
-            }
-            });
+        }
+    });
         </pre>
 
         Send Greetings message to member-A:
 	    <pre class="prettyprint" style="font-size: 14px">
     // Send greeting message to other cluster members
     List<ClusterMember> members = clusterB.membership().members();
-            ClusterMember localMember = clusterB.membership().localMember();
-            for (ClusterMember member : members) {
-            if (!clusterB.membership().isLocalMember(member)) {
+
+    for (ClusterMember member : members) {
+        if (!clusterB.membership().isLocalMember(member)) {
             clusterB.to(member).send(new Message(new Greetings("Greetings from ClusterMember B")));
-            }
-            }
+        }
+    }
         </pre>
     </section>
 
