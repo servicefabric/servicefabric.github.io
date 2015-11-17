@@ -20,6 +20,10 @@ pre {
   font-size: 14px;
 }
 
+pre.prettyprint {
+  font-size: 14px;
+}
+
 a {
   color: #1e6bb8;
   text-decoration: none;

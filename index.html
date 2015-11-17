@@ -81,7 +81,7 @@
         <h4>Preparing Your Project for Clustering</h4>
         <p>The ScaleCube Cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
 
-        <pre style="font-size: 14px">
+        <pre>
     &lt;dependency&gt;
         &lt;groupId&gt;io.servicefabric&lt;/groupId&gt;
         &lt;artifactId&gt;servicefabric-cluster&lt;artifactId&gt;
@@ -93,7 +93,7 @@
         <p>
             Setting up cluster nodes A and B while A is seed node and B use A as seed:
         </p>
-	    <pre class="prettyprint" style="font-size: 14px">
+	    <pre class="prettyprint">
     // create cluster member A on port 3000 and join as seed member
     ICluster clusterA = Cluster.newInstance(3000).join();
 
