@@ -11,16 +11,12 @@ body {
   color: #505050;
 }
 
-p{
+p {
   font-size: 16px;
   line-height: 1.5;
 }
 
-pre {
-  font-size: 14px;
-}
-
-pre.prettyprint {
+.main-content pre.prettyprint {
   font-size: 14px;
 }
 

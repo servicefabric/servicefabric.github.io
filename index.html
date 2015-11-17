@@ -79,9 +79,11 @@
         </p>
 
         <h4>Preparing Your Project for Clustering</h4>
+
         <p>The ScaleCube Cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
 
-        <pre>
+        <pre class="prettyprint">
+
     &lt;dependency&gt;
         &lt;groupId&gt;io.servicefabric&lt;/groupId&gt;
         &lt;artifactId&gt;servicefabric-cluster&lt;artifactId&gt;
@@ -90,10 +92,11 @@
         </pre>
 
         <h3>Simple Cluster examples</h3>
-        <p>
-            Setting up cluster nodes A and B while A is seed node and B use A as seed:
-        </p>
+
+        <p>Setting up cluster nodes A and B while A is seed node and B use A as seed:</p>
+
 	    <pre class="prettyprint">
+
     // create cluster member A on port 3000 and join as seed member
     ICluster clusterA = Cluster.newInstance(3000).join();
 
@@ -103,8 +106,10 @@
 
         <h4>Send gossip from member-A that eventually will reach all members</h4>
 
-        Subscribe to gossip:
+        <p>Subscribe to gossip:</p>
+
 	    <pre class="prettyprint">
+
     // subscribe to all gossip messages:
     clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
         @Override
@@ -115,15 +120,20 @@
     });
         </pre>
 
-        spread gossip from member-B:
+        <p>Spread gossip from member-B:</p>
+
 	    <pre class="prettyprint">
+
     // spread gossip
     clusterB.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
         </pre>
 
         <h4>Send message from member-B to member-A</h4>
-        Subscribe to Greetings message on member-A using filter:
-	    <pre class="prettyprint">
+
+        <p>Subscribe to Greetings message on member-A using filter:</p>
+
+        <pre class="prettyprint">
+
     // Filter and subscribe to greetings messages:
     clusterA.listen().filter(new Func1&lt;TransportMessage, Boolean&gt;() {
         @Override
@@ -138,8 +148,10 @@
     });
         </pre>
 
-        Send Greetings message to member-A:
+        <p>Send Greetings message to member-A:</p>
+
 	    <pre class="prettyprint">
+
     // Send greeting message to other cluster members
     List&lt;ClusterMember&gt; members = clusterB.membership().members();
 
