@@ -6,10 +6,8 @@
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
         ga('create', 'UA-66704504-1', 'auto');
         ga('send', 'pageview');
-
     </script>
     <meta charset="UTF-8">
     <title>ScaleCube Cluster</title>
@@ -18,7 +16,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
     <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 </head>
 <body onload="prettyPrint()">
@@ -32,140 +31,187 @@
 
 <div class="main-content">
     <section class="col-xs-7 col-sm-8 col-md-10">
-        <h2>Intro</h2>
-        <p>ScaleCube Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
-            It does this using gossip protocols and an automatic failure detector.
+        <h2>Overview</h2>
+
+        <p>
+            ScaleCube Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with
+            no single point of failure or single point of bottleneck. It does this using gossip protocols and an
+            automatic failure detector.
         </p>
 
-        <h2>Terms</h2>
-        <h4>Cluster Member</h4>
-        <p>A logical member of a cluster. There could be multiple nodes on a physical machine. Defined by a member id.</p>
+        <h2>Basic Concepts</h2>
 
         <h4>Cluster</h4>
-        <p>A set of nodes joined together through the membership service.</p>
+
+        <p>
+            A set of nodes (servers) joined together through the membership protocol.
+        </p>
+
+        <h4>Member</h4>
+
+        <p>
+            A member is a single node (server) that is part of your cluster. There could be multiple members on a single
+            physical machine which running transport on different ports and defined by a member id.
+        </p>
+
+        <h4>Transport</h4>
+
+        <p>
+            Transport component is responsible to maintain point-to-point connections between the members. It is used as
+            a backbone for asynchronous messaging between the members of the cluster.
+        </p>
+
+        <h4>Cluster Membership</h4>
+
+        <p>
+            Cluster Membership component is responsible for managing information about existing members of the cluster.
+            It is running Java implementation of <a href="http://www.cs.cornell.edu/~asdas/research/dsn02-swim.pdf">SWIM
+            protocol</a> for distributed group membership, with a few minor adaptations. It uses suspicion mechanism
+            over the failure detector events. Also it uses separate membership updates dissemination component (gossip
+            protocol). But it introduces a separate gossip protocol component instead of piggybacking membership updates
+            on top of failure detector messages. It is done in order to reuse gossip component for other platform events
+            and have more fine grained control over time intervals used for gossiping and failure detection pinging.
+            New members to the cluster joins via the configuration provided well known server addresses (seed members).
+            And also it extends SWIM protocol with the introduction of periodic SYNC messages in order to improve
+            recovery from network partitioning and message losses.
+        </p>
 
         <h4>Seed Members</h4>
+
         <p>
-            The seed members are configured contact points for new members joining the cluster.
-            When a new member is started it sends to all seed nodes (one by one) sync command in order to synchronize membership tables until one of them answers,
-            if all failed to answer it is decided that this member is the first member in the cluster.
-            Seed members will be used further in order to restore cluster from network partitioning They will continued to be and sync with cluster nodes even if they are marked as failed.
-            So it is possible to configure any node as seed member in order to join the cluster, but it is recommended to configure nodes with most probability for maximum up-time
-            so in such case they can restore from network partitioning via this seed members (e.g. possible choice for seed members are API Gateways)
-            The seed members configuration does not have any influence on the running cluster itself,
-            it is only relevant for new members joining the cluster as it helps them to find contact points to send the join command to;
-            a new member can send this command to any current member of the cluster, not only to the seed members.
-            The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running, but when initially starting a cluster,
-            the cluster will be initialized only when one or more seed-nodes will become initialized else no other node can join the cluster and nodes can only join themselves.
-            It is quickest to start all configured seed nodes at the same time (order doesn't matter), otherwise it can take up to time until the nodes can join.
-            Once more than two seed nodes have been started it is no problem to shut down the first seed node.
-            If the first seed node is restarted, it will first try to join the other seed nodes in the existing cluster.
-            You can join to any node in the cluster. It does not have to be configured as a seed node.
-            Note that you can only join to an existing cluster member, which means that for bootstrapping some node must join itself,and then the following nodes could join them to make up a cluster.
+            The seed members is a set of configured contact points for new members joining the cluster. When a new
+            member is started it sends to all seed nodes SYNC message in order to synchronize membership
+            tables until one of them answers, if all failed to answer it is decided that this member is the first member
+            in the cluster. Seed members will be used further in order to restore cluster from network partitioning.
+            They will continued to be SYNCed by cluster members even if they are marked as failed. It is possible to
+            configure any node as a seed member in order to join the cluster, but it is recommended to configure nodes
+            with most probability for maximum up-time so in such case cluster can be restored from network partitioning
+            through SYNC messages with seed members (e.g. API Gateways can serve as a seed members of the cluster).
+            The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running,
+            but when initially starting a cluster, the cluster will be initialized only when one or more seed-nodes will
+            become initialized else no other node can join the cluster and nodes can only see themselves. Note that you
+            can only join to an existing cluster member, which means that for bootstrapping some node must join itself,
+            and then the following nodes could join them to make up a cluster.
         </p>
 
         <h4>Failure Detector</h4>
-        <p>The failure detector is responsible for trying to detect if a node is unreachable from the rest of the cluster
-            In a cluster each node is monitored by a few (default maximum 5) other nodes,
-            and when any of these detects the node as unreachable that information will spread to the rest of the cluster through the gossip.In other words,
-            only one node needs to mark a node unreachable to have the rest of the cluster mark that node unreachable.
-            The failure detector will also detect if the node becomes reachable again.
-            When all nodes that monitored the unreachable node detects it as reachable again the cluster, after gossip dissemination, will consider it as reachable.
-            If a messages cannot be delivered to a node it will be quarantined and then it cannot come back from unreachable.
-            The nodes in the cluster monitor each other by sending heartbeats to detect if a node is unreachable from the rest of the cluster.
-            once a node becomes reachable again it can try and rejoin the cluster.
-            The heartbeat arrival times is interpreted by an implementation of The Phi Accrual Failure Detector.
-            The suspicion level of failure is given by a value called phi. The basic idea of the phi failure detector is to express the value of phi on a scale that is dynamically adjusted to reflect current network conditions
+
+        <p>
+            Failure Detector component is responsible for monitoring availability of other members in the cluster and
+            for detecting if a node is unreachable from the rest of the cluster. The nodes in the cluster monitor each
+            other using <a href="http://www.antonkharenko.com/2015/08/scalable-and-efficient-distributed.html">random-probing
+            based failure detector algorithm</a> with suspicion mechanism. So when any node detects
+            the node as unreachable that information will spread to the rest of the cluster through the gossip protocol.
+            In other words, only one node needs to mark a node unreachable to have the rest of the cluster mark that
+            node unreachable. Node marked as unreachable are not removed until configured timeout. The failure detector
+            continue to monitor this node and detect if the node becomes reachable again.
         </p>
 
-        <h4>Preparing Your Project for Clustering</h4>
+        <h4>Gossip Protocol</h4>
 
-        <p>The ScaleCube Cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
+        <p>
+            Gossip Protocol component responsible for spreading information (gossips) over the cluster members using
+            infection-style dissemination algorithms. It provides reliable cross-cluster broadcast.
+        </p>
+
+        <h2>Getting Started</h2>
+
+        <h4>Maven Repository</h4>
+
+        <p>
+            The ScaleCube Cluster is hosted on Maven Central. In order to use it just add dependency on the latest
+            version in your pom.xml file:
+        </p>
 
         <pre class="prettyprint">
-
-    &lt;dependency&gt;
-        &lt;groupId&gt;io.servicefabric&lt;/groupId&gt;
-        &lt;artifactId&gt;servicefabric-cluster&lt;artifactId&gt;
-        &lt;version&gt;${project.version}&lt;version&gt;
-    &lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.scalecube&lt;/groupId&gt;
+    &lt;artifactId&gt;scalecube-cluster&lt;artifactId&gt;
+    &lt;version&gt;0.0.5&lt;version&gt;
+&lt;/dependency&gt;
         </pre>
 
-        <h3>Simple Cluster examples</h3>
+        <h4>Join Cluster</h4>
 
-        <p>Setting up cluster nodes A and B while A is seed node and B use A as seed:</p>
+        <p>
+            Setting up cluster consisting from two member nodes A and B both running on a same machine, but different
+            ports. Member A is a seed node of the cluster. Member B use Member A as seed to join the cluster:
+        </p>
 
 	    <pre class="prettyprint">
+// Create cluster member A on port 3000 and join a cluster as a seed member
+ICluster clusterA = Cluster.newInstance(3000).joinAwait();
 
-    // create cluster member A on port 3000 and join as seed member
-    ICluster clusterA = Cluster.newInstance(3000).join();
-
-    // create cluster member B on port 3001 and join as seed member A
-    ICluster clusterB =  Cluster.newInstance(3001,"localhost:3000").join();
+// Create cluster member B on port 3001 and join a cluster with the seed member A
+String seedMembers = "localhost:3000";
+ICluster clusterB =  Cluster.newInstance(3001, seedMembers).join();
         </pre>
 
-        <h4>Send gossip from member-A that eventually will reach all members</h4>
 
-        <p>Subscribe to gossip:</p>
+
+        <h4>Spread Gossip through the Cluster</h4>
+
+        <p>Member A listens for the gossips disseminated through the cluster:</p>
 
 	    <pre class="prettyprint">
-
-    // subscribe to all gossip messages:
-    clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
-        @Override
-        public void call(Message gossip) {
-            // print out the gossip message
-            System.out.println("Gossip message:"  + gossip);
-        }
-    });
+// Subscribe to all gossip messages:
+clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
+    @Override
+    public void call(Message gossip) {
+        // print out the gossip message
+        System.out.println("Gossip message: " + gossip);
+    }
+});
         </pre>
 
-        <p>Spread gossip from member-B:</p>
+        <p>Member B spreads gossip message through the cluster:</p>
 
 	    <pre class="prettyprint">
-
-    // spread gossip
-    clusterB.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
+// Spread gossip
+cluster.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
         </pre>
 
         <h4>Send message from member-B to member-A</h4>
 
-        <p>Subscribe to Greetings message on member-A using filter:</p>
+        <p>Member A listens to Greetings messages using filter:</p>
 
         <pre class="prettyprint">
-
-    // Filter and subscribe to greetings messages:
-    clusterA.listen().filter(new Func1&lt;TransportMessage, Boolean&gt;() {
-        @Override
-        public Boolean call(TransportMessage t1) {
-            return t1.message().data() != null && Greetings.class.equals(t1.message().data().getClass());
-        }
-    }).subscribe(new Action1&lt;TransportMessage&gt;() {
-            @Override
-            public void call(TransportMessage t1) {
-            System.out.println(t1.message().data());
-        }
-    });
+// Filter and subscribe to greetings messages:
+clusterA.listen().filter(new Func1&lt;Message, Boolean&gt;() {
+    @Override
+    public Boolean call(Message message) {
+      return message.data() != null && Greetings.class.equals(message.data().getClass());
+    }
+}).subscribe(new Action1&lt;Message&gt;() {
+    @Override
+    public void call(Message message) {
+        System.out.println(message.data());
+    }
+});
         </pre>
 
-        <p>Send Greetings message to member-A:</p>
+        <p>Member B sends Greetings message to all other members of the cluster:</p>
 
 	    <pre class="prettyprint">
-
-    // Send greeting message to other cluster members
-    List&lt;ClusterMember&gt; members = clusterB.membership().members();
-
-    for (ClusterMember member : members) {
-        if (!clusterB.membership().isLocalMember(member)) {
-            clusterB.to(member).send(new Message(new Greetings("Greetings from ClusterMember B")));
-        }
+// Send Greetings message to other cluster members
+Greetings greetings = new Greetings("Greetings from ClusterMember B");
+Message greetingsMessage = new Message(greetings);
+List&lt;ClusterMember&gt; members = clusterB.membership().members();
+for (ClusterMember member : members) {
+    if (!clusterB.membership().isLocalMember(member)) {
+        clusterB.send(member, greetingsMessage);
     }
+}
         </pre>
+        <br><br><br>
     </section>
 
     <section class="col-xs-5 col-sm-4 col-md-2">
-        <a class="twitter-timeline" href="https://twitter.com/ScaleCube" data-widget-id="634655010568060928">Tweets by @ScaleCube</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <a class="twitter-timeline" href="https://twitter.com/ScaleCube" data-widget-id="634655010568060928">Tweets by
+            @ScaleCube</a>
+        <script>
+            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+        </script>
     </section>
 </div>
 
