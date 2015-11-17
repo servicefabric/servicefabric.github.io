@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -13,7 +12,7 @@
 
     </script>
     <meta charset="UTF-8">
-    <title>ScaleCube by Cluster</title>
+    <title>ScaleCube Cluster</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -25,21 +24,18 @@
 <body onload="prettyPrint()">
 
 <section class="page-header" style="margin:0">
-    <h1 class="project-name" style="padding-top: 25px;">ScaleCube I/O Cluster</h1>
-    <a href="https://github.com/servicefabric" class="btn">View on GitHub</a>
-    <a href="https://github.com/servicefabric/servicefabric/zipball/master" class="btn">Download .zip</a>
-    <a href="https://github.com/servicefabric/servicefabric/tarball/master" class="btn">Download .tar.gz</a>
+    <h1 class="project-name" style="padding-top: 25px;">ScaleCube Cluster</h1>
+    <a href="https://github.com/scalecube" class="btn">View on GitHub</a>
+    <a href="https://github.com/scalecube/scalecube/zipball/master" class="btn">Download .zip</a>
+    <a href="https://github.com/scalecube/scalecube/tarball/master" class="btn">Download .tar.gz</a>
 </section>
 
 <div class="main-content">
     <section class="col-xs-7 col-sm-8 col-md-10">
-        <text alt="ScaleCube Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
-            It does this using gossip protocols and an automatic failure detector."></text>
         <h2>Intro</h2>
         <p>ScaleCube Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with no single point of failure or single point of bottleneck.
             It does this using gossip protocols and an automatic failure detector.
         </p>
-
 
         <h2>Terms</h2>
         <h4>Cluster Member</h4>
@@ -83,23 +79,20 @@
         </p>
 
         <h4>Preparing Your Project for Clustering</h4>
-        <p>The SScaleCube I/O cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
+        <p>The ScaleCube Cluster is a separate jar file. Make sure that you have the following dependency in your project:</p>
 
-
-        <div>
-            <div>
-              <pre style="font-size: 16px">
-    <span>&lt;</span>dependency&gt;</span>
-        <span>&lt;groupId&gt;io.servicefabric&lt;/groupId&gt;</span>
-        <span>&lt;</span>artifactId&gt;servicefabric-cluster&lt;artifactId&gt;</span>
-        <span>&lt;</span>version&gt;${project.version}&lt;version&gt;</span>
-    <span>&lt;/</span>dependency&gt;</span>
-              </pre>
-            </div>
-        </div>
+        <pre style="font-size: 14px">
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.servicefabric&lt;/groupId&gt;
+        &lt;artifactId&gt;servicefabric-cluster&lt;artifactId&gt;
+        &lt;version&gt;${project.version}&lt;version&gt;
+    &lt;/dependency&gt;
+        </pre>
 
         <h3>Simple Cluster examples</h3>
-        setting up cluster nodes A and B while A is seed node and B use A as seed:
+        <p>
+            Setting up cluster nodes A and B while A is seed node and B use A as seed:
+        </p>
 	    <pre class="prettyprint" style="font-size: 14px">
     // create cluster member A on port 3000 and join as seed member
     ICluster clusterA = Cluster.newInstance(3000).join();
@@ -111,9 +104,9 @@
         <h4>Send gossip from member-A that eventually will reach all members</h4>
 
         Subscribe to gossip:
-	    <pre class="prettyprint" style="font-size: 14px">
+	    <pre class="prettyprint">
     // subscribe to all gossip messages:
-    clusterA.gossip().listen().subscribe(new Action1<Message>() {
+    clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
         @Override
         public void call(Message gossip) {
             // print out the gossip message
@@ -123,21 +116,21 @@
         </pre>
 
         spread gossip from member-B:
-	    <pre class="prettyprint" style="font-size: 14px">
+	    <pre class="prettyprint">
     // spread gossip
     clusterB.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
         </pre>
 
         <h4>Send message from member-B to member-A</h4>
         Subscribe to Greetings message on member-A using filter:
-	    <pre class="prettyprint" style="font-size: 14px">
+	    <pre class="prettyprint">
     // Filter and subscribe to greetings messages:
-    clusterA.listen().filter(new Func1<TransportMessage, Boolean>() {
+    clusterA.listen().filter(new Func1&lt;TransportMessage, Boolean&gt;() {
         @Override
         public Boolean call(TransportMessage t1) {
             return t1.message().data() != null && Greetings.class.equals(t1.message().data().getClass());
         }
-    }).subscribe(new Action1<TransportMessage>() {
+    }).subscribe(new Action1&lt;TransportMessage&gt;() {
             @Override
             public void call(TransportMessage t1) {
             System.out.println(t1.message().data());
@@ -146,9 +139,9 @@
         </pre>
 
         Send Greetings message to member-A:
-	    <pre class="prettyprint" style="font-size: 14px">
+	    <pre class="prettyprint">
     // Send greeting message to other cluster members
-    List<ClusterMember> members = clusterB.membership().members();
+    List&lt;ClusterMember&gt; members = clusterB.membership().members();
 
     for (ClusterMember member : members) {
         if (!clusterB.membership().isLocalMember(member)) {
@@ -159,7 +152,7 @@
     </section>
 
     <section class="col-xs-5 col-sm-4 col-md-2">
-        <a class="twitter-timeline" href="https://twitter.com/ServiceFabricIO" data-widget-id="634655010568060928">Tweets by @ScaleCube</a>
+        <a class="twitter-timeline" href="https://twitter.com/ScaleCube" data-widget-id="634655010568060928">Tweets by @ScaleCube</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </section>
 </div>

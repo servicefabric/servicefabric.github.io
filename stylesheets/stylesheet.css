@@ -1,38 +1,49 @@
 * {
-    box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 body {
-    padding: 0;
-    margin: 0;
-    font-family: wf_segoe-ui_normal,"Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #505050;
+  padding: 0;
+  margin: 0;
+  font-family: wf_segoe-ui_normal,"Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #505050;
 }
 
 p{
-    font-size: 16px;
-    line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+pre {
+  font-size: 14px;
 }
 
 a {
-    color: #1e6bb8;
-    text-decoration: none; }
+  color: #1e6bb8;
+  text-decoration: none;
+}
+
 a:hover {
-    text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .btn {
-    display: inline-block;
-    margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    background-color: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 0.3rem;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
 .btn + .btn {
-    margin-left: 1rem; }
+  margin-left: 1rem;
+}
 
 .btn:hover {
     color: rgba(255, 255, 255, 0.8);
