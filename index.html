@@ -171,7 +171,7 @@ clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
 cluster.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));
         </pre>
 
-        <h4>Send message from member-B to member-A</h4>
+        <h4>Send Messages between Cluster Members</h4>
 
         <p>Member A listens to Greetings messages using filter:</p>
 
