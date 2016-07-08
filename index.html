@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-          content="ScaleCube : ScaleCube is a microservices framework for the rapid development of distributed, resilient, reactive applications that scales.">
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -33,8 +33,7 @@
         <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
 
         <h1 id="project_title">ScaleCube</h1>
-        <h2 id="project_tagline">ScaleCube is a microservices framework for the rapid development of distributed,
-            resilient, reactive applications that scales.</h2>
+        <h2 id="project_tagline">ScaleCube is a lightweight decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM</h2>
     </header>
 </div>
 
@@ -44,9 +43,9 @@
         <h3>Overview</h3>
 
         <p>
-            ScaleCube Cluster provides a fault-tolerant decentralized peer-to-peer based cluster membership service with
-            no single point of failure or single point of bottleneck. It does this using gossip protocols and an
-            automatic failure detector.
+            ScaleCube provides a fault-tolerant decentralized peer-to-peer based cluster membership service with
+            no single point of failure or single point of bottleneck. It does this using gossip protocol and an
+            scalable and efficient failure detection algorithm.
         </p>
 
         <h3>Basic Concepts</h3>
@@ -148,43 +147,40 @@
         </p>
 
 	    <pre class="prettyprint">
-// Create cluster member A on port 3000 and join a cluster as a seed member
+// Create cluster seed member A on port 3000
 ICluster clusterA = Cluster.newInstance(3000).joinAwait();
 
-// Create cluster member B on port 3001 and join a cluster with the seed member A
+// Join to cluster another member B
 String seedMembers = "localhost:3000";
-ICluster clusterB = Cluster.newInstance(3001, seedMembers).join();</pre>
+ICluster clusterB = Cluster.newInstance(3001, seedMembers).joinAwait();</pre>
 
-        <h5>Spread Gossip through the Cluster</h5>
+        <h5>Spread Gossip</h5>
 
-        <p>Member A listens for the gossips disseminated through the cluster:</p>
+        <p>Member A listens for the gossips disseminated through the cluster and Member B spreads gossip message:</p>
 
 	    <pre class="prettyprint">
-// Subscribe to all gossip messages:
+// Listen for gossips on member A
 clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
     @Override
     public void call(Message gossip) {
-        // print out the gossip message
-        System.out.println("Gossip message: " + gossip);
+        System.out.println("Heard gossip: " + gossip);
     }
-});</pre>
+});
 
-        <p>Member B spreads gossip message through the cluster:</p>
-
-	    <pre class="prettyprint">
-// Spread gossip
-cluster.gossip().spread(new Message(new Greetings("Greetings from ClusterMember B")));</pre>
+// Spread gossip from member B
+Message msg = new Message(new Greetings("Greetings from ClusterMember B"));
+clusterB.gossip().spread(msg);</pre>
 
         <h5>Send Messages between Cluster Members</h5>
 
         <p>Member A listens to Greetings messages using filter:</p>
 
         <pre class="prettyprint">
-// Filter and subscribe to greetings messages:
+// Listen for greetings messages
 clusterA.listen().filter(new Func1&lt;Message, Boolean&gt;() {
     @Override
     public Boolean call(Message message) {
-      return message.data() != null && Greetings.class.equals(message.data().getClass());
+      return message.data() instanceof Greetings;
     }
 }).subscribe(new Action1&lt;Message&gt;() {
     @Override
@@ -196,7 +192,7 @@ clusterA.listen().filter(new Func1&lt;Message, Boolean&gt;() {
         <p>Member B sends Greetings message to all other members of the cluster:</p>
 
 	    <pre class="prettyprint">
-// Send Greetings message to other cluster members
+// Send greetings message to other members
 Greetings greetings = new Greetings("Greetings from ClusterMember B");
 Message greetingsMessage = new Message(greetings);
 List&lt;ClusterMember&gt; members = clusterB.membership().members();
