@@ -183,16 +183,10 @@ clusterB.gossip().spread(msg);</pre>
 
         <pre class="prettyprint">
 // Listen for greetings messages
-clusterA.listen().filter(new Func1&lt;Message, Boolean&gt;() {
-    @Override
-    public Boolean call(Message message) {
-      return message.data() instanceof Greetings;
-    }
-}).subscribe(new Action1&lt;Message&gt;() {
-    @Override
-    public void call(Message message) {
-        System.out.println(message.data());
-    }
+clusterA.listen().filter(message-&gt; {
+    return message.data() instanceof Greetings;
+}).subscribe(message-&gt; {
+    System.out.println(message.data());
 });</pre>
 
         <p>Member B sends Greetings message to all other members of the cluster:</p>
