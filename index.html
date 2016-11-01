@@ -213,9 +213,9 @@ clusterB.otherMembers().forEach(member-&gt{
 <p>Member gets notified when member other members left or join the cluster:</p>
 
 <pre class="prettyprint">
-// Send greetings message to other members
 Cluster.joinAwait().listenMembership()
-        .subscribe(event -> System.out.println(" Alice received membership: " + event));
+        .subscribe(event -> 
+        	System.out.println(" Alice received membership: " + event));
  </pre>
  
         <h3>Bugs and Feedback</h3>
