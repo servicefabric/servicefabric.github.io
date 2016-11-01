@@ -181,8 +181,8 @@ seedNode.listenGossips().subscribe(gossip -&gt;
 // Spread gossip from another member 
 clusterB.gossip().spread(
 	Message.builder()
-    .data(new Greetings("Greetings from ClusterMember B")
-    .build()
+    	.data(new Greetings("Greetings from ClusterMember B")
+    	.build()
 );</pre>
 
         <h5>Send Messages between Cluster Members</h5>
@@ -192,7 +192,7 @@ clusterB.gossip().spread(
         <pre class="prettyprint">
 // Listen for greetings messages
 clusterA.listen().filter(message-&gt; {
-    return message.data() instanceof Greetings;
+    return message.data() instanceof Greetings.class;
 }).subscribe(message-&gt; {
     System.out.println(message.data());
 });</pre>
