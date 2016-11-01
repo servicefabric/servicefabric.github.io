@@ -162,12 +162,12 @@
         </p>
 
 	    <pre class="prettyprint">
-// Create cluster seed member A on port 3000
-ICluster clusterA = Cluster.newInstance(3000).joinAwait();
+// Start seed node
+ICluster seedNode = Cluster.joinAwait();
 
 // Join to cluster another member B
-String seedMembers = "localhost:3000";
-ICluster clusterB = Cluster.newInstance(3001, seedMembers).joinAwait();</pre>
+Cluster.joinAwait(seedNode.address());
+</pre>
 
         <h5>Spread Gossip</h5>
 
@@ -175,16 +175,14 @@ ICluster clusterB = Cluster.newInstance(3001, seedMembers).joinAwait();</pre>
 
 	    <pre class="prettyprint">
 // Listen for gossips on member A
-clusterA.gossip().listen().subscribe(new Action1&lt;Message&gt;() {
-    @Override
-    public void call(Message gossip) {
-        System.out.println("Heard gossip: " + gossip);
-    }
-});
+seedNode.listenGossips().subscribe(gossip -&gt; System.out.println("Heard gossip: " + gossip.data()));
 
-// Spread gossip from member B
-Message msg = new Message(new Greetings("Greetings from ClusterMember B"));
-clusterB.gossip().spread(msg);</pre>
+// Spread gossip from another member 
+clusterB.gossip().spread(
+	Message.builder()
+    .data(new Greetings("Greetings from ClusterMember B")
+    .build()
+);</pre>
 
         <h5>Send Messages between Cluster Members</h5>
 
