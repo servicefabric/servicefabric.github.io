@@ -201,14 +201,14 @@ clusterA.listen().filter(message-&gt; {
 
 	    <pre class="prettyprint">
 // Send greetings message to other members
-Greetings greetings = new Greetings("Greetings from ClusterMember B");
-Message greetingsMessage = new Message(greetings);
-List&lt;ClusterMember&gt; members = clusterB.membership().members();
-for (ClusterMember member : members) {
-    if (!clusterB.membership().isLocalMember(member)) {
-        clusterB.send(member, greetingsMessage);
-    }
-}</pre>
+
+Message greetingsMessage = Message.builder()
+	.data(new Greetings("Greetings from ClusterMember B"))
+	.build();
+
+clusterB.otherMembers().forEach(member-&gt{
+   clusterB.send(member, greetingsMessage);  
+};</pre>
 
         <h3>Bugs and Feedback</h3>
 
