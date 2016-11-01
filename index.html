@@ -175,7 +175,8 @@ Cluster.joinAwait(seedNode.address());
 
 	    <pre class="prettyprint">
 // Listen for gossips on member A
-seedNode.listenGossips().subscribe(gossip -&gt; System.out.println("Heard gossip: " + gossip.data()));
+seedNode.listenGossips().subscribe(gossip -&gt; 
+	System.out.println("Heard gossip: " + gossip.data()));
 
 // Spread gossip from another member 
 clusterB.gossip().spread(
