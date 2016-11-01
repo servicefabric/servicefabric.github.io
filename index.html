@@ -197,7 +197,7 @@ clusterA.listen().filter(message-&gt; {
     System.out.println(message.data());
 });</pre>
 
-        <p>Member B sends Greetings message to all other members of the cluster:</p>
+        <p>Member sends Greetings message to all other members of the cluster:</p>
 
 	    <pre class="prettyprint">
 // Send greetings message to other members
@@ -210,6 +210,14 @@ clusterB.otherMembers().forEach(member-&gt{
    clusterB.send(member, greetingsMessage);  
 };</pre>
 
+<p>Member gets notified when member other members left or join the cluster:</p>
+
+<pre class="prettyprint">
+// Send greetings message to other members
+Cluster.joinAwait().listenMembership()
+        .subscribe(event -> System.out.println(" Alice received membership: " + event));
+ </pre>
+ 
         <h3>Bugs and Feedback</h3>
 
         <p>
