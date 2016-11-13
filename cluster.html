@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+    <script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-86674150-1', 'auto');
+	ga('send', 'pageview');
+    </script>
+    <title>ScaleCube</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
+
+        <h1 id="project_title">ScaleCube</h1>
+        <h2 id="project_tagline">ScaleCube is a lightweight decentralized cluster membership, failure detection, messaging and gossip protocol library for the Java VM</h2>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+        <h3>Overview</h3>
+
+        <p>
+            ScaleCube provides a fault-tolerant decentralized peer-to-peer based cluster membership service with
+            no single point of failure or single point of bottleneck. It does this using gossip protocol and an
+            scalable and efficient failure detection algorithm.
+        </p>
+
+        <h3>Basic Concepts</h3>
+
+        <h5>Cluster</h5>
+
+        <p>
+            A set of nodes (servers) joined together through the membership protocol.
+        </p>
+
+        <h5>Member</h5>
+
+        <p>
+            A member is a single node (server) that is part of your cluster. There could be multiple members on a single
+            physical machine which running transport on different ports and defined by a member id.
+        </p>
+
+        <h5>Transport</h5>
+
+        <p>
+            Transport component is responsible to maintain point-to-point connections between the members. It is used as
+            a backbone for asynchronous messaging between the members of the cluster.
+        </p>
+
+        <h5>Cluster Membership</h5>
+
+        <p>
+            Distributed peer-to-peer applications require weakly-consistent knowledge of cluster membership
+            information at all participating members. ScaleCube provides scalable and efficient implementation of
+            cluster membership algorithm.
+        </p>
+
+        <p>
+            Cluster Membership component is responsible for managing information about existing members of the cluster.
+            It is running Java implementation of <a href="http://www.cs.cornell.edu/~asdas/research/dsn02-swim.pdf">SWIM
+            protocol</a> for distributed group membership, with a few minor adaptations. It uses suspicion mechanism
+            over the failure detector events. Also it uses separate membership updates dissemination component (gossip
+            protocol). But it introduces a separate gossip protocol component instead of piggybacking membership updates
+            on top of failure detector messages. It is done in order to reuse gossip component for other platform events
+            and have more fine grained control over time intervals used for gossiping and failure detection pinging.
+            New members to the cluster joins via the configuration provided well known server addresses (seed members).
+            And also it extends SWIM protocol with the introduction of periodic SYNC messages in order to improve
+            recovery from network partitioning and message losses.
+        </p>
+
+        <h5>Seed Members</h5>
+
+        <p>
+            The seed members is a set of configured contact points for new members joining the cluster. When a new
+            member is started it sends to all seed nodes SYNC message in order to synchronize membership
+            tables until one of them answers, if all failed to answer it is decided that this member is the first member
+            in the cluster. Seed members will be used further in order to restore cluster from network partitioning.
+            They will continued to be SYNCed by cluster members even if they are marked as failed. It is possible to
+            configure any node as a seed member in order to join the cluster, but it is recommended to configure nodes
+            with most probability for maximum up-time so in such case cluster can be restored from network partitioning
+            through SYNC messages with seed members (e.g. API Gateways can serve as a seed members of the cluster).
+            The seed nodes can be started in any order and it is not necessary to have all/or any seed nodes running,
+            but when initially starting a cluster, the cluster will be initialized only when one or more seed-nodes will
+            become initialized else no other node can join the cluster and nodes can only see themselves. Note that you
+            can only join to an existing cluster member, which means that for bootstrapping some node must join itself,
+            and then the following nodes could join them to make up a cluster.
+        </p>
+
+        <h5>Failure Detector</h5>
+
+        <p>
+            Failure Detector component is responsible for monitoring availability of other members in the cluster and
+            for detecting if a node is unreachable from the rest of the cluster. The nodes in the cluster monitor each
+            other using <a href="http://www.antonkharenko.com/2015/08/scalable-and-efficient-distributed.html">random-probing
+            based failure detector algorithm</a> with suspicion mechanism. So when any node detects
+            the node as unreachable that information will spread to the rest of the cluster through the gossip protocol.
+            In other words, only one node needs to mark a node unreachable to have the rest of the cluster mark that
+            node unreachable. Node marked as unreachable are not removed until configured timeout. The failure detector
+            continue to monitor this node and detect if the node becomes reachable again.
+        </p>
+
+        <h5>Gossip Protocol</h5>
+
+        <p>
+            Gossip Protocol component responsible for spreading information (gossips) over the cluster members using
+            infection-style dissemination algorithms. It provides reliable cross-cluster broadcast.
+        </p>
+
+        <h3>Getting Started</h3>
+
+        <h5>Maven Repository</h5>
+
+        <p>
+            The ScaleCube Cluster is hosted on
+            <a href="http://search.maven.org/#search%7Cga%7C1%7Cio.scalecube">Maven Central</a>.
+            In order to use it just add dependency on the latest version in your pom.xml file:
+        </p>
+        <pre class="prettyprint">
+&lt;dependency&gt;
+    &lt;groupId&gt;io.scalecube&lt;/groupId&gt;
+    &lt;artifactId&gt;scalecube-cluster&lt;artifactId&gt;
+    &lt;version&gt;0.9.1-SNAPSHOT&lt;version&gt;
+&lt;/dependency&gt;</pre>
+
+        <h5>Join Cluster</h5>
+
+        <p>
+            Setting up cluster consisting from two member nodes A and B both running on a same machine, but different
+            ports. Member A is a seed node of the cluster. Member B use Member A as seed to join the cluster:
+        </p>
+
+	    <pre class="prettyprint">
+// Start seed node
+ICluster seedNode = Cluster.joinAwait();
+
+// Join to cluster another member B
+Cluster.joinAwait(seedNode.address());
+</pre>
+
+        <h5>Spread Gossip</h5>
+
+        <p>Member A listens for the gossips disseminated through the cluster and Member B spreads gossip message:</p>
+
+	    <pre class="prettyprint">
+// Listen for gossips on member A
+seedNode.listenGossips().subscribe(gossip -&gt; 
+	System.out.println("Heard gossip: " + gossip.data()));
+
+// Spread gossip from another member 
+clusterB.gossip().spread(
+	Message.builder()
+    	.data(new Greetings("Greetings from ClusterMember B")
+    	.build()
+);</pre>
+
+        <h5>Send Messages between Cluster Members</h5>
+
+        <p>Member A listens to Greetings messages using filter:</p>
+
+        <pre class="prettyprint">
+// Listen for greetings messages
+clusterA.listen().filter(message-&gt; {
+    return message.data() instanceof Greetings.class;
+}).subscribe(message-&gt; {
+    System.out.println(message.data());
+});</pre>
+
+        <p>Member sends Greetings message to all other members of the cluster:</p>
+
+	    <pre class="prettyprint">
+// Send greetings message to other members
+
+Message greetingsMessage = Message.builder()
+	.data(new Greetings("Greetings from ClusterMember B"))
+	.build();
+
+clusterB.otherMembers().forEach(member-&gt{
+   clusterB.send(member, greetingsMessage);  
+};</pre>
+
+<p>Member gets notified when member other members left or join the cluster:</p>
+
+<pre class="prettyprint">
+Cluster.joinAwait().listenMembership()
+        .subscribe(event -> 
+        	System.out.println(" Alice received membership: " + event));
+ </pre>
+ 
+        <h3>Bugs and Feedback</h3>
+
+        <p>
+            For bugs, questions and discussions please use the
+            <a href="https://github.com/scalecube/scalecube/issues">GitHub Issues</a>.
+        </p>
+
+    </section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+    </footer>
+</div>
+
+
+</body>
+</html>
