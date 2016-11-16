@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-86674150-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <title>ScaleCube</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
+
+        <h1 id="project_title">ScaleCube Reactive Microservices</h1>
+        <h2 id="project_tagline">Create distributed applications by breaking your application apart into decoupled services that can be built and scaled separately.</h2>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+        <h3>Overview</h3>
+
+        <p>
+            ScaleCube Microservices is a message-driven and asynchronous by default, built to scale due to it's the peer-to-peer nature.
+            empowered by powered by scalecube-cluster gossip capabilities to answer the cross-cutting-concerns
+            such as; service discovery, location transparency, fault-tolerance and real time failure-detection.
+            ScaleCube Microservices provides fluent java-8 functional APIs and Completable Futures benefits.
+            The ScaleCube Microservices are lightweight and embeddable in-order to reduce restrictions regards service implementation,
+            It only requires a simple declaration of the Service APIs as entry point to the service component.
+            With ScaleCube Microservices its possible to provision services within same process,
+            many process on same hardware or many process on many hardwares this gives enables ease of development and
+            testing of a distributed system.
+            No need to worry about the final topology and sizing hardware at the development stage. write once scale anywhere.
+        </p>
+
+        <h3>Basic Concepts</h3>
+
+        <h5>Microservice</h5>
+        <p>
+            A Lightweight system component running in it's own process. Built around business capabilities and independently deployable by fully automated deployment machinery.
+            Isolated, Distributed and have well bounded context communicates via APIs. member in a microservices cluster, discoverable and aware of faliure
+        </p>
+
+        <h5>Service Discovery</h5>
+        <p>
+            With Scalecube Microservices each Microservice self-register at the cluster and utilizes the cluster gossip-protocol to declare and register so it can transparently communicate
+            with it's peer microservices that share the same cluster group.
+        </p>
+
+        <h5>Routing</h5>
+        <p>
+            Microservice may have more then one instance or version of an instance at the cluster the routing strategy is resposible to select the relevant microservice instance
+            when invoking a service. it can be but not limited to: Round-Rubin, Random Selection, Session based selection ect.
+        </p>
+
+        <h5>Service Proxy</h5>
+        <p>
+            Microservices are message driven and communicate via well defined service interface APIs from the consumer side a proxy is a client to a microservices generated from the Microservice interface.
+        </p>
+
+        <h3>Getting Started</h3>
+
+        <h5>Maven Repository</h5>
+
+        <p>
+            The ScaleCube Services is hosted on
+            <a href="http://search.maven.org/#search%7Cga%7C1%7Cio.scalecube">Maven Central</a>.
+            In order to use it just add dependency on the latest version in your pom.xml file:
+        </p>
+        <pre class="prettyprint">
+&lt;dependency&gt;
+    &lt;groupId&gt;io.scalecube&lt;/groupId&gt;
+    &lt;artifactId&gt;scalecube-services&lt;artifactId&gt;
+    &lt;version&gt;1.0.0&lt;version&gt;
+&lt;/dependency&gt;</pre>
+
+        <h5>Define a Microservice</h5>
+
+        <p>
+            A Microservice is defined using a Service interface the service interface is simple java interface annotated with a @Service annotation and @ServiceMethod.
+        </p>
+
+  <pre class="prettyprint">
+  @Service
+  public interface GreetingService {
+
+    @ServiceMethod
+    CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request);
+
+  }</pre>
+
+        <h5>Implement</h5>
+
+        <p>Implementing a microservice interface is quite straightforward:</p>
+
+ <pre class="prettyprint">
+  public class GreetingServiceImpl implements GreetingService {
+
+    @Override
+    public CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request) {
+      return CompletableFuture.completedFuture(new GreetingResponse("Hello " + request.name()));
+    }
+  }</pre>
+
+        <h5>Provision a Microservice</h5>
+
+        <p>so far we learned that microservice is yet another java component with two decorations to run the microservice we need to provision it in a cluster:</p>
+
+        <pre class="prettyprint">
+  // Create microservice provider
+  Microservices provider = Microservices.builder()
+    .services(new GreetingServiceImpl())
+    .build();</pre>
+
+        <p>Consume a Microservice</p>
+
+<pre class="prettyprint">
+  // Create microservice consumer
+  Microservices consumer = Microservices.builder()
+    .seeds(providerAddress) // the address of any node at the cluster.
+      .build();
+
+  // Get a proxy to the service API.
+  GreetingService greetingService = consumer.proxy()
+    .api(GreetingService.class) // the interface of the service.
+    .create();
+
+  // Call service and when complete print the greeting.
+  greetingService.greeting(new GreetingRequest("Joe"))
+    .whenComplete((result, error) -> { // handle the async response.
+        System.out.println(result.greeting());
+    });
+</pre>
+
+
+        <h3>Bugs and Feedback</h3>
+
+        <p>
+            For bugs, questions and discussions please use the
+            <a href="https://github.com/scalecube/scalecube/issues">GitHub Issues</a>.
+        </p>
+
+    </section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+    </footer>
+</div>
+
+
+</body>
+</html>
