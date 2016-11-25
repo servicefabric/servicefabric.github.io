@@ -173,7 +173,7 @@ Microservices gateway = Microservices.builder().build();
 Microservices node1 = Microservices.builder()
         .seeds(gateway.cluster().address())
         .services(ServiceConfig.builder().service(new GreetingServiceImplA())
-        .tag("A/B-Testing", "A").tag("Weight", "0.3").add()
+        .tag("Canary-Testing", "A").tag("Weight", "0.3").add()
         .build())
     .build();
 
@@ -181,13 +181,13 @@ Microservices node1 = Microservices.builder()
 Microservices node2 = Microservices.builder()
         .seeds(gateway.cluster().address())
         .services(ServiceConfig.builder().service(new GreetingServiceImplB())
-        .tag("A/B-Testing", "B").tag("Weight", "0.7").add().build())
+        .tag("Canary-Testing", "B").tag("Weight", "0.7").add().build())
     .build();
 
 // get a proxy to the service api with ABTesting router.
 GreetingService service = gateway.proxy()
     .api(GreetingService.class) // create proxy for GreetingService API
-    .router(ABTestingRouter.class) // define a custom router
+    .router(CanaryTestingRouter.class) // define a custom router
     .create();
 
 
@@ -208,12 +208,12 @@ for (int i = 0; i < 100; i++) {
         <p>Implementing a custom router for the example above</p>
         <pre class="prettyprint">
 // A custom router must implement Router interface
-public class ABTestingRouter implements Router {
+public class CanaryTestingRouter implements Router {
 
     private ServiceRegistry serviceRegistry;
     // if we want a handle to scalecube-service-registry we provide a constructor
     // that accepts ServiceRegistry as input parameter.
-    public ABTestingRouter(ServiceRegistry serviceRegistry) {
+    public CanaryTestingRouter(ServiceRegistry serviceRegistry) {
         this.serviceRegistry = serviceRegistry;
     }
 
