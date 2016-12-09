@@ -271,6 +271,33 @@ Full-Width Styles
   margin: 0 auto;
 }
 
+.next_link {
+  color: indigo;
+  padding: 10px 10px;
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 5px;
+  width:100%;
+  border-radius: 6px 6px 6px 6px;
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px 6px 6px 6px;
+  border: 1px solid #999999;
+  background-color: #f8f8f8;
+}
+.next_link:hover {
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 5px;
+  width:100%;
+  border-radius: 6px 6px 6px 6px;
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px 6px 6px 6px;
+  border: 1px solid #999999;
+  background-color: #229692;
+}
+
 #forkme_banner {
   display: block;
   position: absolute;
@@ -382,5 +409,5 @@ Small Device Styles
     max-width: 480px;
     font-size: 11px;
   }
-
 }
+

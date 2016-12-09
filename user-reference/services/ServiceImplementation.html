@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../../stylesheets/stylesheet.css">
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-86674150-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <title>ScaleCube</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
+
+        <h1 id="project_title">ScaleCube Reactive Microservices</h1>
+        <h2 id="project_tagline">The Future is reactive -  The Future is right here!</h2>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+
+        <h3>Implementing services</h3>
+
+        <P>
+            Implementing a service is simple as simple as implementing the service interface. as you can see its pure java
+            so your model and implementation stays clean. one more benefit of such approach comes when testing your service,
+            building the service is just like building any java component.
+        </P>
+
+        <p>
+            for example:
+        </p>
+
+<pre class="prettyprint">
+public class GreetingServiceImpl implements GreetingService {
+ @Override
+ public CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request) {
+   return CompletableFuture.completedFuture(
+     new GreetingResponse("Hello " + request.name())
+   );
+ }
+}</pre>
+
+        <h4>Java Class</h4>
+        <p>
+            The service is a simple java class with one or more service methods.
+            a service method may return java-8 CompletableFuture or void in case no result is expected.
+            Service requests might be a local or remote call and should not block the service consumer
+            (unless the consumer explicitly called the future.get() method).
+        </p>
+
+        <a href="ProvisionClusterServices.html">
+            <div class="next_link">
+                <strong>Next: </strong> Provisioning Clustered Services
+            </div>
+        </a>
+
+    </section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+    </footer>
+</div>
+
+
+</body>
+</html>

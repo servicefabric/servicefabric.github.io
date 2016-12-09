@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../../stylesheets/stylesheet.css">
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-86674150-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <title>ScaleCube</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
+
+        <h1 id="project_title">ScaleCube Reactive Microservices</h1>
+        <h2 id="project_tagline">The Future is reactive -  The Future is right here!</h2>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+
+        <h3>Provisioning Clustered Services</h3>
+
+        <P>
+            So far we have learned how to define and implement a service, actually it was nothing more then implementing a java component.
+            at this section we will learn how to provision our components as clustered micro services.
+        </P>
+
+        <pre class="prettyprint">
+  // Create microservice provider
+  Microservices provider = Microservices.builder()
+    .port(4002) // base port
+    .seeds(...)
+    .services(new GreetingServiceImpl(),...)
+    .build();</pre>
+
+        <P>
+            The line above introduces the service component to the cluster <code>.port(4002)</code>, it reads the information from the service interface.
+            and registers the instance in the cluster using the <code>.services(...)</code>  option.
+            its possible to introduce many service instances to the cluster or clusters for example by running several jvm instances
+            each containing a service instance or having many services in the same JVM instance.
+        </P>
+
+        <P>
+            <code>.port(4002)</code> port is the base port the Microservices member to listen on, by default it might increment +n if
+            the base port is taken. once a port is allocated the requested services will register the service on the newly allocated port.
+            if not specified the default base port is 4000.
+        </P>
+
+
+        <h4>Service Tags</h4>
+        <P>
+            It is also possible to register services with service tags. the service <code>.tag(key,value)</code>
+            is a user defined property as that describes a service instance.
+            tag helps to distinguish instances and a single instance my <code>..add()</code> several tags.
+            <br>Possible reasons for Tags:
+            <br> - we wish route an select a specific service instance 30% of the times.
+            <br> - give specific instance some special role in the cluster.
+            <br> - always choose the most latest version of a service.
+            <br> - ...
+        </P>
+
+        <pre class="prettyprint">
+ Microservices provider = Microservices.builder()
+    .seeds(...)
+    .services().service(new GreetingServiceImpl())
+            .tag("Weight", "0.3").add()
+            .tag("Version", "1.0.3").add()
+            .tag("Role", "Master").add()
+        .build()
+    .build();</pre>
+
+
+
+        <a href="ConsumingServices.html">
+            <div class="next_link">
+                <strong>Next: </strong> Consuming Services
+            </div>
+        </a>
+
+    </section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+    </footer>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../../stylesheets/stylesheet.css">
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-86674150-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <title>ScaleCube</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
+
+        <h1 id="project_title">ScaleCube Reactive Microservices</h1>
+        <h2 id="project_tagline">The Future is reactive -  The Future is right here!</h2>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+
+        <h3>Consuming services</h3>
+
+        <P>
+            We’ve seen how to define service interfaces and how to implement them,
+            now we need to consume them.
+            The service interface contains everything ScaleCube-services needs to know about how to invoke a service.
+        </P>
+
+        <p>
+            A service implementations may be located anywhere at the cluster and or may appear with number of instances.
+            ScaleCube service <code>.proxy()</code> solve this for you. no matter where and how much service instances you have it gives you the full control to consume them.
+        </p>
+
+        <p>
+            A service consumer is a member of the service cluster sharing same Cluster Membership / Failure Detection / Gossip discovery group.
+            this can be achieved by joining one of the known cluster members AKA <code>.seeds()</code> nodes.
+        </p>
+<pre class="prettyprint">
+   // Create microservice consumer
+  Microservices consumer = Microservices.builder()
+    .seeds(providerAddress) // the address of any node at the cluster.
+      .build();
+</pre>
+
+        <p>
+            Using the service interface class we can request from the consumer a <code>.proxy()</code> for a given
+            <code>.api(GreetingService.class)</code>.
+            the <code>create()</code> will build for us a proxy with relevant descriptors to address the specific service in the cluster.
+        </p>
+
+<pre class="prettyprint">
+  // Get a proxy to the service API.
+  GreetingService greetingService = consumer.proxy()
+    .api(GreetingService.class) // the interface of the service.
+    .create();
+</pre>
+
+        <p>
+            Using the service proxy to call a service is as trivial as a simple method call.
+            the service proxy will locate the service instance in the cluster and will route to them the requests.
+        </p>
+
+<pre class="prettyprint">
+  // Call service and when complete print the greeting.
+  greetingService.greeting(new GreetingRequest("Joe"))
+    .whenComplete((result, error) -> { // handle the async response.
+        System.out.println(result.greeting());
+    });
+</pre>
+
+        <p>
+            By default the scale-cube services provides a round-robin service instance selection.
+            that means for each service request the proxy will use the currently available service endpoints and will invoke
+            one message to one service instance at a time so its balanced across all currently-live-service-instances.
+            using the <code>.router(...)</code> its also possible to control the endpoint selection logic.
+        </p>
+
+        <p>
+            Service Proxy Options:
+            <br><code>.router(...)</code> option you can choose from available selection logic or provide a custom one.
+            <br><code>.timeout(Duration)</code> option you can specify a timeout for waiting for service response the default is 30 secounds.
+        </p>
+
+ <pre class="prettyprint">
+  // Get a proxy to the service API.
+  GreetingService greetingService = consumer.proxy()
+    .api(GreetingService.class)      // the interface of the service.
+    .timeout(Duration.ofSeconds(1))   // timeout limit for expected response
+    .router(CanaryTestingRouter.class) // service instance selector
+    .create();
+</pre>
+
+
+
+
+
+
+
+
+        <a href="ServiceImplementation.html">
+            <div class="next_link">
+                <strong>Next: </strong> Implementing services
+            </div>
+        </a>
+
+    </section>
+</div>
+
+
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+    </footer>
+</div>
+
+
+</body>
+</html>

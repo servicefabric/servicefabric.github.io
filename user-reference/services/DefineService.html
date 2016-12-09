@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="ScaleCube is a decentralized cluster membership, failure detection, and gossip protocol solution for the Java VM">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../../stylesheets/stylesheet.css">
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-86674150-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <title>ScaleCube</title>
+</head>
+
+<body onload="prettyPrint()">
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/scalecube/scalecube">View on GitHub</a>
+
+        <h1 id="project_title">ScaleCube Reactive Microservices</h1>
+        <h2 id="project_tagline">The Future is reactive -  The Future is right here!</h2>
+    </header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+
+
+
+        <h3>Defining Services</h3>
+
+        <P>
+            ScaleCube services are described by an interface,
+            This interface not only defines how the service is invoked and implemented,
+            this interface is agnostic to transport protocol.
+            Generally, the service interface, its implementation and consumption should remain agnostic to what transport is being used.
+            It mainly defines the service API and data-model.
+        </P>
+
+        <p>
+            A Microservice is defined using a Service interface the service interface is simple java interface annotated with a
+            <code style="color:darkred;font-weight:bold">@Service</code> annotation and
+            <code style="color:darkred;font-weight:bold">@ServiceMethod</code>
+        </p>
+
+
+  <pre class="prettyprint">
+  @Service
+  public interface GreetingService {
+
+    @ServiceMethod
+    CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request);
+
+  }</pre>
+        <h4>Java Interface</h4>
+        <p>
+            The service interface is a simple java interface with one or more service methods.
+            a service method may return java-8 CompletableFuture or void in case no result is expected.
+            Service requests might be a local or remote call and should not block the service consumer
+            (unless the consumer explicitly called the future.get() method).
+        </p>
+
+        <h4>Service Annotations</h4>
+
+        <p>
+        <code style="color:darkred;font-weight:bold">@Service</code> Annotation is used to define the service name.
+            by default if not specified the class name is used as service name.
+            optionally, user may specify a specific desired logical name to a service
+            <code style="color:darkred;font-weight:bold">@Service
+                <b style="color:black;font-weight:bold">
+                    ("my-specific-service-name")
+                </b>
+            </code>
+            the logical service name is used to address the service in the cluster when its registered and discovered.
+            each service should have its own unique logical name in a given cluster / tenant.
+        </p>
+
+        <code style="color:darkred;font-weight:bold">@ServiceMethod</code> Annotation is used to define the service method name.
+        by default if not specified the method name in use is the java interface method name.
+        optionally, user may specify a specific desired logical name to a service method
+        <p><code style="color:darkred;font-weight:bold">@ServiceMethod
+            <b style="color:black;font-weight:bold">
+                ("specific-method-name")
+            </b>
+        </code>
+        </p>
+        each service method should have its own unique logical name for a given service.
+        </p>
+
+
+
+        <a href="ServiceImplementation.html">
+            <div class="next_link">
+                <strong>Next: </strong> Implementing services
+            </div>
+        </a>
+
+    </section>
+</div>
+
+
+
+
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+    </footer>
+</div>
+
+
+</body>
+</html>
