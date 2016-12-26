@@ -109,161 +109,30 @@
     &lt;groupId&gt;io.scalecube&lt;/groupId&gt;
     &lt;artifactId&gt;scalecube-services&lt;artifactId&gt;
     &lt;version&gt;1.0.0&lt;version&gt;
-&lt;/dependency&gt;</pre>
+&lt;/dependency&gt;
+        </pre>
 
         <h5>User Guide</h5>
         <li><a href="./user-reference/services/DefineService.html">Defining Services</a></li>
         <li><a href="./user-reference/services/ServiceImplementation.html">Implementing services</a></li>
         <li><a href="./user-reference/services/ProvisionClusterServices.html">Provisioning Clustered Services</a></li>
         <li><a href="./user-reference/services/ConsumingServices.html">Consuming services</a></li>
+        <li><a href="./user-reference/services/ImplementingRouter.html">Implementing Router</a></li>
 
-        <h5>Define a Microservice</h5>
-
-        <p>
-            A Microservice is defined using a Service interface the service interface is simple java interface annotated with a @Service annotation and @ServiceMethod.
-        </p>
-
-  <pre class="prettyprint">
-  @Service
-  public interface GreetingService {
-
-    @ServiceMethod
-    CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request);
-
-  }</pre>
-
-        <h5>Implement</h5>
-
-        <p>Implementing a microservice interface is quite straightforward:</p>
-
- <pre class="prettyprint">
-  public class GreetingServiceImpl implements GreetingService {
-
-    @Override
-    public CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request) {
-      return CompletableFuture.completedFuture(new GreetingResponse("Hello " + request.name()));
-    }
-  }</pre>
-
-        <h5>Provision a Microservice</h5>
-
-        <p>so far we learned that microservice is yet another java component with two decorations to run the microservice we need to provision it in a cluster:</p>
-
-        <pre class="prettyprint">
-  // Create microservice provider
-  Microservices provider = Microservices.builder()
-    .services(new GreetingServiceImpl())
-    .build();</pre>
-
-        <p>Consume a Microservice</p>
-
-<pre class="prettyprint">
-  // Create microservice consumer
-  Microservices consumer = Microservices.builder()
-    .seeds(providerAddress) // the address of any node at the cluster.
-      .build();
-
-  // Get a proxy to the service API.
-  GreetingService greetingService = consumer.proxy()
-    .api(GreetingService.class) // the interface of the service.
-    .create();
-
-  // Call service and when complete print the greeting.
-  greetingService.greeting(new GreetingRequest("Joe"))
-    .whenComplete((result, error) -> { // handle the async response.
-        System.out.println(result.greeting());
-    });
-</pre>
-
-        <p>Using Service Tags Example</p>
-
-        <pre class="prettyprint">
-
-// Create gateway instance.
-Microservices gateway = Microservices.builder().build();
-
-
-// Create member node1 with A/B testing tag.
-Microservices node1 = Microservices.builder()
-        .seeds(gateway.cluster().address())
-        .services(ServiceConfig.builder().service(new GreetingServiceImplA())
-        .tag("Canary-Testing", "A").tag("Weight", "0.3").add()
-        .build())
-    .build();
-
-// Create member node2 with A/B testing tag.
-Microservices node2 = Microservices.builder()
-        .seeds(gateway.cluster().address())
-        .services(ServiceConfig.builder().service(new GreetingServiceImplB())
-        .tag("Canary-Testing", "B").tag("Weight", "0.7").add().build())
-    .build();
-
-// get a proxy to the service api with ABTesting router.
-GreetingService service = gateway.proxy()
-    .api(GreetingService.class) // create proxy for GreetingService API
-    .router(CanaryTestingRouter.class) // define a custom router
-    .create();
-
-
-// call the service 100 times.
-for (int i = 0; i < 100; i++) {
-    service.greeting("joe").whenComplete((result, ex) -> {
-        if (ex == null) {
-            if (result.startsWith("B")){
-                // print the greeting.
-                System.out.println("this is response from B:" + result);
-            }
-        } else {
-        }
-    });
-}
-</pre>
-
-        <p>Implementing a custom router for the example above</p>
-        <pre class="prettyprint">
-// A custom router must implement Router interface
-public class CanaryTestingRouter implements Router {
-
-    private ServiceRegistry serviceRegistry;
-    // if we want a handle to scalecube-service-registry we provide a constructor
-    // that accepts ServiceRegistry as input parameter.
-    public CanaryTestingRouter(ServiceRegistry serviceRegistry) {
-        this.serviceRegistry = serviceRegistry;
-    }
-
-    @Override // implement the route request for a given service Definition
-    public Optional&ltServiceInstance&gt route(ServiceDefinition serviceDefinition) {
-        // this examples demo a weightedRandom service instance selection.
-        RandomCollection&ltServiceInstance&gt weightedRandom = new RandomCollection<>();
-        // ask service registry to locate service by name
-        // this is local call (in memory) as scalecube knows all about cluster services.
-        serviceRegistry.serviceLookup(serviceDefinition.serviceName())
-            .stream().forEach(instance->{
-              weightedRandom.add(
-                  Double.valueOf(instance.tags().get("Weight")),
-                  instance);
-        });
-        return Optional.of(weightedRandom.next());
-    }
-}
-
-        </pre>
-        <h3>Bugs and Feedback</h3>
-
-        <p>
-            For bugs, questions and discussions please use the
-            <a href="https://github.com/scalecube/scalecube/issues">GitHub Issues</a>.
-        </p>
+        <a href="./user-reference/services/DefineService.html">
+            <div class="next_link">
+                <strong>Next: </strong> Defining Services
+            </div>
+        </a>
 
     </section>
 </div>
-
-<!-- FOOTER  -->
-<div id="footer_wrap" class="outer">
-    <footer class="inner">
-        <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
-    </footer>
-</div>
+        <!-- FOOTER  -->
+        <div id="footer_wrap" class="outer">
+            <footer class="inner">
+                <p class="copyright">Maintained by <a href="https://github.com/scalecube">ScaleCube Team</a></p>
+            </footer>
+        </div>
 
 
 </body>
