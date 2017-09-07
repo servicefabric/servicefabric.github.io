@@ -73,11 +73,11 @@ ServiceCall service = microservices.dispatcher().create();
 </pre>
 
         <p>
-            Calling the Greeting Service:
+            Calling the Greeting Service (Request / Response):
         </p>
 
         <pre class="prettyprint">
-service.invoke(ServiceCall
+service.invoke(Messages.builder()
           .request("my.greeting.service", "greeting")
           .data(Message.builder().data("joe").build())
           .build()).whenComplete((success, error) -> {
@@ -86,15 +86,25 @@ service.invoke(ServiceCall
 }</pre>
 
         <p>
+            Listen and subscribe the Greeting Service (Reactive Stream):
+        </p>
+        <pre class="prettyprint">
+service.listen(Messages.builder()
+          .request("my.greeting.service", "greeting")
+          .data(Message.builder().data("joe").build())
+          .build()).subscribe(onNext -> {
+            // service stream responses
+           });
+}</pre>
+        <p>
             Since Service Dispatchers are not coupled with a java interface they have one more benefit of using timeout
             per a service request where proxy have only a default timeout that apply for all service requests made by the proxy.
         </p>
 
 <pre class="prettyprint">
-service.invoke(ServiceCall
+service.invoke(Messages.builder()
     .request("my.greeting.service", "greeting")
-    .data(Message.builder().data("joe").build())
-    .build(), Duration.ofSeconds(1))
+    .data("joe").build()), Duration.ofSeconds(1))
       .whenComplete((success, error) -> {
       // service response success/error.
       });
