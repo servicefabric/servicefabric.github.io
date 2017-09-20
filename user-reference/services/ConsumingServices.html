@@ -79,6 +79,7 @@
         <p>
             Using the service proxy to call a service is as trivial as a simple method call.
             the service proxy will locate the service instance in the cluster and will route to them the requests.
+            Services supports java CompleteableFuture for a async request response and rx.Observable for a reactive streams pattern.
         </p>
 
 <pre class="prettyprint">
@@ -86,6 +87,12 @@
   greetingService.greeting(new GreetingRequest("Joe"))
     .whenComplete((result, error) -> { // handle the async response.
         System.out.println(result.greeting());
+    });
+
+  // Subscribe to a local or remote service using rx reactive streams.
+  greetingService.greetingStream(new GreetingRequest("Joe"))
+    .subscribe(onNext -> {
+      System.out.println(onNext.greeting())
     });
 </pre>
 

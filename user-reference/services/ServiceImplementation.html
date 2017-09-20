@@ -59,12 +59,18 @@ public class GreetingServiceImpl implements GreetingService {
      new GreetingResponse("Hello " + request.name())
    );
  }
+
+ @Override
+ public Observable&ltGreetingResponse&gt greetingStream(GreetingRequest request){
+   return Observable.just("Hello " + request.name());
+ }
+
 }</pre>
 
         <h4>Java Class</h4>
         <p>
             The service is a simple java class with one or more service methods.
-            a service method may return java-8 CompletableFuture or void in case no result is expected.
+            a service method may return java-8 CompletableFuture | rx.Observable | void in case no result is expected.
             Service requests might be a local or remote call and should not block the service consumer
             (unless the consumer explicitly called the future.get() method).
         </p>
