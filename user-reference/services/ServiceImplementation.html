@@ -42,42 +42,47 @@
         <h3>Implementing services</h3>
 
         <P>
-            Implementing a service is simple as simple as implementing the service interface. as you can see its pure java
-            so your model and implementation stays clean. one more benefit of such approach comes when testing your service,
-            building the service is just like building any java component.
+            Implementing a service is simple as implementing the service interface. As you can see its pure java,
+            so your model and implementation stays clean. One more benefit of such an approach comes when testing your service.
+            Building the service is just like building any other java component.
         </P>
 
         <p>
-            for example:
+            For example:
         </p>
 
 <pre class="prettyprint">
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
+
+
 public class GreetingServiceImpl implements GreetingService {
  @Override
- public CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request) {
-   return CompletableFuture.completedFuture(
+ public Mono&ltGreetingResponse&gt greeting(GreetingRequest request) {
+   return Mono.just(
      new GreetingResponse("Hello " + request.name())
    );
  }
 
  @Override
- public Observable&ltGreetingResponse&gt greetingStream(GreetingRequest request){
-   return Observable.just("Hello " + request.name());
+ public Flux&ltGreetingResponse&gt greetingStream(GreetingRequest request) {
+   return Flux.just(
+     new GreetingResponse("Hello " + request.name())
+   );
  }
-
 }</pre>
 
         <h4>Java Class</h4>
         <p>
             The service is a simple java class with one or more service methods.
-            a service method may return java-8 CompletableFuture | rx.Observable | void in case no result is expected.
+            a service method may return <a href="https://projectreactor.io/" title="Reactor is a fully non-blocking foundation with efficient demand management.">Reactor</a> Project <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html">Mono</a> | <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html">Flux</a> or void in case no result is expected.
             Service requests might be a local or remote call and should not block the service consumer
-            (unless the consumer explicitly called the future.get() method).
+            (unless the consumer explicitly called the <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html#block--">Mono.block()</a method).
         </p>
 
         <a href="ProvisionClusterServices.html">
             <div class="next_link">
-                <strong>Next: </strong> Provisioning Clustered Services
+                <strong>Next: </strong> Provisioning clustered services
             </div>
         </a>
 

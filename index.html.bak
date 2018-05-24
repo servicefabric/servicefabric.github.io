@@ -331,7 +331,7 @@ built and scaled separately.</p>
                                          The ScaleCube Microservices are lightweight and embeddable in-order to reduce restrictions regards service implementation.
                                          It only requires a simple declaration of the Service APIs as an entry point to the service component.
                                          With ScaleCube Microservices its possible to provision services within the same process,
-                                         multiple processes on the same hardware or multiple processes on multiple hardwares thus enabling ease of development and
+                                         multiple process on the same hardware or multiple process on multiple hardwares thus enabling ease of development and
                                          testing of a distributed applications.
                                          There is no need to worry about the final topology and hardware sizing at the development stage. Write once scale anywhere.</p>
                                      <a href="/services.html">Click this link to learn more about ScaleCube Services</a>

@@ -44,17 +44,16 @@
         <h3>Defining Services</h3>
 
         <P>
-            ScaleCube services are described by an interface,
-            This interface not only defines how the service is invoked and implemented,
-            this interface is agnostic to transport protocol.
-            Generally, the service interface, its implementation and consumption should remain agnostic to what transport is being used.
-            It mainly defines the service API and data-model.
+            ScaleCube services are described by an interface.
+            This interface defines how the service is invoked and implemented.
+            Generally, the service interface, its implementation and consumption should remain agnostic to what transport is being used,
+            it mainly defines the service API and data-model.
         </P>
 
         <p>
-            A Microservice is defined using a Service interface the service interface is simple java interface annotated with a
-            <code style="color:darkred;font-weight:bold">@Service</code> annotation and
-            <code style="color:darkred;font-weight:bold">@ServiceMethod</code>
+            A ScaleCube service is defined using an interface, the service interface is simple java interface annotated with a
+            <code style="color:darkred;font-weight:bold">@Service</code> and
+            <code style="color:darkred;font-weight:bold">@ServiceMethod</code> ScaleCube annotaions.
         </p>
 
 
@@ -63,45 +62,45 @@
   public interface GreetingService {
 
     @ServiceMethod
-    CompletableFuture&ltGreetingResponse&gt greeting(GreetingRequest request);
+    Mono&ltGreetingResponse&gt greeting(GreetingRequest request);
 
     @ServiceMethod
-    Observable&ltGreetingResponse&gt greetingStream(GreetingRequest request);
+    Flux&ltGreetingResponse&gt greetingStream(GreetingRequest request);
 
   }</pre>
         <h4>Java Interface</h4>
         <p>
             The service interface is a simple java interface with one or more service methods.
-            a service method may return java-8 CompletableFuture | rx.Observable | void in case no result is expected.
-            Service requests might be a local or remote call and should not block the service consumer
-            (unless the consumer explicitly called the future.get() method).
+            A service method may return <a href="https://projectreactor.io/" title="Reactor is a fully non-blocking foundation with efficient demand management.">Reactor</a> Project <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html">Mono</a> | <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html">Flux</a> or void in case no result is expected.
+            <br>Service requests might be a local or a remote call and should not block the service consumer
+            (unless the consumer explicitly called the <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html#block--">Mono.block()</a> method).
         </p>
 
         <h4>Service Annotations</h4>
 
         <p>
-        <code style="color:darkred;font-weight:bold">@Service</code> Annotation is used to define the service name.
-            by default if not specified the class name is used as service name.
-            optionally, user may specify a specific desired logical name to a service
+        <code style="color:darkred;font-weight:bold">@Service</code> annotation is used to define the service name.
+            By default if a logical name is not specified, the class name is used as the service logical name.
+            Optionally, a user may specify a logical name of a service like so:
             <code style="color:darkred;font-weight:bold">@Service
                 <b style="color:black;font-weight:bold">
                     ("my-specific-service-name")
                 </b>
-            </code>
-            the logical service name is used to address the service in the cluster when its registered and discovered.
-            each service should have its own unique logical name in a given cluster / tenant.
+            </code>.
+            <br>The logical service name is used to address the service in the cluster when it is registered and discovered.
+            Each service should have its own unique logical name in a given cluster / tenant.
         </p>
 
-        <code style="color:darkred;font-weight:bold">@ServiceMethod</code> Annotation is used to define the service method name.
-        by default if not specified the method name in use is the java interface method name.
-        optionally, user may specify a specific desired logical name to a service method
+        <code style="color:darkred;font-weight:bold">@ServiceMethod</code> annotation is used to define a service method.
+        By default if a logical name is not specified, the method name is used as the service method logical name.
+        Optionally, a user may specify a logical name of a service method like so:
         <p><code style="color:darkred;font-weight:bold">@ServiceMethod
             <b style="color:black;font-weight:bold">
                 ("specific-method-name")
             </b>
         </code>
         </p>
-        each service method should have its own unique logical name for a given service.
+        Each service method should have its own unique logical name for a given service.
         </p>
 
 

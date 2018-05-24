@@ -93,7 +93,7 @@
 
         <h5>Service Proxy</h5>
         <p>
-            Microservices are message driven and communicate via well defined service interface APIs. The consumer uses a service proxy as a client to the microservices generated from the Microservice interface.
+            Microservices are message driven and communicate via well defined service interface APIs from the consumer side a proxy is a client to a microservices generated from the Microservice interface.
         </p>
 
         <h3>Getting Started</h3>
