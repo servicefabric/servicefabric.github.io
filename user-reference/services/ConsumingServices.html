@@ -56,22 +56,26 @@
             A service consumer is a member of the service cluster sharing same Cluster Membership / Failure Detection / Gossip discovery group.
             This can be achieved by joining one of the known cluster members AKA <code>.seeds()</code> nodes.
         </p>
-<pre class="prettyprint">
-   // Create microservice consumer
-  Microservices consumer = Microservices.builder()
-    .seeds(providerAddress) // the address of any node at the cluster.
-      .build();
+<pre class="prettyprint">   
+    AtomicInteger port = new AtomicInteger(4000);
+	
+    // Create microservice consumer
+    Microservices consumer = Microservices.builder()
+		.discoveryPort(port.incrementAndGet())
+		.seeds(providerAddress)
+		.build()
+		.startAwait();
 </pre>
 
         <p>
             Using the service interface class we can request from the consumer a <code>ServiceCall</code> for a given
             <code>.api(GreetingService.class)</code>.
-            The call to the <code>api</code> method will build for us a service stub with relevant descriptors to address the specific service in the cluster.
+            The call to the <code>api</code> method will build for us a service proxy with relevant descriptors to address the specific service in the cluster.
         </p>
 
 <pre class="prettyprint">
-  // Get a stub to the service API.
-  ServiceCall serviceCall = consumer.call();
+  // Get a proxy to the service API.
+  ServiceCall serviceCall = consumer.call().create();
   
   // Creates a service proxy passing the service interface class
   GreetingService greetingService = serviceCall.api(GreetingService.class);
@@ -79,8 +83,8 @@
 </pre>
 
         <p>
-            Using the service stub to call the concrete service is as trivial as a simple method call.
-            The service stub will locate the service instance in the cluster and will route to them the requests.
+            Using the service proxy to call the concrete service is as trivial as a simple method call.
+            The service proxy will locate the service instance in the cluster and will route to them the requests.
             Services supports java <a href="https://projectreactor.io/" title="Reactor is a fully non-blocking foundation with efficient demand management.">Reactor</a> Project <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html">Mono</a> for a async request response and <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html">Flux</a> for a reactive streams pattern.
         </p>
 
@@ -91,15 +95,15 @@
 		Mono.from(future).block(Duration.ofSeconds(1));
   System.out.println(response.getrResult());
   
-  Flux<GreetingResponse> stream = greetingService.greetings(new GreetingRequest("Foo"), 
-  new GreetingRequest("Bar")).subscribe(onNext -> {
+  Flux<GreetingResponse> stream = greetingService.greetings(new GreetingRequest("Joe"))
+   .subscribe(onNext -> {
       System.out.println(onNext.getResult())
   });
 </pre>
 
         <p>
             By default the scale-cube services provides a <a href="https://en.wikipedia.org/wiki/Round-robin" title="Round-robin (RR) is one of the algorithms employed by process and network schedulers in computing.">Round-robin</a> service instance selection.
-            Thus for each service request the service stub will use the currently available service endpoints and will invoke
+            Thus for each service request the service proxy will use the currently available service endpoints and will invoke
             one message to one service instance at a time so its balanced across all currently-live-service-instances.
             Using the <code>.router(...)</code> its also possible to control the endpoint selection logic.
         </p>

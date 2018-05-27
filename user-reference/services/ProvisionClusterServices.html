@@ -81,14 +81,16 @@
         </P>
 
         <pre class="prettyprint">
- Microservices provider = Microservices.builder()
-    .seeds(...)
-    .services().service(new GreetingServiceImpl())
-            .tag("Weight", "0.3").add()
-            .tag("Version", "1.0.3").add()
-            .tag("Role", "Master").add()
+    Microservices services1 = Microservices.builder()
+        .seeds(...)
+        .service(new GreetingServiceImpl())
+	.tag("Weight", "0.3")
+	.tag("Version", "1.0.3").add()
+        .tag("Role", "Master").add()
+	.register()
         .build()
-    .build();</pre>
+        .startAwait();
+		</pre>
 
 
 

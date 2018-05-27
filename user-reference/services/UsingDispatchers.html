@@ -69,17 +69,17 @@
         </p>
 
         <pre class="prettyprint">
-  ServiceMessage greetingRequest = Messages.builder()
-          .request("my.greeting.service", "greeting")
+  ServiceMessage greetingRequest = ServiceMessage.builder()
+          .qualifier("my.greeting.service", "greeting")
           .data("joe")
           .build();
 
-  Publisher<ServiceMessage> result =
+  Publisher&lt;ServiceMessage> publisher =
         microservices.call()
 		.requestOne(greetingRequest, String.class);
   
-  long TIMEOUT = 3;
-  ServiceMessage result = Mono.from(result).block(
+  final long TIMEOUT = 3;
+  ServiceMessage result = Mono.from(publisher).block(
       Duration.ofSeconds(TIMEOUT)).data();
   System.out.println(result.data());
 </pre>
@@ -92,12 +92,12 @@
         </p>
         <pre class="prettyprint">
 
-  ServiceMessage greetingRequest = Messages.builder()
-          .request("my.greeting.service", "greeting")
+  ServiceMessage serviceMessage = ServiceMessage.builder()
+          .qualifier("my.greeting.service", "greeting")
           .data("joe")
           .build();
    
-  Flux.from(service.requestMany(greetingRequest))
+  Flux.from(service.requestMany(serviceMessage))
         .subscribe(onNext -> /* service stream responses */);
 }</pre>
 
