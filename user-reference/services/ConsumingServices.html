@@ -57,11 +57,8 @@
             This can be achieved by joining one of the known cluster members AKA <code>.seeds()</code> nodes.
         </p>
 <pre class="prettyprint">   
-    AtomicInteger port = new AtomicInteger(4000);
-	
     // Create microservice consumer
     Microservices consumer = Microservices.builder()
-		.discoveryPort(port.incrementAndGet())
 		.seeds(providerAddress)
 		.build()
 		.startAwait();
@@ -90,12 +87,15 @@
 
 <pre class="prettyprint">
   // Call service and when complete print the greeting.
-  Publisher<GreetingResponse> future = greetingService.greeting(new GreetingRequest("Joe"));
-  GreetingResponse response = 
-		Mono.from(future).block(Duration.ofSeconds(1));
-  System.out.println(response.getrResult());
+  GreetingRequest req = new GreetingRequest("Joe");
   
-  Flux<GreetingResponse> stream = greetingService.greetings(new GreetingRequest("Joe"))
+  Publisher&lt;GreetingResponse> publisher = greetingService.greeting(req);
+  GreetingResponse response = 
+		Mono.from(publisher).subscribe(result -> {
+			System.out.println(result.greeting());
+		});
+  
+  Flux&lt;GreetingResponse> stream = greetingService.greetings(req)
    .subscribe(onNext -> {
       System.out.println(onNext.getResult())
   });
@@ -116,8 +116,9 @@
 
  <pre class="prettyprint">
   // Get a proxy to a service API via a router.
-   CanaryService service = gateway.call()
-        .router(CanaryTestingRouter.class)
+    CanaryService service = gateway.call()
+        .router(Routers.getRouter(CanaryTestingRouter.class))
+        .create()
         .api(CanaryService.class);
 </pre>
 

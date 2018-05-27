@@ -74,8 +74,8 @@
           .data("joe")
           .build();
 
-  Publisher&lt;ServiceMessage> publisher =
-        microservices.call()
+  Publisher&lt;ServiceMessage> publisher = microservices.call()
+		.create()
 		.requestOne(greetingRequest, String.class);
   
   final long TIMEOUT = 3;
