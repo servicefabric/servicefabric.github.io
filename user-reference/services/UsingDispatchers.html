@@ -54,61 +54,53 @@
 
         <p>
             Service Proxy: uses a java interface and restrictive type safe approach when making a service call.
-            using a service proxy there is almost no boiler plate code and the business logic is clean and decoupled by
+            When using a service proxy there is almost no boiler plate code and the business logic is clean and decoupled by
             a pure java interface.
         </p>
 
         <p>
             Dispatchers: service dispatchers uses Message communication using message headers to address a service.
-            dispatchers have the exact same behavior as service proxy without the requirement to have the dependency
+            Dispatchers have the exact same behavior as service proxy without the requirement to have the dependency
             of any specific java interface
         </p>
-
-        <p>
-            Creating a service dispatcher:
-        </p>
-
-<pre class="prettyprint">
-ServiceCall service = microservices.dispatcher().create();
-</pre>
 
         <p>
             Calling the Greeting Service (Request / Response):
         </p>
 
         <pre class="prettyprint">
-service.invoke(Messages.builder()
-          .request("my.greeting.service", "greeting")
-          .data(Message.builder().data("joe").build())
-          .build()).whenComplete((success, error) -> {
-            // service response success/error.
-           });
-}</pre>
+  ServiceMessage greetingRequest = ServiceMessage.builder()
+          .qualifier("my.greeting.service", "greeting")
+          .data("joe")
+          .build();
 
+  Publisher&lt;ServiceMessage> publisher = microservices.call()
+		.create()
+		.requestOne(greetingRequest, String.class);
+  
+  final long TIMEOUT = 3;
+  ServiceMessage result = Mono.from(publisher).block(
+      Duration.ofSeconds(TIMEOUT)).data();
+  System.out.println(result.data());
+</pre>
+        <p>
+            Since Service Messages are not coupled with a java interface they have one more benefit of using timeout
+            per a service request where proxy (explicit service inteface) have only a default timeout that apply for all service requests made by the proxy.
+        </p>
         <p>
             Listen and subscribe the Greeting Service (Reactive Stream):
         </p>
         <pre class="prettyprint">
-service.listen(Messages.builder()
-          .request("my.greeting.service", "greeting")
-          .data(Message.builder().data("joe").build())
-          .build()).subscribe(onNext -> {
-            // service stream responses
-           });
-}</pre>
-        <p>
-            Since Service Dispatchers are not coupled with a java interface they have one more benefit of using timeout
-            per a service request where proxy have only a default timeout that apply for all service requests made by the proxy.
-        </p>
 
-<pre class="prettyprint">
-service.invoke(Messages.builder()
-    .request("my.greeting.service", "greeting")
-    .data("joe").build()), Duration.ofSeconds(1))
-      .whenComplete((success, error) -> {
-      // service response success/error.
-      });
-</pre>
+  ServiceMessage serviceMessage = ServiceMessage.builder()
+          .qualifier("my.greeting.service", "greeting")
+          .data("joe")
+          .build();
+   
+  Flux.from(service.requestMany(serviceMessage))
+        .subscribe(onNext -> /* service stream responses */);
+}</pre>
+
 
         <a href="DefineService.html">
             <div class="next_link">

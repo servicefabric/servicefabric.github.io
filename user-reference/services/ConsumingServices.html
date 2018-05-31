@@ -39,68 +39,73 @@
 <div id="main_content_wrap" class="outer">
     <section id="main_content" class="inner">
 
-        <h3>Consuming services</h3>
+        <h3>Consuming Services</h3>
 
         <P>
-            We’ve seen how to define service interfaces and how to implement them,
+            We have seen how to <a href="DefineService.html">define</a> a service interfaces and how to <a href="ServiceImplementation.html">implement</a> them,
             now we need to consume them.
-            The service interface contains everything ScaleCube-services needs to know about how to invoke a service.
+            The service interface contains everything ScaleCube services needs to know on how to go about invoking a service.
         </P>
 
         <p>
-            A service implementations may be located anywhere at the cluster and or may appear with number of instances.
-            ScaleCube service <code>.proxy()</code> solve this for you. no matter where and how much service instances you have it gives you the full control to consume them.
+            A service implementation may be located anywhere at the cluster and or may appear with number of instances.
+            ScaleCube service <code>ServiceCall</code> solve this for you. no matter where and how much service instances you have it gives you the full control to consume them.
         </p>
 
         <p>
             A service consumer is a member of the service cluster sharing same Cluster Membership / Failure Detection / Gossip discovery group.
-            this can be achieved by joining one of the known cluster members AKA <code>.seeds()</code> nodes.
+            This can be achieved by joining one of the known cluster members AKA <code>.seeds()</code> nodes.
         </p>
-<pre class="prettyprint">
-   // Create microservice consumer
-  Microservices consumer = Microservices.builder()
-    .seeds(providerAddress) // the address of any node at the cluster.
-      .build();
+<pre class="prettyprint">   
+    // Create microservice consumer
+    Microservices consumer = Microservices.builder()
+		.seeds(providerAddress)
+		.build()
+		.startAwait();
 </pre>
 
         <p>
-            Using the service interface class we can request from the consumer a <code>.proxy()</code> for a given
+            Using the service interface class we can request from the consumer a <code>ServiceCall</code> for a given
             <code>.api(GreetingService.class)</code>.
-            the <code>create()</code> will build for us a proxy with relevant descriptors to address the specific service in the cluster.
+            The call to the <code>api</code> method will build for us a service proxy with relevant descriptors to address the specific service in the cluster.
         </p>
 
 <pre class="prettyprint">
   // Get a proxy to the service API.
-  GreetingService greetingService = consumer.proxy()
-    .api(GreetingService.class) // the interface of the service.
-    .create();
+  ServiceCall serviceCall = consumer.call().create();
+  
+  // Creates a service proxy passing the service interface class
+  GreetingService greetingService = serviceCall.api(GreetingService.class);
+
 </pre>
 
         <p>
-            Using the service proxy to call a service is as trivial as a simple method call.
-            the service proxy will locate the service instance in the cluster and will route to them the requests.
-            Services supports java CompleteableFuture for a async request response and rx.Observable for a reactive streams pattern.
+            Using the service proxy to call the concrete service is as trivial as a simple method call.
+            The service proxy will locate the service instance in the cluster and will route to them the requests.
+            Services supports java <a href="https://projectreactor.io/" title="Reactor is a fully non-blocking foundation with efficient demand management.">Reactor</a> Project <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html">Mono</a> for a async request response and <a href="https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html">Flux</a> for a reactive streams pattern.
         </p>
 
 <pre class="prettyprint">
   // Call service and when complete print the greeting.
-  greetingService.greeting(new GreetingRequest("Joe"))
-    .whenComplete((result, error) -> { // handle the async response.
-        System.out.println(result.greeting());
-    });
-
-  // Subscribe to a local or remote service using rx reactive streams.
-  greetingService.greetingStream(new GreetingRequest("Joe"))
-    .subscribe(onNext -> {
-      System.out.println(onNext.greeting())
-    });
+  GreetingRequest req = new GreetingRequest("Joe");
+  
+  Publisher&lt;GreetingResponse> publisher = greetingService.greeting(req);
+  GreetingResponse response = 
+		Mono.from(publisher).subscribe(result -> {
+			System.out.println(result.greeting());
+		});
+  
+  Flux&lt;GreetingResponse> stream = greetingService.greetings(req)
+   .subscribe(onNext -> {
+      System.out.println(onNext.getResult())
+  });
 </pre>
 
         <p>
-            By default the scale-cube services provides a round-robin service instance selection.
-            that means for each service request the proxy will use the currently available service endpoints and will invoke
+            By default the scale-cube services provides a <a href="https://en.wikipedia.org/wiki/Round-robin" title="Round-robin (RR) is one of the algorithms employed by process and network schedulers in computing.">Round-robin</a> service instance selection.
+            Thus for each service request the service proxy will use the currently available service endpoints and will invoke
             one message to one service instance at a time so its balanced across all currently-live-service-instances.
-            using the <code>.router(...)</code> its also possible to control the endpoint selection logic.
+            Using the <code>.router(...)</code> its also possible to control the endpoint selection logic.
         </p>
 
         <p>
@@ -110,20 +115,12 @@
         </p>
 
  <pre class="prettyprint">
-  // Get a proxy to the service API.
-  GreetingService greetingService = consumer.proxy()
-    .api(GreetingService.class)      // the interface of the service.
-    .timeout(Duration.ofSeconds(1))   // timeout limit for expected response
-    .router(CanaryTestingRouter.class) // service instance selector
-    .create();
+  // Get a proxy to a service API via a router.
+    CanaryService service = gateway.call()
+        .router(Routers.getRouter(CanaryTestingRouter.class))
+        .create()
+        .api(CanaryService.class);
 </pre>
-
-
-
-
-
-
-
 
         <a href="ImplementingRouter.html">
             <div class="next_link">

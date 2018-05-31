@@ -46,28 +46,28 @@
         </P>
 
         <p>
-            for example:
+            The code snippet below demonstrates service instance selection by a Weighted Random of a given service tag.
         </p>
 
 
 <pre class="prettyprint">
-public class MyCanaryRouter implements Router {
+public class CanaryTestingRouter implements Router {
 
-  private ServiceRegistry serviceRegistry;
-
-  public MyCanaryRouter(ServiceRegistry serviceRegistry) {
-    this.serviceRegistry = serviceRegistry;
+  @Override
+  public Optional<ServiceReference> route(ServiceRegistry serviceRegistry, 
+      ServiceMessage request) {
+    RandomCollection<ServiceReference> weightedRandom = new RandomCollection<>();
+    serviceRegistry.lookupService(request.qualifier())
+        .forEach(sr -> 
+		weightedRandom.add(
+		  Double.valueOf(sr.tags().get("Weight")), sr));
+    return Optional.of(weightedRandom.next());
   }
 
   @Override
-  public Optional&ltServiceInstance&gt route(ServiceDefinition serviceDefinition) {
-    RandomCollection&ltServiceInstance&gt weightedRandom = new RandomCollection<>();
-    serviceRegistry.serviceLookup(serviceDefinition.serviceName()).stream().forEach(instance -> {
-      weightedRandom.add(
-          Double.valueOf(instance.tags().get("Weight")),
-          instance);
-    });
-    return Optional.of(weightedRandom.next());
+  public List<ServiceReference> routes(ServiceRegistry serviceRegistry, 
+      ServiceMessage request) {
+    return serviceRegistry.lookupService(request.qualifier());
   }
 }
 </pre>
@@ -75,12 +75,8 @@ public class MyCanaryRouter implements Router {
         <h4>Constructor</h4>
         <p>
             To get a handle to the service registry the router may implement a constructor that accepts ServiceRegistry.
-            using the service registry its possible to lookup currently active service instances and manually select
-            the target service instance and then apply custom selection logic and return a selected ServiceInstance.
-        </p>
-
-        <p>
-            In the example above we select service instance by a Weighted Random of a given service tag.
+            Using the service registry its possible to lookup currently active service instances, manually select
+            the target service instance, apply custom selection logic and return a selected ServiceInstance.
         </p>
 
         <a href="UsingDispatchers.html">

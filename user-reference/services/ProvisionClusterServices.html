@@ -42,8 +42,8 @@
         <h3>Provisioning Clustered Services</h3>
 
         <P>
-            So far we have learned how to define and implement a service, actually it was nothing more then implementing a java component.
-            at this section we will learn how to provision our components as clustered micro services.
+            So far we have learned how to <a href="DefineService.html">define</a> and <a href="ServiceImplementation.html">implement</a> a service</a>, actually it was nothing more than implementing a Java component.
+            <br>In this section we will learn how to provision our components as clustered Microservices .
         </P>
 
         <pre class="prettyprint">
@@ -55,46 +55,48 @@
     .build();</pre>
 
         <P>
-            The line above introduces the service component to the cluster <code>.port(4002)</code>, it reads the information from the service interface.
+            The line above introduces the service component to the cluster <code>.port(4002)</code>, it reads the information from the service interface
             and registers the instance in the cluster using the <code>.services(...)</code>  option.
-            its possible to introduce many service instances to the cluster or clusters for example by running several jvm instances
+            It iss possible to introduce many service instances to the cluster or clusters for example by running several JVM instances,
             each containing a service instance or having many services in the same JVM instance.
         </P>
 
         <P>
-            <code>.port(4002)</code> port is the base port the Microservices member to listen on, by default it might increment +n if
-            the base port is taken. once a port is allocated the requested services will register the service on the newly allocated port.
-            if not specified the default base port is 4000.
+            <code>.port(4002)</code> port is the base port the Microservices member listens on, by default it might increment +n if
+            the base port is already taken. Once a port is allocated the requested services will register the service on the newly allocated port.
+            If not specified the default base port is 4000.
         </P>
 
 
         <h4>Service Tags</h4>
         <P>
-            It is also possible to register services with service tags. the service <code>.tag(key,value)</code>
-            is a user defined property as that describes a service instance.
-            tag helps to distinguish instances and a single instance my <code>..add()</code> several tags.
-            <br>Possible reasons for Tags:
-            <br> - we wish route an select a specific service instance 30% of the times.
-            <br> - give specific instance some special role in the cluster.
-            <br> - always choose the most latest version of a service.
+            It is also possible to register services with service tags. The service <code>.tag(key,value)</code>
+            is a user defined property used to describe a service instance.
+            Tag helps to distinguish instances and a single instance, it is possible to add several tags to the service description.
+            <br> Following are several uses of Service Tags:
+            <br> - Route and select a specific service instance 30% of the times.
+            <br> - Assign a specific service instance with special role in the cluster.
+            <br> - Always choose the latest version of a service.
             <br> - ...
         </P>
 
         <pre class="prettyprint">
- Microservices provider = Microservices.builder()
-    .seeds(...)
-    .services().service(new GreetingServiceImpl())
-            .tag("Weight", "0.3").add()
-            .tag("Version", "1.0.3").add()
-            .tag("Role", "Master").add()
+    Microservices services1 = Microservices.builder()
+        .seeds(...)
+        .service(new GreetingServiceImpl())
+	.tag("Weight", "0.3")
+	.tag("Version", "1.0.3")
+        .tag("Role", "Master")
+	.register()
         .build()
-    .build();</pre>
+        .startAwait();
+		</pre>
 
 
 
         <a href="ConsumingServices.html">
             <div class="next_link">
-                <strong>Next: </strong> Consuming Services
+                <strong>Next: </strong> Consuming services
             </div>
         </a>
 
