@@ -55,17 +55,11 @@
     .startAwait();</pre>
 
         <P>
-            The line above introduces the service component to the cluster <code>.port(4002)</code>, it reads the information from the service interface
+            The line above introduces the service component to the cluster, it reads the information from the service interface
             and registers the instance in the cluster using the <code>.services(...)</code>  option.
             It iss possible to introduce many service instances to the cluster or clusters for example by running several JVM instances,
             each containing a service instance or having many services in the same JVM instance.
         </P>
-
-        <!-- P>
-            <code>.port(4002)</code> port is the base port the Microservices member listens on, by default it might increment +n if
-            the base port is already taken. Once a port is allocated the requested services will register the service on the newly allocated port.
-            If not specified the default base port is 4000.
-        </P-->
 
 
         <h4>Service Tags</h4>
