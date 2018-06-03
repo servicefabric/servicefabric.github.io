@@ -49,10 +49,10 @@
         <pre class="prettyprint">
   // Create microservice provider
   Microservices provider = Microservices.builder()
-    .port(4002) // base port
     .seeds(...)
     .services(new GreetingServiceImpl(),...)
-    .build();</pre>
+    .build()
+    .startAwait();</pre>
 
         <P>
             The line above introduces the service component to the cluster <code>.port(4002)</code>, it reads the information from the service interface
@@ -61,11 +61,11 @@
             each containing a service instance or having many services in the same JVM instance.
         </P>
 
-        <P>
+        <!-- P>
             <code>.port(4002)</code> port is the base port the Microservices member listens on, by default it might increment +n if
             the base port is already taken. Once a port is allocated the requested services will register the service on the newly allocated port.
             If not specified the default base port is 4000.
-        </P>
+        </P-->
 
 
         <h4>Service Tags</h4>
