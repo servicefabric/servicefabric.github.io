@@ -1,0 +1,147 @@
+@charset "utf-8";
+#editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.brand-name {
+    padding-top: 8px;
+    padding-left: 10px;
+    text-transform: uppercase;
+}
+.text-white {
+    color: #fff;
+    font-family: "Raleway", Helvetica, Arial, sans-serif;
+}
+.text-blue {
+    color: #77a3e5;
+    font-family: "Raleway", Helvetica, Arial, sans-serif;
+}
+.text-bold, strong {
+    font-weight: 700;
+}
+
+.ace_editor, .ace_editor *
+{
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", "Droid Sans Mono", "Consolas", monospace;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    letter-spacing: 1px !important;
+}
+.top-bar-button {
+    display: inline-block;
+    height: 28px;
+    padding: 0 .8em;
+    border: 1px solid #f1f1f1;
+    color: #f1f1f1;
+    border-radius: 2px;
+    line-height: 1.8;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: inherit;
+    cursor: pointer;
+    overflow: hidden;
+}
+.top-bar-button:hover {
+    background-color: #1ae96c;
+    border: 1px solid #1ae96c;
+    color: #1b1b1b;
+    font-weight: bold;
+}
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+    color: #5a5a5a;
+}
+button:disabled:hover {
+    background-color: #404040;
+    border: 1px solid #418856;
+    font-weight: normal;
+}
+/* horizontal panel*/
+
+.panel-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #5a5a5a;
+    overflow: hidden;
+    height: calc(100vh - 30px);
+    /* avoid browser level touch actions */
+    xtouch-action: none;
+}
+
+.panel-left {
+    flex: 0 0 auto;
+    /* only manually resize */
+    padding: 5px;
+    width: 300px;
+    min-height: 200px;
+    min-width: 150px;
+    white-space: nowrap;
+    background: #272822;
+    color: white;
+}
+
+.splitter {
+    flex: 0 0 auto;
+    width: 14px;
+    background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #313131;
+    min-height: 200px;
+    cursor: col-resize;
+}
+
+.panel-right {
+    flex: 1 1 auto;
+    /* resizable */
+    padding: 5px;
+    width: 100%;
+    min-height: 200px;
+    min-width: 200px;
+    background: #0f0f0f;
+}
+
+html,
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+}
+/* vertical panel */
+
+.panel-container-vertical {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #6b6868;
+    overflow: hidden;
+}
+
+.panel-top {
+    flex: 0 0 auto;
+    /* only manually resize */
+    padding: 3px;
+    height: 150px;
+    width: 100%;
+    white-space: nowrap;
+    background: #292828;
+    color: black;
+}
+
+.splitter-horizontal {
+    flex: 0 0 auto;
+    height: 14px;
+    background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #313131;
+    cursor: row-resize;
+}
+
+.panel-bottom {
+    flex: 1 1 auto;
+    /* resizable */
+    padding: 1px;
+    min-height: 200px;
+    background: #000000;
+    overflow-y:auto;
+}
