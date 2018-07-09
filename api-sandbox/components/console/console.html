@@ -1,0 +1,19 @@
+<html>
+	<head>
+    <link rel="stylesheet" type="text/css" href="console.css"/>
+    <script src="console.js"></script>
+  </head>
+
+	<body >
+        <div style="margin:0 auto;  width: 300px; height: 300px" id="log-container" class="log-container"></div>
+    </body>
+   <script>
+     let console = new Console("log-container");
+     console.info("this is an INFO message entry");
+     console.error("this is an ERROR message entry");
+     console.debug("this is an DEBUG message entry");
+     console.warn("this is an WARN message entry");
+   </script>
+
+
+</html>
