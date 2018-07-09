@@ -30,6 +30,26 @@
     font-weight: 400 !important;
     letter-spacing: 1px !important;
 }
+.send-button {
+    display: inline-block;
+    height: 28px;
+    padding: 0 .8em;
+    border: 1px solid #f1f1f1;
+    color: #f1f1f1;
+    border-radius: 2px;
+    line-height: 1.8;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: inherit;
+    cursor: pointer;
+    overflow: hidden;
+}
+.send-button:hover {
+    background-color: #1ae96c;
+    border: 1px solid #1ae96c;
+    color: #1b1b1b;
+    font-weight: bold;
+}
 .top-bar-button {
     display: inline-block;
     height: 28px;
