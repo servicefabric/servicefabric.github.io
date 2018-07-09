@@ -76,9 +76,7 @@ svg.icon {
 .log-line:hover {
   background-color: #323232;
 }
-span {
-  padding-right: 10px;
-}
+
 a::before {
   content: counter(line-numbering);
   counter-increment: line-numbering;
