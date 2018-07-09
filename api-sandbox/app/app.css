@@ -95,7 +95,7 @@ button:disabled:hover {
 .panel-left {
     flex: 0 0 auto;
     /* only manually resize */
-    padding: 5px;
+    padding: 3px;
     width: 300px;
     min-height: 200px;
     min-width: 150px;
@@ -156,7 +156,9 @@ body {
     background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #313131;
     cursor: row-resize;
 }
-
+/*
+  css corrections:
+ */
 .panel-bottom {
     flex: 1 1 auto;
     /* resizable */
@@ -164,4 +166,8 @@ body {
     min-height: 200px;
     background: #000000;
     overflow-y:auto;
+}
+
+.list-group-item {
+    padding: 7px;
 }
