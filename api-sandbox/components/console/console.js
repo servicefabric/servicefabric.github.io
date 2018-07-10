@@ -1,7 +1,6 @@
 class Console {
 
   constructor(elementId) {
-    this.logContainer = document.getElementById(elementId);
     this.id =  "log-entries" + window.performance.now();
     let html = "<div>"
         + "<div class='log-header'>"
@@ -14,7 +13,7 @@ class Console {
         + "<div id='"+this.id+"' class='log-entries'></div>"
       + "</div>";
 
-    this.logContainer.appendChild(this.toElement(html));
+    appendHtmlElement(elementId, html);
     this.entries = document.getElementById(this.id);
   }
 
@@ -50,17 +49,6 @@ class Console {
     this.appendEntry("WARN",message, time);
   }
 
-  /**
-   * @return {Element}
-   * @param html
-   */
-  toElement (html) {
-    let template = document.createElement('template');
-    html = html.trim(); // Never return a text node of whitespace as the result
-    template.innerHTML = html;
-    return template.content.firstChild;
-  }
-
   appendEntry(type, msg, time ){
     let title = "This command finished after "+ time +" seconds.";
     let color = "log-info";
@@ -80,7 +68,7 @@ class Console {
       +   "<span class='"+color+"'>"+ msg +"</span>"
       + "</div>";
 
-    this.entries.appendChild(this.toElement(html));
+      appendHtmlElement(this.id,html);
   }
 }
 function now(){
