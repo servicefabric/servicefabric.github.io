@@ -55,23 +55,28 @@ class Connection {
 
         this.connectBtn = document.getElementById(connectBtnId);
         this.connectBtn.onclick = function () {
-            self.connectBtn.disabled = true;
-            self.disconnectBtn.disabled = false;
+            self.onConnect();
             self.connect(self.connectionElement.value);
         };
 
         // Get the button that opens the modal
         this.disconnectBtn = document.getElementById(closeConnectionBtnId);
         this.disconnectBtn.onclick = function () {
-            self.disconnectBtn.disabled = true;
-            self.connectBtn.disabled = false;
+            self.onDisconnect();
             self.disconnect();
         };
         self = this;
         this.toggleButton(self.disconnectBtn);
 
     }
-
+    onConnect(){
+        self.connectBtn.disabled = true;
+        self.disconnectBtn.disabled = false;
+    }
+    onDisconnect(){
+        self.disconnectBtn.disabled = true;
+        self.connectBtn.disabled = false;
+    }
     toggleButton(btn){
         if (btn.disabled === false) {
             btn.disabled = true;
@@ -95,7 +100,10 @@ class Connection {
             this.listen().subscribe( next=>{
                 console.debug(next);
             },error => {
-                this.console.error(error.__proto__.constructor.name + " on " +  error.currentTarget.url + " encounter error: " + error.type + "with code: " + error.code);
+                if(error.__proto__.constructor.name === "CloseEvent") {
+                    self.onDisconnect();
+                }
+                this.console.error(error.__proto__.constructor.name + " on " +  error.currentTarget.url + " encounter error: " + error.type + " reason code: " + error.code);
             });
         } catch (error){
             this.console.error(error);
