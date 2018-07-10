@@ -28,11 +28,15 @@
     <script src="../components/console/console.js" type="text/javascript" charset="utf-8"></script>
     <script src="../components/connection/Connection.js" type="text/javascript" charset="utf-8"></script>
     <script src="../components/tree/ApiTree.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../components/Utils.js" type="text/javascript" charset="utf-8"></script>
     <script src="../services/WebSocketTransport.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
     <link rel="stylesheet" href="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/css/bootstrap-treeview.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../components/settings/settings.css"/>
+    <script src="../components/settings/settings.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../components/console/console.css"/>
     <link rel="stylesheet" type="text/css" href="../components/connection/Connection.css"/>
@@ -45,10 +49,13 @@
 </header>
 
 <body>
+<div id="app-settings-modal" class="modal"></div>
 <div class="panel-container">
+    <!-- The Modal -->
+
     <div class="panel-left">
         <div style="background: #323c4a;" id="actions">
-            <button id="connectionSettingsBtn" class="top-bar-button" title="settings" >
+            <button id="app-settings-btn" class="top-bar-button" title="settings" >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
                     <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
@@ -83,21 +90,10 @@
     </div>
 </div>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
 
-    <!-- Modal content -->
-    <div class="modal-content">
-        <h3>Connection Settings:</h3>
-        <span class="close">&times;</span>
-        <div class="form-fields">
-            <label>Location:</label>
-            <input id="wsurl" size="40" value="wss://demos.kaazing.com/echo"></input>
-        </div>
-    </div>
-</div>
 
 <script>
+    var settings = new Settings('app-settings-modal');
 
     $(".panel-left").resizable({
         handleSelector: ".splitter",
@@ -112,7 +108,7 @@
     var editor = new CodeEditor("inputEditor");
 
     var console = new Console("console");
-    let connection = new Connection(console,"connectionSettingsBtn","connect","disconnect","wsurl","sendBtn",editor);
+    let connection = new Connection(settings,console,"connect","disconnect","wsurl","sendBtn",editor);
 
     var tree = new ApiTree("treeview",(node) => {
         editor.setValue(JSON.stringify( node.data));

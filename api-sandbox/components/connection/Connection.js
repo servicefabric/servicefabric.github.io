@@ -9,7 +9,7 @@ class NoConnection {
 
 class Connection {
 
-    constructor(console,openModalBtnId,connectBtnId, closeConnectionBtnId,inputBoxId, sendBtnId, editor){
+    constructor(settings,console,connectBtnId, closeConnectionBtnId,inputBoxId, sendBtnId, editor){
         self.console = console;
         self.inputValue = editor;
         this.console = console;
@@ -17,46 +17,16 @@ class Connection {
         this.transport = new NoConnection ();
         this.connectionElement = document.getElementById(inputBoxId);
         self.connectionElement = this.connectionElement;
-        // Get the modal
-        this.modal = document.getElementById('myModal');
-        self.modal = document.getElementById('myModal');
-        // Get the button that opens the modal
-        this.modalOpenBtn = document.getElementById(openModalBtnId);
-
-        // Get the <span> element that closes the modal
-        this.span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal
-        this.modalOpenBtn.onclick = function() {
-            self.modal.style.display = "block";
-        };
-
-        // When the user clicks on the button, open the modal
-        this.modalOpenBtn.onclick = function() {
-            self.modal.style.display = "block";
-        };
 
         this.sendBtnId = document.getElementById(sendBtnId);
         this.sendBtnId.onclick = function () {
             self.send(self.inputValue.getValue());
         };
 
-        // When the user clicks on <span> (x), close the modal
-        this.span.onclick = function() {
-            self.modal.style.display = "none";
-        };
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == this.modal) {
-                self.modal.style.display = "none";
-            }
-        };
-
         this.connectBtn = document.getElementById(connectBtnId);
         this.connectBtn.onclick = function () {
             self.onConnect();
-            self.connect(self.connectionElement.value);
+            self.connect(currentSettings.url);
         };
 
         // Get the button that opens the modal
@@ -67,7 +37,6 @@ class Connection {
         };
         self = this;
         this.toggleButton(self.disconnectBtn);
-
     }
     onConnect(){
         self.connectBtn.disabled = true;
@@ -95,7 +64,13 @@ class Connection {
 
     connect(endpointUri) {
         try {
-            this.transport =  new WebSocketTransport(endpointUri);
+            if(currentSettings.transport === "WebSocket"){
+                this.transport =  new WebSocketTransport(endpointUri);
+            } else {
+                this.console.error(currentSettings.transport + " is Comming soon... this transport is yet supported.");
+                return;
+            }
+            
             this.console.info("Connected to: " + endpointUri);
             this.listen().subscribe( next=>{
                 console.debug(next);
