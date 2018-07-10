@@ -70,7 +70,7 @@ class Connection {
                 this.console.error(currentSettings.transport + " is Comming soon... this transport is yet supported.");
                 return;
             }
-            
+
             this.console.info("Connected to: " + endpointUri);
             this.listen().subscribe( next=>{
                 console.debug(next);
