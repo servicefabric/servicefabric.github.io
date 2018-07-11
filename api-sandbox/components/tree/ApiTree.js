@@ -1,22 +1,37 @@
 
 var treeModel = [
     {
-        text: "ScaleCube",
+        text: "<span class='brand-name icon node-icon'><span style='padding-right: 0px' class='text-white text-bold'>SCALE</span><span class='text-blue text-bold'>CUBE</span></span>",
         id : "529621b7e4b0a808adf48a31",
         type : "ORG",
         backColor:"black",
         nodes: [
             {
-                text: "Service Message",
+                text: "API Gateway",
                 id : "629621b7e4b0a808adf48a32",
                 type : "API",
                 backColor:"black",
                 nodes: [
                     {
                         id : "729621b7e4b0a808adf48a33",
-                        text: "Template",
+                        text: "WebSocket Greeting Once",
                         backColor:"black",
-                        data: {"q":"//", "d": {} }
+                        data: {"q":"/greeting/one","sid":1,"d":"hello"}
+                    },{
+                        id : "729621b7e4b0a808adf48a33",
+                        text: "WebSocket Greeting Many",
+                        backColor:"black",
+                        data: {"q":"/greeting/many","sid":1,"d":"hello"}
+                    },{
+                        id : "829621b7e4b0a808adf48a34",
+                        text: "RSocket Greeting Once",
+                        backColor:"black",
+                        data: { metadata : {"q": "/greeting/one"}, data:"hello" }
+                    },{
+                        id : "829621b7e4b0a808adf48a34",
+                        text: "RSocket Greeting Many",
+                        backColor:"black",
+                        data: { metadata : {"q": "/greeting/many"}, data:"hello" }
                     }
                 ]
             }

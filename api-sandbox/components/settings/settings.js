@@ -58,7 +58,7 @@ class Settings {
                                                 + "<h5>Adding Classes</h5>"
                                             + "</div>"
                                         + "</div>"
-                                        + "<input type='text' id='transport-url' name='transport-url' class='fullwidth' value='wss://echo.websocket.org/' placeholder='ws://localhost:8080'>"
+                                        + "<input type='text' id='transport-url' name='transport-url' class='fullwidth' value='ws://localhost:8080/' placeholder='ws://localhost:8080'>"
                                     + "</form>"
                                 + "</div>"
                         + "</div>"
