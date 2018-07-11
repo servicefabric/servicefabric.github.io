@@ -24,12 +24,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js.map"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js"></script>
 
+    <script type="text/javascript" src='https://bundle.run/rsocket-core@0.0.7'></script>
+    <script type="text/javascript" src='https://bundle.run/rsocket-websocket-client@0.0.7'></script>
+
     <script src="../components/editor/CodeEditor.js" type="text/javascript" charset="utf-8"></script>
     <script src="../components/console/console.js" type="text/javascript" charset="utf-8"></script>
     <script src="../components/connection/Connection.js" type="text/javascript" charset="utf-8"></script>
     <script src="../components/tree/ApiTree.js" type="text/javascript" charset="utf-8"></script>
     <script src="../components/Utils.js" type="text/javascript" charset="utf-8"></script>
     <script src="../services/WebSocketTransport.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/RSocketTransport.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
     <link rel="stylesheet" href="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/css/bootstrap-treeview.css" />
@@ -93,6 +97,7 @@
 
 
 <script>
+
     var settings = new Settings('app-settings-modal');
 
     $(".panel-left").resizable({
@@ -107,8 +112,8 @@
 
     var editor = new CodeEditor("inputEditor");
 
-    var console = new Console("console");
-    let connection = new Connection(settings,console,"connect","disconnect","wsurl","sendBtn",editor);
+    var consoleLog = new Console("console");
+    let connection = new Connection(settings,consoleLog,"connect","disconnect","wsurl","sendBtn",editor);
 
     var tree = new ApiTree("treeview",(node) => {
         editor.setValue(JSON.stringify( node.data));

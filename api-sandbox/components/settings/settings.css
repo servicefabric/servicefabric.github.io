@@ -5602,10 +5602,6 @@ body.student .footer-professor .layout-change-links::after {
     margin: 0 0 5px 0
 }
 
-.link-footer .copyright .logo .large-screen-logo {
-    background: url(https://static.codepen.io/assets/footer/codepen-logo-midgray-0711f75fbf09cc2e68d3836668e0eba8c28d76760d1e40386095ce503428bd03.svg) no-repeat top right;
-    background-size: 138px 26px
-}
 
 .link-footer .copyright .logo .large-screen-logo {
     display: block;
@@ -5614,16 +5610,6 @@ body.student .footer-professor .layout-change-links::after {
 
 .link-footer .copyright .logo .small-screen-logo {
     display: none
-}
-
-@font-face {
-    font-family: "Telefon Black";
-    src: url(https://static.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-78992f1ed89d5cadb09702e6a0d5bbb0302e85c728c1f8d18fdc8aa56870104c.woff) format("woff"), url(https://static.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-6435f1279663bb84d4a1d8effe0adafbf8499ff6efdd01a59be848c90d8c4c0b.woff2) format("woff2")
-}
-
-@font-face {
-    font-family: "Telefon";
-    src: url(https://static.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-b7a87e0fbd213943fae0c0ef5985635dd43fa9c24876b2725127a13ccaf4ab6a.woff) format("woff"), url(https://static.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-446e9e68a40500d1b24a18331c6d6a78226d276079dcdc2ad9e80a48bdcfd948.woff2) format("woff2")
 }
 
 html {

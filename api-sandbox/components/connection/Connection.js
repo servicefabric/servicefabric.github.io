@@ -64,16 +64,18 @@ class Connection {
 
     connect(endpointUri) {
         try {
-            if(currentSettings.transport === "WebSocket"){
-                this.transport =  new WebSocketTransport(endpointUri);
+            if(currentSettings.transport === "WebSocket") {
+                this.transport = new WebSocketTransport(endpointUri);
+                this.console.info("Connected to: " + endpointUri);
+            } else if (currentSettings.transport === "RSocket") {
+                this.transport = new RSocketTransport(endpointUri);
+                this.console.info("Connected to: " + endpointUri);
             } else {
                 this.console.error(currentSettings.transport + " is Comming soon... this transport is yet supported.");
                 return;
             }
-
-            this.console.info("Connected to: " + endpointUri);
-            this.listen().subscribe( next=>{
-                console.debug(next);
+            this.listen().subscribe(next => {
+                console.debug(JSON.stringify(next));
             },error => {
                 if(error.__proto__.constructor.name === "CloseEvent") {
                     self.onDisconnect();
@@ -81,12 +83,13 @@ class Connection {
                 this.console.error(error.__proto__.constructor.name + " on " +  error.currentTarget.url + " encounter error: " + error.type + " reason code: " + error.code);
             });
         } catch (error){
-            this.console.error(error);
+            this.console.error(JSON.stringify(error));
         }
     }
     transport (){
         return this.transport;
     }
+
     listen(){
         return this.transport.listen();
     }
@@ -94,7 +97,11 @@ class Connection {
     send(msg) {
         try {
             if(this.transport.isConnected()){
-                this.transport.next(msg);
+                if(currentSettings.transport === "WebSocket") {
+                    this.transport.next(JSON.parse(msg));
+                } else {
+                    this.transport.next(msg);
+                }
                 this.console.warn(msg);
             } else {
                 this.console.error("The connection is currently Disconnected from endpoint: " + this.connectionElement.value + " first connect and try again.");
