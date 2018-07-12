@@ -3556,6 +3556,7 @@ body {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+    padding-bottom: 40px
 }
 
 .hidden-iframe {
@@ -6899,12 +6900,9 @@ textarea:focus, textarea:active {
 
 .modal {
     position: fixed;
-    width: 600px;
     min-width: 380px;
     left: 50%;
-    top: 50px;
     padding: 20px;
-    background: black;
     z-index: 201
 }
 
