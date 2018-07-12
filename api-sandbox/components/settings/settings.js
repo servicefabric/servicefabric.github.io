@@ -1,4 +1,7 @@
-var currentSettings;
+var currentSettings = {
+    transport : "WebSocket",
+    url : "ws://localhost:8080"
+};
 class Settings {
 
 

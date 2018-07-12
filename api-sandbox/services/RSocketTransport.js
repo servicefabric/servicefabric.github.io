@@ -37,17 +37,22 @@ class RSocketTransport {
         this.status = true;
     };
 
+    onStatusChanged(statusCallback){
+        this.statusChangedCallback = statusCallback;
+    };
+
     disconnect() {
+        this.status = false;
         this.client.close();
-    }
+    };
 
     isConnected() {
         return this.status;
-    }
+    };
 
     uri(){
         return this.uri;
-    }
+    };
 
     next (next) {
         let input = JSON.parse(next);
@@ -70,7 +75,7 @@ class RSocketTransport {
 
     listen() {
         return this.subject;
-    }
+    };
 }
 
 

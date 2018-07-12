@@ -14,12 +14,19 @@
 
     </script>
 
+    <link rel="stylesheet" type="text/css" href="app.css"/>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-options.js" type="text/javascript" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://rawgit.com/RickStrahl/jquery-resizable/master/src/jquery-resizable.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/css/bootstrap-treeview.css" />
+
+    <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js.map"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js"></script>
@@ -28,23 +35,21 @@
     <script type="text/javascript" src='https://bundle.run/rsocket-websocket-client@0.0.7'></script>
 
     <script src="../components/editor/CodeEditor.js" type="text/javascript" charset="utf-8"></script>
+
     <script src="../components/console/console.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../components/console/console.css"/>
+
     <script src="../components/connection/Connection.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../components/connection/Connection.css"/>
+
+    <script src="../components/settings/settings.js"></script>
+    <link rel="stylesheet" type="text/css" href="../components/settings/settings.css"/>
+
     <script src="../components/tree/ApiTree.js" type="text/javascript" charset="utf-8"></script>
+
     <script src="../components/Utils.js" type="text/javascript" charset="utf-8"></script>
     <script src="../services/WebSocketTransport.js" type="text/javascript" charset="utf-8"></script>
     <script src="../services/RSocketTransport.js" type="text/javascript" charset="utf-8"></script>
-
-    <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
-    <link rel="stylesheet" href="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/css/bootstrap-treeview.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" type="text/css" href="../components/settings/settings.css"/>
-    <script src="../components/settings/settings.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="../components/console/console.css"/>
-    <link rel="stylesheet" type="text/css" href="../components/connection/Connection.css"/>
-    <link rel="stylesheet" type="text/css" href="app.css"/>
 
 </head>
 
@@ -53,24 +58,12 @@
 </header>
 
 <body>
-<div id="app-settings-modal" class="modal"></div>
+
 <div class="panel-container">
     <!-- The Modal -->
 
     <div class="panel-left">
-        <div style="background: #323c4a;" id="actions">
-            <button id="app-settings-btn" class="top-bar-button" title="settings" >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
-                    <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
-                    <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line>
-                    <line x1="17" y1="16" x2="23" y2="16"></line>
-                </svg>Settings
-            </button>
-            <button class="top-bar-button" id="connect">Connect</button>
-            <button class="top-bar-button" id="disconnect">Disconnect</button>
-        </div>
+        <div id="connections"></div>
         <div style="height: 10px"></div>
         <div id="treeview" class="treeview"></div>
     </div>
@@ -98,8 +91,6 @@
 
 <script>
 
-    var settings = new Settings('app-settings-modal');
-
     $(".panel-left").resizable({
         handleSelector: ".splitter",
         resizeHeight: false
@@ -111,9 +102,17 @@
     });
 
     var editor = new CodeEditor("inputEditor");
+    var console = new Console("console");
+    var connection = new Connection("connections");
 
-    var consoleLog = new Console("console");
-    let connection = new Connection(settings,consoleLog,"connect","disconnect","wsurl","sendBtn",editor);
+    connection.onConnectionChanged((event)=> {
+
+    });
+
+    this.sendBtnId = document.getElementById("sendBtn");
+    this.sendBtnId.onclick = function () {
+        connection.send(editor.getValue());
+    };
 
     var tree = new ApiTree("treeview",(node) => {
         editor.setValue(JSON.stringify( node.data));
