@@ -15,6 +15,7 @@ class CodeEditor {
             enableSnippets: true,
             enableLiveAutocompletion: false
         });
+        this.beautify = ace.require("ace/ext/beautify");
         this.editor.resize();
     }
 
@@ -24,6 +25,7 @@ class CodeEditor {
 
     setValue (code) {
         this.editor.setValue(code);
+        this.beautify.beautify(this.editor.getSession());
     }
     setMode(mode){
         this.editor.session.setMode("ace/mode/" + mode);
