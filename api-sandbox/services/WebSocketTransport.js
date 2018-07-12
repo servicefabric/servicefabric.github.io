@@ -7,6 +7,10 @@ class WebSocketTransport {
         this.status = true;
     };
 
+    onStatusChanged(statusCallback){
+        this.statusChangedCallback = statusCallback;
+    };
+
     isConnected() {
         return this.status;
     }
@@ -19,10 +23,13 @@ class WebSocketTransport {
     };
 
     disconnect() {
+        this.status = false;
         this.subject.unsubscribe();
     };
 
     listen() {
         return this.subject;
     };
+
+
 }
