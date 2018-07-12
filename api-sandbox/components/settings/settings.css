@@ -3556,7 +3556,6 @@ body {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    padding-bottom: 40px
 }
 
 .hidden-iframe {
