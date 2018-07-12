@@ -22,6 +22,12 @@ var treeModel = [
                         text: "WebSocket Greeting Many",
                         backColor:"black",
                         data: {"q":"/greeting/many","sid":1,"d":"hello"}
+                    },
+                    {
+                        id : "729621b7e4b0a808adf48a33",
+                        text: "WebSocket Complete Signal",
+                        backColor:"black",
+                        data: {"sid": 1, "sig": 3}
                     },{
                         id : "829621b7e4b0a808adf48a34",
                         text: "RSocket Greeting Once",
