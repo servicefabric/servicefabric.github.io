@@ -33,15 +33,14 @@
 .send-button {
     display: inline-block;
     height: 28px;
-    width: 100%;
-    padding: 0 .8em;
+    width: calc(100% - 2px);
     border: 1px solid #f1f1f1;
     color: #f1f1f1;
     border-radius: 2px;
     line-height: 1.8;
     font-size: 14px;
     font-weight: 300;
-    background-color: inherit;
+    background-color: #232323;
     cursor: pointer;
     overflow: hidden;
 }
@@ -122,7 +121,14 @@ button:disabled:hover {
     min-width: 200px;
     background: #0f0f0f;
 }
-
+.treeview {
+    width: 100%;
+    height: calc(100% - 14px);
+    color: white;
+}
+.k-splitbar {
+    background: black;
+}
 html,
 body {
     height: 100%;
@@ -135,7 +141,7 @@ body {
 .panel-container-vertical {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100% - 2px);
     border: 1px solid #6b6868;
     overflow: hidden;
 }
@@ -144,8 +150,8 @@ body {
     flex: 0 0 auto;
     /* only manually resize */
     padding: 3px;
-    height: 150px;
-    width: 100%;
+    height: calc(100% - 67px);
+    width: calc(100% - 7px);
     white-space: nowrap;
     background: #292828;
     color: black;
