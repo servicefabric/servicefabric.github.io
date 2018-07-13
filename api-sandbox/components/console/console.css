@@ -1,21 +1,23 @@
 .yellow {
-  color: #FFFF91;
-  font-weight: 700;
+  color: #eae4a3c2;
 }
+
 .green {
   color: #aef877;
-  font-weight: 700;
+}
+
+.purple {
+  color: #b995b8;
 }
 
 .red {
   color: #e83a3a;
-  font-weight: 700;
 }
 
 .log-header {
-  height: 28px;
+  height: 32px;
   margin: 0;
-  padding: .2em .2em .2em;
+  padding: .1em .1em;
   text-align: right;
   background-color: #403f3f;
 }

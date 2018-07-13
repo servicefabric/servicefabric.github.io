@@ -18,3 +18,18 @@ function appendHtmlElement (parentId, html) {
     template.innerHTML = html;
     container.appendChild(template.content.firstChild);
 }
+
+function getJSON(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'text';
+    xhr.onload = function() {
+        var status = xhr.status;
+        if (status === 200) {
+            callback(null, JSON.parse(xhr.responseText));
+        } else {
+            callback(status, xhr.response);
+        }
+    };
+    xhr.send();
+};

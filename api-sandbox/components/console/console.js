@@ -1,3 +1,4 @@
+
 class Console {
 
   constructor(elementId) {
@@ -20,6 +21,13 @@ class Console {
   id(){
     return this.id;
   }
+
+  log (message, time) {
+        if(time===undefined){
+            time= now();
+        }
+        this.appendEntry("DEBUG",message,time);
+    }
 
   info (message, time) {
     if(time===undefined){
