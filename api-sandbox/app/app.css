@@ -137,7 +137,7 @@ button:disabled:hover {
 }
 .treeview {
     width: 100%;
-    height: calc(100% - 44px);
+    height: calc(100% - 74px);
     color: white;
 }
 .k-splitbar {
@@ -163,7 +163,7 @@ body {
 .panel-top {
     flex: 0 0 auto;
     /* only manually resize */
-    height: calc(100% - 31px);
+    height: calc(100% - 1px);
     width: calc(100%);
     white-space: nowrap;
     background-color: #292828;
