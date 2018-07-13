@@ -1,49 +1,5 @@
 
-var treeModel = [
-    {
-        text: "<span class='brand-name icon node-icon'><span style='padding-right: 0px' class='text-white text-bold'>SCALE</span><span class='text-blue text-bold'>CUBE</span></span>",
-        id : "529621b7e4b0a808adf48a31",
-        type : "ORG",
-        backColor:"black",
-        nodes: [
-            {
-                text: "API Gateway",
-                id : "629621b7e4b0a808adf48a32",
-                type : "API",
-                backColor:"black",
-                nodes: [
-                    {
-                        id : "729621b7e4b0a808adf48a33",
-                        text: "WebSocket Greeting Once",
-                        backColor:"black",
-                        data: {"q":"/greeting/one","sid":1,"d":"hello"}
-                    },{
-                        id : "729621b7e4b0a808adf48a33",
-                        text: "WebSocket Greeting Many",
-                        backColor:"black",
-                        data: {"q":"/greeting/many","sid":1,"d":"hello"}
-                    },
-                    {
-                        id : "729621b7e4b0a808adf48a33",
-                        text: "WebSocket Complete Signal",
-                        backColor:"black",
-                        data: {"sid": 1, "sig": 3}
-                    },{
-                        id : "829621b7e4b0a808adf48a34",
-                        text: "RSocket Greeting Once",
-                        backColor:"black",
-                        data: { metadata : {"q": "/greeting/one"}, data:"hello" }
-                    },{
-                        id : "829621b7e4b0a808adf48a34",
-                        text: "RSocket Greeting Many",
-                        backColor:"black",
-                        data: { metadata : {"q": "/greeting/many"}, data:"hello" }
-                    }
-                ]
-            }
-        ]
-    }
-];
+var treeModel = [];
 
 function getTree() {
     return treeModel;
@@ -56,6 +12,14 @@ class ApiTree {
         this.containerId = '#'+container;
         handler = callback;
         this.render();
+    }
+
+    import(url){
+        let response = getJSON (url, function (status, model) {
+            if(status===null) {
+                tree.pushModel(model);
+            }
+        });
     }
 
     render() {
@@ -81,20 +45,41 @@ class ApiTree {
             onSearchCleared: undefined
         });
     }
-
-    addNode(text, nodeText,nodeData ) {
-        var newNode = {
-            text: text,
-            backColor:"black",
-                nodes: [{
-                    text: nodeText,
-                    backColor:"black",
-                    data: nodeData
-                }
-            ]
-        };
-        treeModel[0].nodes.push(newNode);
+    pushModel(tree) {
+        treeModel.push(tree);
         this.render();
+    }
+
+    append(parentId,node) {
+        let parent = this.node(parentId);
+
+        node.backColor = "black"
+        parent.nodes.push(node);
+
+    }
+
+    node(id, node) {
+        if(node==undefined){
+            node = treeModel;
+        }
+
+        let i = 0;
+        let search = id.split('/');
+        let root = node.find(parent=>parent.id === search[i]);
+        if(search.length===1){
+            return root;
+        }
+
+        // looking for sub items.
+        i++;
+        let parent = root;
+        let result = null;
+        for(; i < search.length ; i++) {
+            result = parent.nodes.find( item => item.id === search[i] );
+            parent = result;
+        }
+
+        return result;
     }
 }
 
