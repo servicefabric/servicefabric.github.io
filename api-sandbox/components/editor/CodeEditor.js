@@ -11,7 +11,7 @@ class CodeEditor {
         this.editor.autocomplete = false;
         this.editor.autoIndent = false;
         this.editor.setOptions({
-            minLines: 15,
+            minLines: 8,
             enableBasicAutocompletion: true,
             enableSnippets: true,
             enableLiveAutocompletion: false,
