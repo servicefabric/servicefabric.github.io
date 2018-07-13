@@ -11,11 +11,17 @@ class CodeEditor {
         this.editor.autocomplete = false;
         this.editor.autoIndent = false;
         this.editor.setOptions({
+            minLines: 15,
             enableBasicAutocompletion: true,
             enableSnippets: true,
-            enableLiveAutocompletion: false
+            enableLiveAutocompletion: false,
+            maxLines: Infinity
         });
         this.beautify = ace.require("ace/ext/beautify");
+        this.editor.resize();
+    }
+
+    resize (){
         this.editor.resize();
     }
 
