@@ -51,7 +51,6 @@
   Microservices provider = Microservices.builder()
     .seeds(...)
     .services(new GreetingServiceImpl(),...)
-    .build()
     .startAwait();</pre>
 
         <P>
@@ -82,7 +81,6 @@
 	.tag("Version", "1.0.3")
         .tag("Role", "Master")
 	.register()
-        .build()
         .startAwait();
 		</pre>
 
