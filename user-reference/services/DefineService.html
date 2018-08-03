@@ -67,6 +67,9 @@
     @ServiceMethod
     Flux&ltGreetingResponse&gt greetingStream(GreetingRequest request);
 
+    @ServiceMethod
+    Flux&ltGreetingResponse&gt greetingChannel(Flux&ltGreetingRequest&gt requests);
+    
   }</pre>
         <h4>Java Interface</h4>
         <p>
