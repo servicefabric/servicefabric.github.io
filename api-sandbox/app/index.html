@@ -115,7 +115,7 @@
     };
 
     var tree = new ApiTree("treeview",(node) => {
-        editor.setValue(JSON.stringify( node.data));
+        editor.setValue(JSON.stringify(node.data, null, 2));
     });
 
     $("#horizontal").kendoSplitter({
