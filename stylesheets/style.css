@@ -1888,6 +1888,19 @@ h6,
   letter-spacing: 0;
 }
 
+.xbig {
+  font-size: 78px;
+  font-weight: bold;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.normal {
+  font-size: 22px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
 @media (min-width: 768px) {
   .big {
     font-size: 20px;
