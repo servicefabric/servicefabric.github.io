@@ -3235,8 +3235,8 @@ body {
 *               of common elements in page footer
 */
 .page-foot {
-  padding: 32px 0;
   background-color: #1b1b1b;
+  height: 50px;
 }
 
 
@@ -3269,9 +3269,7 @@ body {
 }
 
 @media (min-width: 768px) {
-  .page-foot {
-    padding: 64px 0;
-  }
+
 }
 
 input,
