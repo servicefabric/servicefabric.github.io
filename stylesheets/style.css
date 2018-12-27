@@ -5276,10 +5276,13 @@ dl {
 
 .gitter-color {
   background-color: #ED1965;
+  background:rgba(237,25,101,0.2);
+
 }
 
 .twitter-color {
-  background-color: #1DA1F2;
+  background-color: #1989cd;
+  background: rgba(25, 137, 205, 0.3);
 }
 
 .follow-button {
