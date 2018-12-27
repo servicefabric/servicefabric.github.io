@@ -5270,10 +5270,23 @@ dl {
   display: inline-block;
 }
 
-.follow-button {
+.gh-color {
+  background-color: #181717;
+}
 
+.gitter-color {
+  background-color: #ED1965;
+  background:rgba(237,25,101,0.2);
+
+}
+
+.twitter-color {
+  background-color: #1989cd;
+  background: rgba(25, 137, 205, 0.3);
+}
+
+.follow-button {
     width: 300px;
-    background: transparent;
     border-width: 2px;
     border-width: 3px;
     border-bottom-color: white;
@@ -5285,11 +5298,12 @@ dl {
     text-align: center;
     color: white;
 }
-.follow-button:hover{
-    color: white;
- background: #1DA1F2;
 
+.follow-button:hover {
+    color: white;
+    background-color: #39A85B;
 }
+
 @media (max-width: 1199px) {
   .rd-navbar-fixed.rd-navbar--on-search .brand-name {
     opacity: 0;
