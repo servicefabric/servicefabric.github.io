@@ -3235,14 +3235,40 @@ body {
 *               of common elements in page footer
 */
 .page-foot {
-  padding: 32px 0;
   background-color: #1b1b1b;
+  height: 50px;
+}
+
+
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -100;
+  background-repeat: no-repeat;
+}
+
+.fullscreen-bg__video {
+  position: absolute;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-repeat: no-repeat;
+}
+
+
+.content {
+  position:absolute;
+  top:0; left:0;
+  background: black;
+  color:white;
 }
 
 @media (min-width: 768px) {
-  .page-foot {
-    padding: 64px 0;
-  }
+
 }
 
 input,
@@ -5244,7 +5270,26 @@ dl {
   display: inline-block;
 }
 
+.follow-button {
 
+    width: 300px;
+    background: transparent;
+    border-width: 2px;
+    border-width: 3px;
+    border-bottom-color: white;
+    border-style:solid;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+}
+.follow-button:hover{
+    color: white;
+ background: #1DA1F2;
+
+}
 @media (max-width: 1199px) {
   .rd-navbar-fixed.rd-navbar--on-search .brand-name {
     opacity: 0;
@@ -5275,11 +5320,6 @@ dl {
 .rd-navbar-fixed .rd-navbar-fixed--hidden {
   display: none;
 }
-
-html.rd-navbar-fixed-linked .page {
-  padding-top: 56px;
-}
-
 
 @media (min-width: 768px) {
   .responsive-tabs:not(.resp-easy-accordion) .resp-accordion {
@@ -5350,4 +5390,9 @@ html.rd-navbar-fixed-linked .page {
   font-weight: 700;
   src: local('Raleway Bold'), local('Raleway-Bold'), url(http://fonts.gstatic.com/s/raleway/v11/JbtMzqLaYbbbCL9X6EvaI_k_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+/* custom */
+section {
+  min-height: 100vh;
 }
