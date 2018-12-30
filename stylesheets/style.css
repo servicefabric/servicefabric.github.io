@@ -72,6 +72,8 @@ samp {
   font-size: 1em;
 }
 
+
+
 button,
 input,
 optgroup,
@@ -1882,6 +1884,14 @@ h6,
   }
 }
 
+
+.big-17 {
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+
 .big {
   font-size: 18px;
   line-height: 1.5;
@@ -2131,11 +2141,19 @@ address {
 
 
 .icon-sm {
-  width: 42px;
-  height: 42px;
-  font-size: 42px;
-  line-height: 42px;
+  width: 11px;
+  height: 11px;
+  line-height: 11px;
   content: url('../images/cube.png');
+}
+
+.icon-ar {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  line-height: 32px;
+  position: absolute;
+  margin-left: 30px;
 }
 
 @media (min-width: 768px) {
@@ -3697,6 +3715,10 @@ blockquote q:before, blockquote q:after {
 
 blockquote cite {
   font-style: normal;
+}
+pre,
+.box-custom {
+
 }
 
 .box-custom {
@@ -5270,40 +5292,6 @@ dl {
   display: inline-block;
 }
 
-.gh-color {
-  background-color: #181717;
-}
-
-.gitter-color {
-  background-color: #ED1965;
-  background:rgba(237,25,101,0.2);
-
-}
-
-.twitter-color {
-  background-color: #1989cd;
-  background: rgba(25, 137, 205, 0.3);
-}
-
-.follow-button {
-    width: 300px;
-    border-width: 2px;
-    border-width: 3px;
-    border-bottom-color: white;
-    border-style:solid;
-    font-size: 22px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-}
-
-.follow-button:hover {
-    color: white;
-    background-color: #39A85B;
-}
-
 @media (max-width: 1199px) {
   .rd-navbar-fixed.rd-navbar--on-search .brand-name {
     opacity: 0;
@@ -5409,4 +5397,54 @@ dl {
 /* custom */
 section {
   min-height: 100vh;
+}
+.float{
+  position:fixed;
+  width:60px;
+  height:60px;
+  bottom:40px;
+  right:40px;
+  background-color:#0C9;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+  margin-top:22px;
+}
+
+.gh-color {
+  background-color: #181717;
+}
+
+.gitter-color {
+  background-color: #ED1965;
+  background:rgba(237,25,101,0.2);
+
+}
+
+.twitter-color {
+  background-color: #1989cd;
+  background: rgba(25, 137, 205, 0.3);
+}
+
+.follow-button {
+  width: 300px;
+  border-width: 2px;
+  border-width: 3px;
+  border-bottom-color: white;
+  border-style:solid;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+}
+
+.follow-button:hover {
+  color: white;
+  background-color: #39A85B;
 }
