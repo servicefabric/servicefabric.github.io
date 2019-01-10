@@ -1,9 +1,9 @@
 define({
   "name": "Configuration service",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "2.0.17-SNAPSHOT",
   "description": "Configuration service API",
   "title": "API documentation for the Configuration Service",
-  "url": " - Websocket: wss://configuration-service-7070.genesis.om2.com/io.scalecube.configuration.api.ConfigurationService/   - RSocket: wss://configuration-service-9090.genesis.om2.com/io.scalecube.configuration.api.ConfigurationService/   - HTTP: https://configuration-service-8080.genesis.om2.com/",
+  "url": "Websocket: wss://configuration-service-7070.genesis.om2.com/\nRSocket: wss://configuration-service-9090.genesis.om2.com/\nHTTP: https://configuration-service-8080.genesis.om2.com",
   "template": {
     "forceLanguage": "en"
   },
@@ -22,7 +22,7 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2018-12-24T11:07:48.846Z",
+    "time": "2019-01-10T09:42:03.114Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }
