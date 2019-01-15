@@ -59,7 +59,7 @@
 <pre class="prettyprint">   
     // Create microservice consumer
     Microservices consumer = Microservices.builder()
-		.seeds(providerAddress)
+		.discovery(options -> options.seeds(....))
 		.startAwait();
 </pre>
 
