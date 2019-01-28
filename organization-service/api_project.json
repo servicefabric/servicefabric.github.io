@@ -1,26 +1,26 @@
 {
   "name": "Organization service",
-  "version": "2.0.15",
+  "version": "2.0.17-SNAPSHOT",
   "description": "Organization service API",
   "title": "API documentation for the Organization Service",
-  "url": "Websocket: wss://configuration-service-7070.genesis.om2.com/\nRSocket: wss://configuration-service-9090.genesis.om2.com/\nHTTP: https://configuration-service-8080.genesis.om2.com",
   "template": {
     "forceLanguage": "en"
   },
   "order": [
     "Overview",
     "GettingStarted",
-    "Datatypes",
+    "TransportProtocols",
+    "InteractiveAPIExplorer",
     "CreateOrganization",
     "GetOrganization",
     "UpdateOrganization",
     "DeleteOrganization",
-    "InviteMember",
-    "KickoutMember",
     "LeaveOrganization",
-    "UpdateOrganizationMemberRole",
-    "GetOrganizationMembers",
     "GetUserOrganizationsMembership",
+    "InviteMember",
+    "GetOrganizationMembers",
+    "UpdateOrganizationMemberRole",
+    "KickoutMember",
     "AddOrganizationApiKey",
     "DeleteOrganizationApiKey"
   ],
@@ -29,7 +29,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-01-17T07:15:18.996Z",
+    "time": "2019-01-28T11:09:24.477Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }
