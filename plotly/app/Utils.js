@@ -40,14 +40,14 @@ function fetchTraces(links) {
             links.forEach((element) => {
                 console.log("import: " + element);
                 importJson(element).then(model => {
-                    console.log(model)
+                    console.log(model);
                     traces.push(model);
                     if ((count = count - 1) <= 0) {
-                        resolve(traces)
+                        resolve(traces);
                     }
                 }, err => {
                     if ((count = count - 1) <= 0) {
-                        resolve(traces)
+                        resolve(traces);
                     }
                 });
             });
