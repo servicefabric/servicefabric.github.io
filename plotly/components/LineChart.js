@@ -1,7 +1,7 @@
 class LineChart {
     constructor(container, futureData, layout) {
         this.containerId = container;
-        futureData.then(data => {
+        futureData.then((data) => {
             this._render(data, layout);
         });
     }
