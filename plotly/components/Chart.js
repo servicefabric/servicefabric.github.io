@@ -66,13 +66,14 @@ function fetchTraces(links) {
 }
 
 function createChart(containerId, url) {
-    fetchTheme("../components/DarkTheme.json").then((layout1) => {
-        importJson(url).then(index=> {
-
-            layout1.title.text = index.chartTitleText;
-            layout1.xaxis.title.text = index.xAxisText;
-            layout1.yaxis.title.text = index.yAxisText;
-            new LineChart(createElement(containerId), fetchTraces(index.traces), layout1);
+    importJson(url).then(charts=> {
+        fetchTheme("../components/DarkTheme.json").then((layout1) => {
+            charts.forEach(c =>{
+                layout1.title.text = c.chartTitleText;
+                layout1.xaxis.title.text = c.xAxisText;
+                layout1.yaxis.title.text = c.yAxisText;
+                new LineChart(createElement(containerId), fetchTraces(c.traces), layout1);
+            });
         });
     });
 }
