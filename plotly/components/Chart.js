@@ -1,3 +1,14 @@
+var index = 0;
+
+function createElement (containerId) {
+    var containersDiv = document.getElementById(containerId);
+    // create a new div element
+    var newDiv = document.createElement("div");
+    newDiv.id = "chart-container" + index++;
+    containersDiv.appendChild(newDiv);
+    return newDiv.id;
+};
+
 function getJSON(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -52,4 +63,16 @@ function fetchTraces(links) {
                 });
             });
         });
+}
+
+function createChart(containerId, url) {
+    fetchTheme("../components/DarkTheme.json").then((layout1) => {
+        importJson(url).then(index=> {
+
+            layout1.title.text = index.chartTitleText;
+            layout1.xaxis.title.text = index.xAxisText;
+            layout1.yaxis.title.text = index.yAxisText;
+            new LineChart(createElement(containerId), fetchTraces(index.traces), layout1);
+        });
+    });
 }

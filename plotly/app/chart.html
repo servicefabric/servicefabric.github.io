@@ -4,44 +4,15 @@
     <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="../components/LineChart.js"></script>
-    <script src="Utils.js"></script>
+    <script src="../components/Chart.js"></script>
 </head>
 
 <body>
 
-<div id="chart-container"><!-- Plotly chart will be drawn inside this DIV --></div>
-<div id="chart-container-1"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="chart-containers"><!-- Plotly chart will be drawn inside this DIV --></div>
 
 <script>
-
-    fetchTheme("../components/DarkTheme.json").then((layout1) => {
-
-        layout1.title.text = "title text";
-        layout1.xaxis.title.text = "x-axis text";
-        layout1.yaxis.title.text = "y-axis text";
-
-        let links = [
-            "../data/trace1.json",
-            "../data/trace2.json"
-        ];
-
-        new LineChart("chart-container", fetchTraces(links), layout1);
-    });
-
-
-    fetchTheme("../components/DarkTheme.json").then((layout1) => {
-
-        layout1.title.text = "title text-1";
-        layout1.xaxis.title.text = "x-axis text-1";
-        layout1.yaxis.title.text = "y-axis text-1";
-
-        let links = [
-            "../data/trace2.json",
-            "https://api.jsonbin.io/b/15c7a57072e4731596f130e0b/3"
-        ];
-
-        new LineChart("chart-container-1", fetchTraces(links), layout1);
-    });
-
+    createChart("chart-containers","../data/chart1.json");
+    createChart("chart-containers","../data/chart2.json");
 </script>
 </body>

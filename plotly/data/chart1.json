@@ -1,0 +1,10 @@
+{
+  "chartTitleText" : "title text-1",
+  "xAxisText" : "x-axis text-1",
+  "yAxisText" : "y-axis text-1",
+
+  "traces" : [
+    "../data/trace2.json",
+    "https://api.jsonbin.io/b/15c7a57072e4731596f130e0b/3"
+  ]
+}
