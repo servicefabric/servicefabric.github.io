@@ -1,18 +1,17 @@
 [
   {
-    "chartTitleText" : "title text-1",
-    "xAxisText" : "x-axis text-1",
-    "yAxisText" : "y-axis text-1",
-
-    "traces" : [
+    "chartTitleText": "title text-1",
+    "xAxisText": "x-axis text-1",
+    "yAxisText": "y-axis text-1",
+    "traces": [
       "../data/trace2.json"
     ]
-  },{
-    "chartTitleText" : "title text",
-    "xAxisText" : "x-axis text",
-    "yAxisText" : "y-axis text",
-
-    "traces" : [
+  },
+  {
+    "chartTitleText": "title text",
+    "xAxisText": "x-axis text",
+    "yAxisText": "y-axis text",
+    "traces": [
       "../data/trace1.json",
       "../data/trace2.json"
     ]
