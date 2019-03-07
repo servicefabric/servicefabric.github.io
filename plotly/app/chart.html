@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../components/LineChart.js"></script>
+    <script src="../components/Chart.js"></script>
+</head>
+
+<body>
+
+<div id="chart-containers"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+<script>
+
+    createChart("chart-containers");
+    createChart("chart-containers","../data/chart2.json");
+</script>
+</body>
