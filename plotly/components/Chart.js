@@ -87,8 +87,9 @@ function createChart(containerId, url) {
         }
     }
     importJson(url).then(charts => {
-        fetchTheme("../components/DarkTheme.json").then((layout1) => {
-            charts.forEach(chart => {
+        charts.forEach(chart => {
+            fetchTheme("../components/DarkTheme.json").then((layout1) => {
+                console.log(chart);
                 layout1.title.text = chart.chartTitleText;
                 layout1.xaxis.title.text = chart.xAxisText;
                 layout1.yaxis.title.text = chart.yAxisText;

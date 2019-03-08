@@ -1,19 +1,18 @@
 [
   {
-    "chartTitleText": "title text-1",
-    "xAxisText": "x-axis text-1",
-    "yAxisText": "y-axis text-1",
+    "chartTitleText": "reactor-aeron latency",
+    "xAxisText": "data samples over time",
+    "yAxisText": "latency microseconds",
     "traces": [
-      "../data/trace2.json"
+      "../data/reactor-aeron-latency.json"
     ]
   },
   {
-    "chartTitleText": "title text",
-    "xAxisText": "x-axis text",
-    "yAxisText": "y-axis text",
+    "chartTitleText": "reactor-aeron-throughput",
+    "xAxisText": "data samples over time",
+    "yAxisText": "messages per secound",
     "traces": [
-      "../data/trace1.json",
-      "../data/trace2.json"
+      "../data/reactor-aeron-throughput.json"
     ]
   }
 ]
