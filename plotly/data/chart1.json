@@ -1,18 +1,74 @@
 [
   {
-    "chartTitleText": "reactor-aeron latency",
-    "xAxisText": "data samples over time",
-    "yAxisText": "latency microseconds",
+    "layout": {
+      "title": "reactor-aeron-latency-mean<br><a href='www.google.com'>xxx</a>",
+      "xaxis": {
+        "title": "data samples over time",
+        "titlefont": {
+          "family": "Courier New, monospace",
+          "size": 12,
+          "color": "#7f7f7f"
+        }
+      },
+      "yaxis" : {
+        "title": "latency microseconds",
+        "titlefont": {
+          "family": "Courier New, monospace",
+          "size": 22,
+          "color": "#7f7f7f"
+        }
+      }
+    },
     "traces": [
-      "../data/reactor-aeron-latency.json"
+      "../data/reactor-aeron.json",
+      "../data/reactor-netty.json"
     ]
   },
   {
-    "chartTitleText": "reactor-aeron-throughput",
-    "xAxisText": "data samples over time",
-    "yAxisText": "messages per secound",
+    "layout": {
+      "title": "reactor-aeron-throughput<br><a href='www.google.com'>xxx</a>",
+      "xaxis": {
+        "title": "data samples over time",
+        "titlefont": {
+          "family": "Courier New, monospace",
+          "size": 12,
+          "color": "#7f7f7f"
+        }
+      },
+      "yaxis" : {
+        "title": "messages per second",
+        "titlefont": {
+          "family": "Courier New, monospace",
+          "size": 22,
+          "color": "#7f7f7f"
+        }
+      }
+    },
     "traces": [
       "../data/reactor-aeron-throughput.json"
     ]
-  }
+  },{
+  "layout": {
+    "title": "reactor-aeron-throughput<br><a href='www.google.com'>xxx</a>",
+    "xaxis": {
+      "title": "data samples over time",
+      "titlefont": {
+        "family": "Courier New, monospace",
+        "size": 12,
+        "color": "#7f7f7f"
+      }
+    },
+    "yaxis" : {
+      "title": "messages per second",
+      "titlefont": {
+        "family": "Courier New, monospace",
+        "size": 22,
+        "color": "#7f7f7f"
+      }
+    }
+  },
+  "traces": [
+    "../data/reactor-aeron-throughput.json"
+  ]
+}
 ]
