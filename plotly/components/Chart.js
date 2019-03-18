@@ -62,13 +62,12 @@ function fetchTraces(links) {
 
     return new Promise((resolve, reject) => {
         links.forEach((element) => {
-            console.log("import: " + element);
             importJson(element).then(model => {
                 if (!Array.isArray(model)) {
                     console.log(model);
                     traces.push(model);
                 } else {
-                    model.forEach(item=>{
+                    model.forEach((item) => {
                         console.log(item);
                         traces.push(item);
                     });
@@ -87,11 +86,11 @@ function fetchTraces(links) {
 
 function createChart(containerId, chart) {
     fetchTheme("../components/DarkTheme.json").then((layout1) => {
-        console.log(chart);
         let result = _.merge({}, layout1, chart.layout);
         new LineChart(createElement(containerId), fetchTraces(chart.traces), result);
     });
 }
+
 function createCharts(containerId, url) {
     if (!url) {
         if (param('url')) {
@@ -100,13 +99,13 @@ function createCharts(containerId, url) {
             console.log("url param is not provided and not found in query string");
         }
     }
-    importJson(url).then(charts => {
-        if(Array.isArray(charts)) {
+    importJson(url).then((charts) => {
+        if (Array.isArray(charts)) {
             charts.forEach(chart => {
-                createChart(containerId,chart);
+                createChart(containerId, chart);
             });
         } else {
-            createChart(containerId,charts);
+            createChart(containerId, charts);
         }
     });
 }
