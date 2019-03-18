@@ -1,8 +1,0 @@
-{
-  "chartTitleText": "title text",
-  "xAxisText": "x-axis text",
-  "yAxisText": "y-axis text",
-  "traces": [
-    "../data/reactor-aeron-latency.json"
-  ]
-}

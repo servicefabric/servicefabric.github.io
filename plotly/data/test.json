@@ -1,0 +1,25 @@
+[{
+  "layout": {
+    "title": "reactor-aeron-latency-mean<br><a href='www.google.com'>xxx</a>",
+    "xaxis": {
+      "title": "data samples over time",
+      "titlefont": {
+        "family": "Courier New, monospace",
+        "size": 12,
+        "color": "#7f7f7f"
+      }
+    },
+    "yaxis" : {
+      "title": "latency microseconds",
+      "titlefont": {
+        "family": "Courier New, monospace",
+        "size": 22,
+        "color": "#7f7f7f"
+      }
+    }
+  },
+  "traces": []
+}]
+
+
+http://localhost:63342/scalecube.github.io/plotly/app/chart.html?_ijt=5vgdocvl27uk6pe2bu2iemkrvf&url=s3.builder-v1.../data/chart1.json

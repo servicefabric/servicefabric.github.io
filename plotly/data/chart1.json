@@ -20,8 +20,8 @@
       }
     },
     "traces": [
-      "../data/reactor-aeron-latency-mean.json",
-      "../data/reactor-aeron-latency-99p.json"
+      "../data/reactor-aeron.json",
+      "../data/reactor-netty.json"
     ]
   },
   {
@@ -47,5 +47,28 @@
     "traces": [
       "../data/reactor-aeron-throughput.json"
     ]
-  }
+  },{
+  "layout": {
+    "title": "reactor-aeron-throughput<br><a href='www.google.com'>xxx</a>",
+    "xaxis": {
+      "title": "data samples over time",
+      "titlefont": {
+        "family": "Courier New, monospace",
+        "size": 12,
+        "color": "#7f7f7f"
+      }
+    },
+    "yaxis" : {
+      "title": "messages per second",
+      "titlefont": {
+        "family": "Courier New, monospace",
+        "size": 22,
+        "color": "#7f7f7f"
+      }
+    }
+  },
+  "traces": [
+    "../data/reactor-aeron-throughput.json"
+  ]
+}
 ]
