@@ -6,9 +6,20 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="../components/LineChart.js"></script>
     <script src="../components/Chart.js"></script>
+    <style>
+        .body {
+            margin: 0;
+        }
+        .js-plotly-plot {
+            height: 100%;
+        }
+        #chart-containers {
+            height: 100vh;
+        }
+    </style>
 </head>
 
-<body>
+<body class="body">
 
 <div id="chart-containers"><!-- Plotly chart will be drawn inside this DIV --></div>
 

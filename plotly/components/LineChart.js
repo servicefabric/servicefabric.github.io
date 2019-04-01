@@ -7,7 +7,7 @@ class LineChart {
     }
 
     _render(data, layout) {
-        Plotly.newPlot(this.containerId, data, layout);
+        Plotly.newPlot(this.containerId, data, layout,{responsive: true});
     }
 }
 

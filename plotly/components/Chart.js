@@ -6,6 +6,7 @@ function createElement(containerId) {
     var newDiv = document.createElement("div");
     newDiv.id = "chart-container" + index++;
     containersDiv.appendChild(newDiv);
+
     return newDiv.id;
 }
 
