@@ -32,6 +32,7 @@ function getJSON(url, callback) {
     xhr.onload = function () {
         var status = xhr.status;
         if (status === 200) {
+            console.log("response: " + xhr.responseText);
             callback(null, JSON.parse(xhr.responseText));
         } else {
             callback(status, xhr.response);
