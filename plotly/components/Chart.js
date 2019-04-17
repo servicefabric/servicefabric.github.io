@@ -25,7 +25,9 @@ function param(variable) {
 
 function getJSON(url, callback) {
     var xhr = new XMLHttpRequest();
+
     xhr.open("GET", url, true);
+    xhr.setRequestHeader("secret-key", "$2a$10$qQnM8b7F2aeXshFlQbyH5.Yqyt7bMEGmtLRH/gwh8tNCVY41ZsRcy");
     xhr.responseType = "text";
     xhr.onload = function () {
         var status = xhr.status;
