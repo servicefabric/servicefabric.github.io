@@ -1,6 +1,6 @@
 define({
   "name": "Configuration service",
-  "version": "2.1.4-SNAPSHOT",
+  "version": "2.1.5-SNAPSHOT",
   "description": "Configuration service API",
   "title": "API documentation for the Configuration Service",
   "template": {
@@ -18,7 +18,7 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-04-16T15:11:09.415Z",
+    "time": "2019-04-22T06:34:46.485Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }
