@@ -127,16 +127,15 @@
         panes: [{ collapsible: false , size: "250px" }
             ,{}]
     });
+    tree.import("https://raw.githubusercontent.com/ronenhamias/api-sandbox-data/master/scalecube.json");
+    tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/OrganizationServiceALL.json");
+    tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/ConfigurationServiceAll.json");
 
     const treeSourceKey = "tree_source";
-    const defaultTreeSourceUrl = "https://raw.githubusercontent.com/ronenhamias/api-sandbox-data/master/scalecube.json";
+    const defaultTreeSourceUrl = "";
 
     let savedTreeSourceUrl = localStorage.getItem(treeSourceKey);
     let treeSourceUrl = savedTreeSourceUrl ? savedTreeSourceUrl : defaultTreeSourceUrl;
-
-
-    tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/OrganizationServiceALL.json");
-    tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/ConfigurationServiceAll.json");
     tree.import(treeSourceUrl);
 
     function importJson() {
