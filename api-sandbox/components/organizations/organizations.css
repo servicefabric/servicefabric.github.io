@@ -1,0 +1,84 @@
+.tbl {
+    display: flex;
+    flex-direction: column;
+}
+.row {
+    display: flex;
+    min-height: 20px;
+}
+.cell {
+    flex: 4;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #3c3c3c;
+    color: white;
+}
+.cell:nth-child(1) {
+    flex: 1;
+}
+.cell:nth-child(2) {
+    flex: 2;
+}
+.cell.span4-5 {
+    flex: 8 14px;                    /*  col 4,5 flex-grow/border/padding  */
+}
+.cell.span3-4 {
+    flex: 8 14px;                    /*  col 3,4 flex-grow/border/padding  */
+}
+.cell.span3-5 {
+    flex: 12 36px;                   /*  col 3,4,5 flex-grow/border/padding  */
+}
+.row:first-child .cell {
+    display: flex;
+    justify-content: center;         /*  center horiz. */
+    align-items: center;             /*  center vert. */
+}
+.row .cell {
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+    color: white;
+    padding: 20px 20px;
+}
+
+
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}

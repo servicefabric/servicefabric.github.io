@@ -21,98 +21,136 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-beautify.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-    <script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.web.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css"/>
-    <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css"/>
+    <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js.map"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js"></script>
+    <script type="text/javascript" src='https://bundle.run/rsocket-core@0.0.7'></script>
+    <script type="text/javascript" src='https://bundle.run/rsocket-websocket-client@0.0.7'></script>
+    <script src="https://cdn.jsdelivr.net/npm/auth0-js@9.10.2/dist/auth0.min.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/css/bootstrap-treeview.css" />
-
-    <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js.map"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.0/rxjs.umd.js"></script>
-
-    <script type="text/javascript" src='https://bundle.run/rsocket-core@0.0.7'></script>
-    <script type="text/javascript" src='https://bundle.run/rsocket-websocket-client@0.0.7'></script>
-
+    <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../components/connection/Connection.css"/>
+    <link rel="stylesheet" type="text/css" href="../components/settings/settings.css"/>
+    <link rel="stylesheet" type="text/css" href="../components/console/console.css"/>
+    <link rel="stylesheet" type="text/css" href="../components/auth/login.css"/>
+    <link rel="stylesheet" type="text/css" href="app.css"/>
 
     <script src="../components/editor/CodeEditor.js" type="text/javascript" charset="utf-8"></script>
-
     <script src="../components/console/console.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../components/console/console.css"/>
-
     <script src="../components/connection/Connection.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../components/connection/Connection.css"/>
-
     <script src="../components/settings/settings.js"></script>
-    <link rel="stylesheet" type="text/css" href="../components/settings/settings.css"/>
-
     <script src="../components/tree/ApiTree.js" type="text/javascript" charset="utf-8"></script>
-
     <script src="../components/Utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../components/auth/auth0-variables.js"></script>
+    <script src="../components/auth/login.js"></script>
+
     <script src="../services/WebSocketTransport.js" type="text/javascript" charset="utf-8"></script>
     <script src="../services/RSocketTransport.js" type="text/javascript" charset="utf-8"></script>
 
-    <link rel="stylesheet" type="text/css" href="app.css"/>
+    <script src="../services/ConfigurationService.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/OrganizationService.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/Nonce.js" type="text/javascript" charset="utf-8"></script>
 
+    <link href="../components/account/account.css" rel="stylesheet" type="text/css"/>
+    <script src="../components/account/account.js"></script>
+
+    <link href="../components/organizations/organizations.css" rel="stylesheet" type="text/css"/>
+    <script src="../components/organizations/organizations.js"></script>
+
+
+    <script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.web.min.js"></script>
+    <script src="../components/tabs/tabs.js"></script>
 </head>
 
 <header style="height: 28px; background: #323c4a;">
-    <div class="brand-name"><span style="padding-right: 0px" class="text-white text-bold">SCΛLΞ</span><span class="text-blue text-bold">CUBΞ</span></div>
+
+    <div style="display: flex; justify-content: space-between;">
+
+        <div class="brand-name">
+            <span style="padding-right: 0px" class="text-white text-bold">SCΛLΞ</span>
+            <span class="text-blue text-bold">CUBΞ</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <div id="login-container" class="login-container" ></div>
+            <div id="account-container" class="login-container" ></div>
+        </div>
+    </div>
+
 </header>
 
 <body>
+    <div id="tabs">
+        <div id="api-sandbox-tab">
+            <div id="horizontal" class="panel-container">
+        <!-- The Modal -->
 
-<div id="horizontal" class="panel-container">
-    <!-- The Modal -->
+        <div class="panel-left">
+            <div id="connections"></div>
+            <div title="Beautify/Indent json." style="background-color: #4D4E47; display: flex; justify-content: flex-end; size: 14px" type="button" onclick="doBeautify()">
+                <img src="indent_json.svg">
+            </div>
 
-    <div class="panel-left">
-        <div id="connections"></div>
-        <div style="height: calc(100% - 30px); " id="split-vertical">
-            <div style="position:relative; height: 100%; width: 100%;" id="pannel-top">
-                <div style="height: 1px"></div>
-                <div class="panel-top">
-                    <div style="height: 100%; width: 100%" id="inputEditor"></div>
+            <div style="height: calc(100% - 30px); " id="split-vertical">
+                <div style="position:relative; height: 100%; width: 100%;" id="pannel-top">
+                    <div style="height: 1px"></div>
+                    <div class="panel-top">
+                        <div style="height: 100%; width: 100%" id="inputEditor"></div>
+                    </div>
+                </div>
+                <div style="background-color: #272822" id="pannel-bottom">
+                    <div>
+                        <button class="send-button" id="sendBtn">Send</button>
+                    </div>
+                    <div title="Import from external json source." style="background-color: #4D4E47; display: flex; justify-content: flex-end; size: 14px" type="button" onclick="importJson()">
+                        <img src="import_btn.svg"/>
+                    </div>
+                    <div id="treeview" class="treeview"></div>
                 </div>
             </div>
-            <div style="background-color: #272822" id="pannel-bottom">
-                <div>
-                    <button class="send-button" id="sendBtn">Send</button>
+        </div>
+
+        <div class="panel-right">
+            <div class="panel-container-vertical">
+                <div class="panel-bottom">
+                    <div style="height: auto; width: auto" id="console"></div>
                 </div>
-                <div title="Import from external json source." style="background-color: #4D4E47; display: flex; justify-content: flex-end; size: 14px" type="button" onclick="importJson()">
-                    <img src="import_btn.svg"/>
-                </div>
-                <div id="treeview" class="treeview"></div>
+
             </div>
         </div>
     </div>
-
-    <div class="panel-right">
-        <div class="panel-container-vertical">
-            <div class="panel-bottom">
-                <div style="height: auto; width: auto" id="console"></div>
+        </div>
+        <div id="organizations-tab" >
+            <div class="tbl">
+                <div class="row">
+                    <div class="cell">1</div>
+                    <div class="cell">ORGANIZATIONS</div>
+                    <div class="cell">MEMBERS</div>
+                    <div class="cell span4-5">TOTAL </div>
+                </div>
             </div>
-
         </div>
     </div>
-</div>
-
 <script>
+    let tabs = new Tabs("tabs");
+    tabs.show("api-sandbox-tab");
 
+    let login = new Login('login-container');
     var editor = new CodeEditor("inputEditor");
     var console = new Console("console");
     var connection = new Connection("connections");
-
-    connection.onConnectionChanged((event)=> {
-
-    });
 
     this.sendBtnId = document.getElementById("sendBtn");
     this.sendBtnId.onclick = function () {
         connection.send(editor.getValue());
     };
+
+    console.onLogSelected(msg=>{
+        editor.setValue(JSON.stringify( msg ));
+        editor.makeBeauty();
+    });
 
     var tree = new ApiTree("treeview",(node) => {
         editor.setValue(JSON.stringify(node.data, null, 2));
@@ -127,39 +165,47 @@
         panes: [{ collapsible: false , size: "250px" }
             ,{}]
     });
-    tree.import("https://raw.githubusercontent.com/ronenhamias/api-sandbox-data/master/scalecube.json");
-    tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/OrganizationServiceALL.json");
-    tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/ConfigurationServiceAll.json");
 
-    const treeSourceKey = "tree_source";
-    const defaultTreeSourceUrl = "";
-
-    let savedTreeSourceUrl = localStorage.getItem(treeSourceKey);
-    let treeSourceUrl = savedTreeSourceUrl ? savedTreeSourceUrl : defaultTreeSourceUrl;
-    tree.import(treeSourceUrl);
-
+    function doBeautify(){
+        self = this;
+        self.editor.makeBeauty ();
+    }
     function importJson() {
-      let url = prompt("Enter your External URL: ", treeSourceUrl);
-      if (url) {
-        tree.import(url);
-        localStorage.setItem(treeSourceKey, url);
-      }
+        let url = prompt("Enter your External URL: ", treeSourceUrl);
+        if (url) {
+            tree.import(url);
+            localStorage.setItem(treeSourceKey, url);
+        }
     }
 
-    /* tree.addNode("someText","someNodeText",{})
 
-    tree.append('1', {
-            id:"8",
-            text:"new node",
-            data:{"q":1}
+    login.onAuthenticated(token => {
+
+        login.getProfile().then( (p) => {
+            new Account("account-container",p).listen(action=>{
+                if(action === "organizations") {
+                    tabs.show("organizations-tab");
+                } else {
+                    tabs.show("api-sandbox-tab");
+                }
+            });
         });
 
-    tree.append('1/2', {
-            id:"9",
-            text:"new node1",
-            data:{"q":2}
-        });
-    */
+        let organizations = new Organizations("organizations-tab",token);
+
+        tree.import("https://raw.githubusercontent.com/ronenhamias/api-sandbox-data/master/scalecube.json");
+        tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/OrganizationServiceALL.json");
+        tree.import("https://raw.githubusercontent.com/PavloPetrina/JsonData/master/ConfigurationServiceAll.json");
+
+        const treeSourceKey = "tree_source";
+        const defaultTreeSourceUrl = "";
+
+        let savedTreeSourceUrl = localStorage.getItem(treeSourceKey);
+        var treeSourceUrl = savedTreeSourceUrl ? savedTreeSourceUrl : defaultTreeSourceUrl;
+        tree.import(treeSourceUrl);
+    });
+
+
 </script>
 
 </body>

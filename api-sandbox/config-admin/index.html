@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-86674150-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-options.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-beautify.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.web.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/css/bootstrap-treeview.css" />
+
+    <script src="https://rawgit.com/jonmiles/bootstrap-treeview/master/public/js/bootstrap-treeview.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.1/rxjs.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.1/rxjs.umd.js.map"></script>
+
+
+    <script type="text/javascript" src='https://bundle.run/rsocket-core@0.0.7'></script>
+    <script type="text/javascript" src='https://bundle.run/rsocket-websocket-client@0.0.7'></script>
+
+
+    <script src="../components/editor/CodeEditor.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="../components/console/console.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../components/console/console.css"/>
+
+    <script src="../components/connection/Connection.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="../components/connection/Connection.css"/>
+
+    <script src="../components/settings/settings.js"></script>
+    <link rel="stylesheet" type="text/css" href="../components/settings/settings.css"/>
+
+    <script src="../components/tree/ApiTree.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="../components/Utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/WebSocketTransport.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/RSocketTransport.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="../services/ConfigurationService.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/OrganizationService.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../services/Nonce.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="app.css"/>
+
+</head>
+
+<header style="height: 28px; background: #323c4a;">
+    <div class="brand-name"><span style="padding-right: 0px" class="text-white text-bold">SCΛLΞ</span><span class="text-blue text-bold">CUBΞ</span></div>
+</header>
+
+<body>
+
+<div id="horizontal" class="panel-container">
+    <!-- The Modal -->
+
+    <div class="panel-left">
+        <div id="connections"></div>
+        <div style="height: calc(100% - 30px); " id="split-vertical">
+            <div style="position:relative; height: 100%; width: 100%;" id="pannel-top">
+                <div style="height: 1px"></div>
+                <div class="panel-top">
+                    <div style="height: 100%; width: 100%" id="inputEditor"></div>
+                </div>
+            </div>
+            <div style="background-color: #272822" id="pannel-bottom">
+                <div>
+                    <button class="send-button" id="sendBtn">Send</button>
+                </div>
+                <div title="Import from external json source." style="background-color: #4D4E47; display: flex; justify-content: flex-end; size: 14px" type="button" onclick="importJson()">
+                    <img src="import_btn.svg"/>
+                </div>
+                <div id="treeview" class="treeview"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-right">
+        <div class="panel-container-vertical">
+            <div class="panel-bottom">
+                <div style="height: auto; width: auto" id="console"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let jwttoken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqVTVOME5DT1VORlF6UXlOelpHUXpWRFFUazROVGd4UXpJNU5EQTNSa0l5TkVJNU16VTJRUSJ9.eyJpc3MiOiJodHRwczovL3NjYWxlY3ViZS1hZG1pbi5ldS5hdXRoMC5jb20vIiwic3ViIjoibGdzaDRHY0JYRmRUNk9ib0JtYkFZNWNiNVpISHd6ZGxAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vc2NhbGVjdWJlLWFkbWluLmV1LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTU2Njk1NzM3LCJleHAiOjE1NTY3ODIxMzcsImF6cCI6Imxnc2g0R2NCWEZkVDZPYm9CbWJBWTVjYjVaSEh3emRsIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyByZWFkOmFub21hbHlfYmxvY2tzIGRlbGV0ZTphbm9tYWx5X2Jsb2NrcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.lwtDiHUOClpWr5LuKLpXJuKmSNKpKRq-xdKrUwsea9_6yggZQdTHynl_em8KuyVTo5Q67rx8D35IuCoFWLhf9febAZhM9bShGVMSusaCctNxiqmE5_UK4ldnmkk1LzmOibtFfoaY9WJlfQtwG4gxgkI6AcrzY_C-K0v__j0EAcE6TnbPRxn17_LdxAbAhrOFUJDFFjRz4QTTPfTd2iTwJn6K8xzLmolpNxgtWFtfhcFHCNn9nDLa7dTr1VhXziKlmlRT8aBcNUZNxv9NJt8e18qBFYXE_8Ujk7x8gX50HaaujY62htQls0D4IKd95cNRk96Rnlr-gfOZqqw4uY5-dA";
+    let orgService = new OrganizationService(jwttoken);
+
+        orgService.getMembership().then((res)=>{
+            console.log( res );
+        });
+
+
+    var editor = new CodeEditor("inputEditor");
+    //var console = new Console("console");
+    var connection = new Connection("connections");
+
+</script>
+
+</body>
+</html>

@@ -1,8 +1,14 @@
+var _consoles = new  Map();
+
+function copyOnClick(msg, id) {
+    _consoles.get(id).callbacks.forEach(callback=>callback(msg));
+}
 
 class Console {
 
   constructor(elementId) {
     this.id =  "log-entries" + window.performance.now();
+    _consoles.set(this.id, this);
     let html = "<div>"
         + "<div class='log-header'>"
           + "<button onclick=clearLog('"+this.id+"'); title='Clear the log' type='button' class='remove-log-button'>"
@@ -16,6 +22,11 @@ class Console {
 
     appendHtmlElement(elementId, html);
     this.entries = document.getElementById(this.id);
+    this.callbacks = new  Array();
+  }
+
+  onLogSelected(callback) {
+      this.callbacks.push(callback)
   }
 
   id(){
@@ -70,17 +81,23 @@ class Console {
       color = "green";
     }
 
+    if (!(typeof msg === 'string')) {
+        msg = JSON.stringify(msg);
+    }
+
     let html = "<div class='log-line'>"
-      +   "<a></a>"
+      +   "<div class='log-line-copy'>"
+      +      "<button style='background: url(import_btn.svg) no-repeat' class='btn' onclick='return copyOnClick(" + msg + ",\"" + this.id + "\")'/>"
+      +   "</div>"
       +   "<span title='"+ title +"'>"+ time + "</span>"
       +   "<span class='"+color+"'>"+ msg +"</span>"
       + "</div>";
 
-      appendHtmlElement(this.id,html);
+    appendHtmlElement(this.id,html);
   }
 }
 function now(){
-    var currentTime = new Date();
+    const currentTime = new Date();
     return " | " + currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds() + "." +  currentTime.getMilliseconds() + " | ";
 }
 function clearLog(elementId){
@@ -88,4 +105,4 @@ function clearLog(elementId){
   while (entries.hasChildNodes()) {
     entries.removeChild(entries.lastChild);
   }
-};
+}

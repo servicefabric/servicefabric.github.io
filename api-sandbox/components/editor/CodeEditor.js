@@ -36,4 +36,11 @@ class CodeEditor {
     setMode(mode){
         this.editor.session.setMode("ace/mode/" + mode);
     }
+
+    makeBeauty() {
+        const obj = JSON.parse( this.editor.getValue() );
+        const json = JSON.stringify(obj, null, 2)
+        this.editor.setValue(json);
+        this.beautify.beautify(this.editor.session);;
+    }
 }
