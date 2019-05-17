@@ -1,6 +1,6 @@
 {
   "name": "Organization service",
-  "version": "2.1.6-SNAPSHOT",
+  "version": "2.1.7-SNAPSHOT",
   "description": "Organization service API",
   "title": "API documentation for the Organization Service",
   "template": {
@@ -16,20 +16,20 @@
     "UpdateOrganization",
     "DeleteOrganization",
     "LeaveOrganization",
-    "GetUserOrganizationsMembership",
+    "GetMyOrganizations",
     "InviteMember",
     "GetOrganizationMembers",
-    "UpdateOrganizationMemberRole",
+    "UpdateMemberRole",
     "KickoutMember",
-    "AddOrganizationApiKey",
-    "DeleteOrganizationApiKey"
+    "AddApiKey",
+    "DeleteApiKey"
   ],
   "sampleUrl": false,
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-05-16T14:03:47.817Z",
+    "time": "2019-05-17T15:09:41.629Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }
