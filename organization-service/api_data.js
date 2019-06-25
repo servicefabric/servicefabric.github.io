@@ -5,7 +5,7 @@ define({ "api": [
     "title": "addApiKey",
     "name": "AddApiKey",
     "group": "ApiKey",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -109,22 +109,22 @@ define({ "api": [
       "examples": [
         {
           "title": "WebSocket",
-          "content": "Request:\n    {\n        \"q\":\"/organizations/addOrganizationApiKey\",\n        \"sid\": 1,\n        \"d\":{\n               \"token\": {\n                           \"token\":\"Auth0-TOKEN\"\n               },\n               \"organizationId\":\"ORG-ID\",\n               \"apiKeyName\": \"specifiedApiKeyName\",\n               \"claims\": {\n                           \"role\":\"Owner\"\n               }\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/addOrganizationApiKey\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\": [\n                             {\n                                \"name\": \"specifiedApiKeyName\",\n                                \"claims\": {\"role\": \"Owner\"},\n                                \"key\": \"API-TOKEN\"\n                             }\n               ],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n           }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"apiKey name:'specifiedApiKeyName' already exists\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"q\":\"/organizations/addApiKey\",\n        \"sid\": 1,\n        \"d\":{\n               \"token\": {\n                           \"token\":\"Auth0-TOKEN\"\n               },\n               \"organizationId\":\"ORG-ID\",\n               \"apiKeyName\": \"specifiedApiKeyName\",\n               \"claims\": {\n                           \"role\":\"Owner\"\n               }\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/addApiKey\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\": [\n                             {\n                                \"name\": \"specifiedApiKeyName\",\n                                \"claims\": {\"role\": \"Owner\"},\n                                \"key\": \"API-TOKEN\"\n                             }\n               ],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n           }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"apiKey name:'specifiedApiKeyName' already exists\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "RSocket",
-          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/addOrganizationApiKey\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"organizationId\":\"ORG-ID\",\n                  \"apiKeyName\": \"specifiedApiKeyName\",\n                  \"claims\": {\n                               \"role\":\"Admin\"\n               }\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\": [\n                                 {\n                                    \"name\": \"specifiedApiKeyName\",\n                                    \"claims\": {\"role\": \"Admin\"},\n                                    \"key\": \"API-TOKEN\"\n                                 },\n                                 {\n                                    \"name\": \"specifiedApiKeyName\",\n                                    \"claims\": {\"role\": \"Owner\"},\n                                    \"key\": \"API-TOKEN\"\n                                 }\n                  ],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/addOrganizationApiKey\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"apiKey name:'specifiedApiKeyName' already exists\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/addApiKey\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"organizationId\":\"ORG-ID\",\n                  \"apiKeyName\": \"specifiedApiKeyName\",\n                  \"claims\": {\n                               \"role\":\"Admin\"\n               }\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\": [\n                                 {\n                                    \"name\": \"specifiedApiKeyName\",\n                                    \"claims\": {\"role\": \"Admin\"},\n                                    \"key\": \"API-TOKEN\"\n                                 },\n                                 {\n                                    \"name\": \"specifiedApiKeyName\",\n                                    \"claims\": {\"role\": \"Owner\"},\n                                    \"key\": \"API-TOKEN\"\n                                 }\n                  ],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/addApiKey\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"apiKey name:'specifiedApiKeyName' already exists\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "HTTP",
-          "content": "Request:\nhttps://localhost:port/organizations/addOrganizationApiKey (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n        \"claims\": {\n                     \"role\":\"Member\"\n    }\n\nResponse:\n    {\n        \"apiKeys\": [\n                      {\n                         \"name\": \"specifiedApiKeyName\",\n                         \"claims\": {\"role\": \"Member\"},\n                         \"key\": \"API-TOKEN\"\n                      },\n                      {\n                         \"name\": \"specifiedApiKeyName\",\n                         \"claims\": {\"role\": \"Admin\"},\n                         \"key\": \"API-TOKEN\"\n                      },\n                      {\n                         \"name\": \"specifiedApiKeyName\",\n                         \"claims\": {\"role\": \"Owner\"},\n                         \"key\": \"API-TOKEN\"\n                      }\n        ],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"apiKey name:'specifiedApiKeyName' already exists\"\n    }",
+          "content": "Request:\nhttps://localhost:port/organizations/addApiKey (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n        \"claims\": {\n                     \"role\":\"Member\"\n    }\n\nResponse:\n    {\n        \"apiKeys\": [\n                      {\n                         \"name\": \"specifiedApiKeyName\",\n                         \"claims\": {\"role\": \"Member\"},\n                         \"key\": \"API-TOKEN\"\n                      },\n                      {\n                         \"name\": \"specifiedApiKeyName\",\n                         \"claims\": {\"role\": \"Admin\"},\n                         \"key\": \"API-TOKEN\"\n                      },\n                      {\n                         \"name\": \"specifiedApiKeyName\",\n                         \"claims\": {\"role\": \"Owner\"},\n                         \"key\": \"API-TOKEN\"\n                      }\n        ],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"apiKey name:'specifiedApiKeyName' already exists\"\n    }",
           "type": "json"
         }
       ]
     },
-    "filename": "/apidoc/docs/addOrganizationApiKey.apidoc",
+    "filename": "/apidoc/docs/addApiKey.apidoc",
     "groupTitle": "ApiKey"
   },
   {
@@ -133,7 +133,7 @@ define({ "api": [
     "title": "deleteApiKey",
     "name": "DeleteApiKey",
     "group": "ApiKey",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -223,22 +223,22 @@ define({ "api": [
       "examples": [
         {
           "title": "WebSocket",
-          "content": "Request:\n    {\n        \"q\":\"/organizations/deleteOrganizationApiKey\",\n        \"sid\": 1,\n        \"d\":{\n              \"token\": {\n                          \"token\":\"Auth0-TOKEN\"\n              },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/deleteOrganizationApiKey\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\":[],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"user: 'id@clients', name: 'null', not in role Owner or Admin of organization: 'specifiedOrganizationName'\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"q\":\"/organizations/deleteApiKey\",\n        \"sid\": 1,\n        \"d\":{\n              \"token\": {\n                          \"token\":\"Auth0-TOKEN\"\n              },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/deleteApiKey\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\":[],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"user: 'id@clients', name: 'null', not in role Owner or Admin of organization: 'specifiedOrganizationName'\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "RSocket",
-          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/deleteOrganizationApiKey\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\":[],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/deleteOrganizationApiKey\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"user: 'id@clients', name: 'null', not in role Owner or Admin of organization: 'specifiedOrganizationName'\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/deleteApiKey\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\":[],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/deleteApiKey\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"user: 'id@clients', name: 'null', not in role Owner or Admin of organization: 'specifiedOrganizationName'\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "HTTP",
-          "content": "Request:\nhttps://localhost:port/organizations/createRepository (endpoint url)\n\nBody:\n    {\n       \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n    }\n\nResponse:\n    {\n        \"apiKeys\":[],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"user: 'id@clients', name: 'null', not in role Owner or Admin of organization: 'specifiedOrganizationName'\"\n    }",
+          "content": "Request:\nhttps://localhost:port/organizations/deleteApiKey (endpoint url)\n\nBody:\n    {\n       \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\",\n        \"apiKeyName\": \"specifiedApiKeyName\",\n    }\n\nResponse:\n    {\n        \"apiKeys\":[],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"user: 'id@clients', name: 'null', not in role Owner or Admin of organization: 'specifiedOrganizationName'\"\n    }",
           "type": "json"
         }
       ]
     },
-    "filename": "/apidoc/docs/deleteOrganizationApiKey.apidoc",
+    "filename": "/apidoc/docs/deleteApiKey.apidoc",
     "groupTitle": "ApiKey"
   },
   {
@@ -247,7 +247,7 @@ define({ "api": [
     "title": "getMyOrganizations",
     "name": "GetMyOrganizations",
     "group": "Member",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -330,22 +330,22 @@ define({ "api": [
       "examples": [
         {
           "title": "WebSocket",
-          "content": "Request:\n    {\n        \"q\":\"/organizations/getUserOrganizationsMembership\",\n        \"sid\": 1,\n        \"d\":{\n              \"token\": {\n                          \"token\":\"Auth0-TOKEN\"\n              }\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/getUserOrganizationsMembership\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\":[],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"Token verification failed\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"q\":\"/organizations/getMyOrganizations\",\n        \"sid\": 1,\n        \"d\":{\n              \"token\": {\n                          \"token\":\"Auth0-TOKEN\"\n              }\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/getMyOrganizations\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\":[],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"Token verification failed\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "RSocket",
-          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/getUserOrganizationsMembership\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  }\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\":[],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/getUserOrganizationsMembership\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"Token verification failed\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/getMyOrganizations\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  }\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\":[],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/getMyOrganizations\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"Token verification failed\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "HTTP",
-          "content": "Request:\nhttps://localhost:port/organizations/getUserOrganizationsMembership (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        }\n    }\n\nResponse:\n    {\n        \"apiKeys\":[],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"Token verification failed\"\n    }",
+          "content": "Request:\nhttps://localhost:port/organizations/getMyOrganizations (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        }\n    }\n\nResponse:\n    {\n        \"apiKeys\":[],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"Token verification failed\"\n    }",
           "type": "json"
         }
       ]
     },
-    "filename": "/apidoc/docs/getUserOrganizationsMembership.apidoc",
+    "filename": "/apidoc/docs/getMyOrganizations.apidoc",
     "groupTitle": "Member"
   },
   {
@@ -354,7 +354,7 @@ define({ "api": [
     "title": "getOrganizationMembers",
     "name": "GetOrganizationMembers",
     "group": "Member",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -433,7 +433,7 @@ define({ "api": [
     "title": "inviteMember",
     "name": "InviteMember",
     "group": "Member",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -525,7 +525,7 @@ define({ "api": [
     "title": "kickoutMember",
     "name": "KickoutMember",
     "group": "Member",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -610,7 +610,7 @@ define({ "api": [
     "title": "updateMemberRole",
     "name": "UpdateMemberRole",
     "group": "Member",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -678,17 +678,17 @@ define({ "api": [
       "examples": [
         {
           "title": "WebSocket",
-          "content": "Request:\n    {\n        \"q\":\"/organizations/updateOrganizationMemberRole\",\n        \"sid\": 1,\n        \"d\":{\n               \"token\": {\n                           \"token\":\"Auth0-TOKEN\"\n               },\n               \"organizationId\":\"ORG-ID\",\n               \"userId\": \"id@clients\",\n               \"role\": \"Owner\"\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/updateOrganizationMemberRole\",\n        \"sid\":1,\n        \"d\":{}\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"Unknown role: Boss\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"q\":\"/organizations/updateMemberRole\",\n        \"sid\": 1,\n        \"d\":{\n               \"token\": {\n                           \"token\":\"Auth0-TOKEN\"\n               },\n               \"organizationId\":\"ORG-ID\",\n               \"userId\": \"id@clients\",\n               \"role\": \"Owner\"\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/updateMemberRole\",\n        \"sid\":1,\n        \"d\":{}\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"Unknown role: Boss\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "RSocket",
-          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/updateOrganizationMemberRole\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"organizationId\":\"ORG-ID\",\n                  \"userId\": \"id@clients\",\n                  \"role\": \"Admin\"\n        }\n    }\n\nResponse:\n    {\n        \"data\":{},\n        \"metadata\":{\n          \"q\": \"/organizations/updateOrganizationMemberRole\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"Unknown role: Boss\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/updateMemberRole\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"organizationId\":\"ORG-ID\",\n                  \"userId\": \"id@clients\",\n                  \"role\": \"Admin\"\n        }\n    }\n\nResponse:\n    {\n        \"data\":{},\n        \"metadata\":{\n          \"q\": \"/organizations/updateMemberRole\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"Unknown role: Boss\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "HTTP",
-          "content": "Request:\nhttps://localhost:port/organizations/updateOrganizationMemberRole (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\",\n        \"userId\": \"id@clients\",\n        \"role\": \"Member\"\n    }\n\nResponse:\n    {\n\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"Unknown role: Boss\"\n    }",
+          "content": "Request:\nhttps://localhost:port/organizations/updateMemberRole (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\",\n        \"userId\": \"id@clients\",\n        \"role\": \"Member\"\n    }\n\nResponse:\n    {\n\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"Unknown role: Boss\"\n    }",
           "type": "json"
         }
       ]
@@ -702,7 +702,7 @@ define({ "api": [
     "title": "createOrganization",
     "name": "CreateOrganization",
     "group": "Organization",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -792,17 +792,17 @@ define({ "api": [
       "examples": [
         {
           "title": "WebSocket",
-          "content": "Request:\n    {\n        \"q\":\"/organizations/create\",\n        \"sid\": 1,\n        \"d\":{\n              \"token\": {\n                          \"token\":\"Auth0-TOKEN\"\n              },\n              \"name\":\"specifiedOrganizationName\",\n              \"email\":\"specifiedOrganization@email.com\"\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/create\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\":[],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"Organization name: 'org name' already in use\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"q\":\"/organizations/createOrganization\",\n        \"sid\": 1,\n        \"d\":{\n              \"token\": {\n                          \"token\":\"Auth0-TOKEN\"\n              },\n              \"name\":\"specifiedOrganizationName\",\n              \"email\":\"specifiedOrganization@email.com\"\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/createOrganization\",\n        \"sid\":1,\n        \"d\":{\n               \"apiKeys\":[],\n               \"id\":\"ORG-ID\",\n               \"name\":\"specifiedOrganizationName\",\n               \"email\":\"specifiedOrganization@email.com\",\n               \"ownerId\":\"id@clients\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"Organization name: 'org name' already in use\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "RSocket",
-          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/create\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\"\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\":[],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/create\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"Organization name: 'org name' already in use\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/createOrganization\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\"\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"apiKeys\":[],\n                  \"id\":\"ORG-ID\",\n                  \"name\":\"specifiedOrganizationName\",\n                  \"email\":\"specifiedOrganization@email.com\",\n                  \"ownerId\":\"id@clients\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/createOrganization\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"Organization name: 'org name' already in use\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "HTTP",
-          "content": "Request:\nhttps://localhost:port/organizations/create (endpoint url)\n\nBody:\n    {\n       \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\"\n    }\n\nResponse:\n    {\n        \"apiKeys\":[],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"Organization name: 'org name' already in use\"\n    }",
+          "content": "Request:\nhttps://localhost:port/organizations/createOrganization (endpoint url)\n\nBody:\n    {\n       \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\"\n    }\n\nResponse:\n    {\n        \"apiKeys\":[],\n        \"id\":\"ORG-ID\",\n        \"name\":\"specifiedOrganizationName\",\n        \"email\":\"specifiedOrganization@email.com\",\n        \"ownerId\":\"id@clients\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"Organization name: 'org name' already in use\"\n    }",
           "type": "json"
         }
       ]
@@ -816,7 +816,7 @@ define({ "api": [
     "title": "deleteOrganization",
     "name": "DeleteOrganization",
     "group": "Organization",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -878,17 +878,17 @@ define({ "api": [
       "examples": [
         {
           "title": "WebSocket",
-          "content": "Request:\n    {\n        \"q\":\"/organizations/delete\",\n        \"sid\": 1,\n        \"d\":{\n               \"token\": {\n                           \"token\":\"Auth0-TOKEN\"\n               },\n               \"organizationId\":\"ORG-ID\"\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/delete\",\n        \"sid\":1,\n        \"d\":{\n               \"deleted\": true,\n               \"organizationId\": \"ORG-ID\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"ORG-ID\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"q\":\"/organizations/deleteOrganization\",\n        \"sid\": 1,\n        \"d\":{\n               \"token\": {\n                           \"token\":\"Auth0-TOKEN\"\n               },\n               \"organizationId\":\"ORG-ID\"\n        }\n    }\n\nResponse:\n    {\n        \"q\":\"/organizations/deleteOrganization\",\n        \"sid\":1,\n        \"d\":{\n               \"deleted\": true,\n               \"organizationId\": \"ORG-ID\"\n        }\n\n    }\n\n    {\n        \"sig\":1,\n        \"sid\":1\n    }\n\nError Response:\n    {\n        \"sig\":2,\n        \"q\":\"/io.scalecube.services.error/500\",\n        \"sid\":1,\n        \"d\":{\n               \"errorCode\":500,\n               \"errorMessage\":\"ORG-ID\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "RSocket",
-          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/delete\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"organizationId\":\"ORG-ID\"\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"deleted\": true,\n                  \"organizationId\": \"ORG-ID\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/delete\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"ORG-ID\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
+          "content": "Request:\n    {\n        \"metadata\":{\n                     \"q\": \"/organizations/deleteOrganization\"\n        },\n        \"data\":{\n                  \"token\": {\n                              \"token\":\"Auth0-TOKEN\"\n                  },\n                  \"organizationId\":\"ORG-ID\"\n        }\n    }\n\nResponse:\n    {\n        \"data\":{\n                  \"deleted\": true,\n                  \"organizationId\": \"ORG-ID\"\n        },\n        \"metadata\":{\n          \"q\": \"/organizations/deleteOrganization\"\n        }\n    }\n\nError Response:\n    {\n        \"data\":{\n                  \"errorCode\":500,\n                  \"errorMessage\":\"ORG-ID\"\n        },\n        \"metadata\":{\n                     \"q\":\"/io.scalecube.services.error/500\"\n        }\n    }",
           "type": "json"
         },
         {
           "title": "HTTP",
-          "content": "Request:\nhttps://localhost:port/organizations/delete (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\"\n    }\n\nResponse:\n    {\n        \"deleted\": true,\n        \"organizationId\": \"ORG-ID\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"ORG-ID\"\n    }",
+          "content": "Request:\nhttps://localhost:port/organizations/deleteOrganization (endpoint url)\n\nBody:\n    {\n        \"token\": {\n                    \"token\":\"Auth0-TOKEN\"\n        },\n        \"organizationId\":\"ORG-ID\"\n    }\n\nResponse:\n    {\n        \"deleted\": true,\n        \"organizationId\": \"ORG-ID\"\n    }\n\nError Response:\n    {\n        \"errorCode\":500,\n        \"errorMessage\":\"ORG-ID\"\n    }",
           "type": "json"
         }
       ]
@@ -902,7 +902,7 @@ define({ "api": [
     "title": "getOrganization",
     "name": "GetOrganization",
     "group": "Organization",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -1009,7 +1009,7 @@ define({ "api": [
     "title": "leaveOrganization",
     "name": "LeaveOrganization",
     "group": "Organization",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -1087,7 +1087,7 @@ define({ "api": [
     "title": "updateOrganization",
     "name": "UpdateOrganization",
     "group": "Organization",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -1208,7 +1208,7 @@ define({ "api": [
     "title": "Getting Started",
     "name": "GettingStarted",
     "group": "Overview",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "description": "<p>Organization service enable you to integrate the API in order to create and manage the organizations. Besides the origin owner unique ability to create the organization there is a necessity for each organization member to achieve appropriate managers' permission level (roles: Owner | Admin) granted by other managers of the relevant organization for management ability. Thus each organization could be deleted or relevant credentials updated, authorized users could be invited to and removed from the relevant organization, each member could get the info about the relevant organization and also to know the own membership in the all related organizations. Organization managers could provide and delete the relevant API keys (permission level with appropriate assigned role: Owner | Admin | Member) which are vital leverage (write or read permission provision) for the <a href=\"http://scalecube.io/configuration-service/index.html\">Configuration service</a> management and security purpose.</p> <blockquote> <p>Note: API keys assigned with some of the relevant roles (Owner | Admin | Member) are visible to organization members' similar roles only via permission level (role) in the specific Organization: <br>-Owner could observe all accessible API keys <br>-Admin could observe only the &quot;Admin&quot; and &quot;Member&quot; API keys <br>-Member could observe only the &quot;Member&quot; API keys</p> </blockquote> <p><b>Getting Started</b></p> <p>All API endpoints documented below are the integral part of <a href=\"http://scalecube.io/configuration-service/index.html\">Configuration service</a> <a href=\"https://github.com/jivygroup/exchange/wiki/Configuration-&-Organization-services-host-addresses\"><b>host address</b></a>. <br> You can try out any query in realtime using our interactive API. Actually service requires authentication, so there is a necessity to get the token issued via secured authority. Thus, firstly we recommend to create an account in <a href=\"https://manage.auth0.com/\"><b>Auth0</b></a> and issue the token whereby to perform the valid requests across all service endpoints. In order to reach an effective security <a href=\"https://auth0.com/blog/navigating-rs256-and-jwks/\"><b>RS256</b></a> algorithm should be used when signing the access tokens for this service API.</p> <p><b>Validation</b> for the object entities is handled by <b>Scalecube</b> services and do the next upon the request object:</p> <blockquote> <p>~ ignores any excessive keys and values added besides the required parameters <br>~ doesn't ignore the keys duplicates and takes the last values which applied for each of the relevant key duplicate</p> </blockquote>",
     "filename": "/apidoc/docs/overview.apidoc",
     "groupTitle": "Overview"
@@ -1219,7 +1219,7 @@ define({ "api": [
     "title": "Interactive API Explorer",
     "name": "InteractiveAPIExplorer",
     "group": "Overview",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "description": "<p><b>WebSocket and RSocket</b> transports are accessible to apply via in-house developed API Explorer called <b>Sandbox</b> thus to connect and run follow up the next steps:</p>    <ul>                   <li> Navigate to the sandbox: <a href=\"http://scalecube.io/api-sandbox/app/index.html\">Scalecube sandbox</a> </li>                   <li> Click on the <b>Settings</b> button then set the relevant <a href=\"https://github.com/jivygroup/exchange/wiki/Configuration-&-Organization-services-host-addresses\"><b>Host address</b></a> for the chosen <b>transport</b> </li>                   <li> Click on <b>Import icon</b> and copy-paste the template.json file path for <a href=\"https://raw.githubusercontent.com/scalecube/scalecube-organization-service/master/API-Calls-examples.json\">Organization service endpoints.json</a></li>                   <li> Click on the <b>Connect</b> button (now you are connected to the environment) and push <b>Send</b> button to make your request</li>    </ul>",
     "filename": "/apidoc/docs/overview.apidoc",
     "groupTitle": "Overview"
@@ -1230,7 +1230,7 @@ define({ "api": [
     "title": "Transport protocols API",
     "name": "TransportProtocols",
     "group": "Overview",
-    "version": "2.1.8-SNAPSHOT",
+    "version": "2.1.9-SNAPSHOT",
     "permission": [
       {
         "name": "Successful requests and responses"
