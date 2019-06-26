@@ -1,6 +1,6 @@
 {
   "name": "Configuration service",
-  "version": "2.1.8-SNAPSHOT",
+  "version": "2.1.9-SNAPSHOT",
   "description": "Configuration service API",
   "title": "API documentation for the Configuration Service",
   "template": {
@@ -18,7 +18,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-06-25T11:37:17.795Z",
+    "time": "2019-06-26T14:22:52.391Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }
