@@ -5,7 +5,7 @@ define({ "api": [
     "title": "createRepository",
     "name": "CreateRepository",
     "group": "Methods",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -239,7 +239,7 @@ define({ "api": [
     "title": "delete (entry)",
     "name": "Delete",
     "group": "Methods",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -494,7 +494,7 @@ define({ "api": [
     "title": "entries (get all entries)",
     "name": "Entries",
     "group": "Methods",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -773,7 +773,7 @@ define({ "api": [
     "title": "fetch (get single entry)",
     "name": "Fetch",
     "group": "Methods",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -1094,7 +1094,7 @@ define({ "api": [
     "title": "save (entry)",
     "name": "Save",
     "group": "Methods",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "permission": [
       {
         "name": "Request / Response / Error-response"
@@ -1370,7 +1370,7 @@ define({ "api": [
     "title": "Getting Started",
     "name": "GettingStarted",
     "group": "Overview",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "description": "<p>Configuration service enable you to integrate the API in order to create and manage the separate repositories purposed for entries collection and storage.</p> <p><b>Getting Started</b></p> <p>All API endpoints are documented below. You can try out any query in realtime using our interactive API. <br> <a href=\"http://scalecube.io/organization-service/index.html\">Organization service</a> is a provider for Configuration service management. Actually all methods require <a href=\"http://scalecube.io/organization-service/index.html#api-ApiKey-AddOrganizationApiKey\">API key</a> authorization since they provide a specific permission level (write or read ) for the each user. So there is a necessity to get the <b>API key</b> (token - assigned with relevant role Member | Admin | Owner) which is basically issued by some of the organization managers who provide such kind permission level to potential costumers. <br>Thus, firstly we recommend to be granted with valid <b>API key</b> assigned with relevant role (permission level) to be able to make valid requests across all service <b>endpoints</b>.</p> <p><b>Validation</b> for the object entities is handled by <b>Scalecube</b> services and do the next upon the request object:</p> <blockquote> <p>~ ignores any excessive keys and values added besides the required parameters <br>~ doesn't ignore the keys duplicates and takes the last values which applied for each of the relevant key duplicate</p> </blockquote> <blockquote> <p>Contracts validation is implemented for specific parameters which value type is string and can only contain characters in range A-Z, a-z, 0-9 as well as underscore, period, dash &amp; percent. Appropriate validation will be added soon.</p> </blockquote>",
     "filename": "/apidoc/docs/overview.apidoc",
     "groupTitle": "Overview"
@@ -1403,7 +1403,7 @@ define({ "api": [
     "title": "Interactive API Explorer",
     "name": "InteractiveAPIExplorer",
     "group": "Overview",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "description": "<p><b>WebSocket and RSocket</b> transport are accessible to use the API via in-house developed API Explorer called <b>Sandbox</b> thus to connect and run follow up the next steps: <ul> <li> Navigate to the sandbox: <a href=\"http://scalecube.io/api-sandbox/app/index.html\">Scalecube sandbox</a> </li> <li> Click on the <b>Settings</b> button then set the relevant <a href=\"https://github.com/jivygroup/exchange/wiki/Configuration-&-Organization-services-host-addresses\"><b>Host address</b></a> for the chosen <b>transport</b> </li> <li> Click on <b>Import icon</b> and copy-paste the template.json file path for <a href=\"https://raw.githubusercontent.com/scalecube/scalecube-configuration-service/master/API-Calls-examples.json\">Configuration service endpoints.json</a></li> <li> Click on the <b>Connect</b> button (now you are connected to the environment) and push <b>Send</b> button to make your request</li> </ul></p>",
     "filename": "/apidoc/docs/overview.apidoc",
     "groupTitle": "Overview"
@@ -1436,7 +1436,7 @@ define({ "api": [
     "title": "Transport protocols API",
     "name": "TransportProtocols",
     "group": "Overview",
-    "version": "2.1.10-SNAPSHOT",
+    "version": "2.1.11-SNAPSHOT",
     "permission": [
       {
         "name": "Successful requests and responses"
