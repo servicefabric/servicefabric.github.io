@@ -1,6 +1,6 @@
 define({
   "name": "Organization service",
-  "version": "2.1.15-SNAPSHOT",
+  "version": "2.1.16-SNAPSHOT",
   "description": "Organization service API",
   "title": "API documentation for the Organization Service",
   "template": {
@@ -29,7 +29,7 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-09-25T08:27:42.446Z",
+    "time": "2019-09-25T14:48:03.523Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }
