@@ -25,9 +25,18 @@ function param(variable) {
 
 function getJSON(url, callback) {
     var xhr = new XMLHttpRequest();
+    try{
+        var urlParam = new URL(url);
+        urlParam.searchParams.append('t', Date.now());
+        url = urlParam.toString();
+    } catch(e){
 
+    }
     xhr.open("GET", url, true);
-    xhr.setRequestHeader("secret-key", "$2a$10$qQnM8b7F2aeXshFlQbyH5.Yqyt7bMEGmtLRH/gwh8tNCVY41ZsRcy");
+    if (url.includes("jsonbin")) {
+        xhr.setRequestHeader("secret-key", "$2a$10$qQnM8b7F2aeXshFlQbyH5.Yqyt7bMEGmtLRH/gwh8tNCVY41ZsRcy");
+    }
+
     xhr.responseType = "text";
     xhr.onload = function () {
         var status = xhr.status;
@@ -66,24 +75,31 @@ function fetchTraces(links) {
 
     return new Promise((resolve, reject) => {
         links.forEach((element) => {
-            importJson(element).then(model => {
-                if (!Array.isArray(model)) {
-                    console.log(model);
-                    traces.push(model);
-                } else {
-                    model.forEach((item) => {
-                        console.log(item);
-                        traces.push(item);
-                    });
-                }
+            if(typeof element === 'object'){
+                traces.push(element);
                 if ((count = count - 1) <= 0) {
                     resolve(traces);
                 }
-            }, err => {
-                if ((count = count - 1) <= 0) {
-                    resolve(traces);
-                }
-            });
+            } else if (typeof element === 'string') {
+                importJson(element).then(model => {
+                    if (!Array.isArray(model)) {
+                        console.log(model);
+                        traces.push(model);
+                    } else {
+                        model.forEach((item) => {
+                            console.log(item);
+                            traces.push(item);
+                        });
+                    }
+                    if ((count = count - 1) <= 0) {
+                        resolve(traces);
+                    }
+                }, err => {
+                    if ((count = count - 1) <= 0) {
+                        resolve(traces);
+                    }
+                });
+            }
         });
     });
 }
