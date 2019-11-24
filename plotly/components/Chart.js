@@ -29,6 +29,7 @@ function getJSON(url, callback) {
         var urlParam = new URL(url);
         urlParam.searchParams.append('t', Date.now());
         url = urlParam.toString();
+        console.log(url);
     } catch(e){
 
     }
