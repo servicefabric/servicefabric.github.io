@@ -42,9 +42,9 @@
 
 svg.icon {
   padding-top: 0px;
-  padding-right: 4px;
+  padding-right: 0px;
   stroke: #9d9d9d;
-  height: 18px;
+  height: 11px;
   vertical-align: middle;
 }
 
@@ -75,15 +75,26 @@ svg.icon {
   color: #bfbfb5;
 }
 
-.log-line:hover {
-  background-color: #323232;
+.log-line-copy {
+  width: 14px;
+  height: 14px;
+  position:relative; /*or absolute*/
+  left: -14px;
+  top: 14px;
+  display: none;
 }
 
-a::before {
-  content: counter(line-numbering);
-  counter-increment: line-numbering;
-  padding-right: 1em;
-  color: white;
+.log-line:hover .log-line-copy {
+  background-color: rgba(99, 99, 99, 0.81);
+  display: block;
+}
+
+.btn {
+  position: relative;
+  size: inherit;
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
 }
 
 body {

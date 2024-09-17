@@ -2632,7 +2632,7 @@ body.layout-left .editor-layout-buttons #left-layout svg, body.layout-top .edito
 }
 
 .embed-modal .CodeMirror-dialog-top button:hover, .embed-modal .CodeMirror-dialog-top button:focus {
-    background: #1e1e1e
+    background: #2C2C2C
 }
 
 .embed-modal .CodeMirror-scrollbar-filler, .embed-modal .CodeMirror-gutter-filler {
@@ -5464,7 +5464,7 @@ body.layout-left .layout-change-links #left-layout svg, body.layout-top .layout-
 .collections-select {
     width: 120px;
     display: inline-block;
-    background: url(https://static.codepen.io/assets/buttons/arrow-tiny-down-white-cd748d5e97310942356ea8298bca9b344350441cffed1a653c89551258a76b3a.png) 93% 7px no-repeat, #1e1e1e !important;
+    background: url(https://static.codepen.io/assets/buttons/arrow-tiny-down-white-cd748d5e97310942356ea8298bca9b344350441cffed1a653c89551258a76b3a.png) 93% 7px no-repeat, #2C2C2C !important;
     color: white;
     -webkit-transform: none !important;
     transform: none !important;
@@ -5485,13 +5485,13 @@ body.layout-left .layout-change-links #left-layout svg, body.layout-top .layout-
 }
 
 .editor-toggle-buttons > .button, .editor-toggle-buttons > .file-upload-button {
-    background: #1e1e1e
+    background: #2C2C2C
 }
 
 .editor-toggle-buttons > .button.active, .editor-toggle-buttons > .active.file-upload-button {
     color: white;
     font-weight: 900 !important;
-    background: #1e1e1e
+    background: #2C2C2C
 }
 
 .editor-toggle-buttons > .button:not(:first-child), .editor-toggle-buttons > .file-upload-button:not(:first-child) {

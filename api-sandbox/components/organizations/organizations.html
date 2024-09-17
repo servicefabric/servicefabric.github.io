@@ -1,0 +1,36 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="organizations.css"/>
+    <script src="../tabs/tabs.js"></script>
+</head>
+<body>
+    <div id="tabs">
+        <div id="organizations_tab" >
+            <div class="tbl">
+                <div class="row">
+                    <div class="cell">1</div>
+                    <div class="cell">ORGANIZATION</div>
+                    <div class="cell">MEMBERS</div>
+                    <div class="cell span4-5">TOTAL </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="organization_tab" >
+            <div class="tbl">
+                <div class="row">
+                    <div class="cell">2</div>
+                    <div class="cell">ORGANIZATION</div>
+                    <div class="cell">MEMBERS</div>
+                    <div class="cell span4-5">TOTAL </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    let tabs = new Tabs("tabs");
+    tabs.show("organizations_tab","organization_tab");
+    let orgs = new Organizations("organizations_tab");
+</script>
+</body>
+</html>

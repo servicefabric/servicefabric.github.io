@@ -61,6 +61,11 @@ class RSocketTransport {
             metadata: input.metadata
         };
 
+        send (request);
+    };
+
+    send (request) {
+
         let onnext = resp => serialize(resp,this.subject);
         let onerror = error => serialize(error,this.subject);
         let oncomplete = () => console.debug("Completed!");

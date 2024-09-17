@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="account.css"/>
+    <script src="account.js"></script>
+</head>
+<body>
+<div class="user-menu-wrap">
+    <a class="mini-photo-wrapper" href="#">
+        <img class="mini-photo" src="https://media.licdn.com/dms/image/C5603AQE3QX-fVU2-aA/profile-displayphoto-shrink_100_100/0?e=2159024400&v=beta&t=X020Tx6uzhwtvhF1xVAxGEFNpY6rrgk8R5Ozikendg4" width="36" height="36"/></a>
+
+    <div class="account-menu-container">
+        <ul class="account-user-menu">
+            <li class="account-user-menu__item"><a class="user-menu-link" href="#">My Profile</a></li>
+            <li class="account-user-menu__item"><a class="user-menu-link" href="#">Search</a></li>
+            <li class="account-user-menu__item"><a class="user-menu-link" href="#">Messages</a></li>
+            <li class="account-user-menu__item"><a class="user-menu-link" href="#">Activity</a></li>
+            <li class="account-user-menu__item"><a class="user-menu-link" href="#">Settings</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    document.querySelector('.mini-photo-wrapper').addEventListener('click', function() {
+        document.querySelector('.menu-container').classList.toggle('active');
+    });
+</script>
+</body>
+</html>

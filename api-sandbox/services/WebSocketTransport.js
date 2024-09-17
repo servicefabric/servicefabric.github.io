@@ -31,5 +31,23 @@ class WebSocketTransport {
         return this.subject;
     };
 
+    requestResponse(req) {
+        let p = this._response(req);
+        this.next(req);
+        return p;
+    }
 
+    _response(req) {
+        return new Promise((resolve, reject) => {
+            this.listen().subscribe((msg)=> {
+                if (msg.sid.toString() === req.sid.toString()) {
+                    resolve(msg);
+                }
+            },(error) => {
+                console.log(error);
+                reject(error);
+            });
+
+        });
+    }
 }
